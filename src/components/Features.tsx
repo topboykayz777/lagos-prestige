@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Shield, Zap, Coffee, Car } from 'lucide-react';
 
 const features = [
@@ -34,20 +35,33 @@ const Features = () => {
   return (
     <section className="max-w-7xl mx-auto px-6 py-32">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div className="lg:col-span-2 flex flex-col justify-center pr-12">
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="lg:col-span-2 flex flex-col justify-center pr-12"
+        >
           <h2 className="text-5xl font-black tracking-tighter text-black mb-6">The ILE <br /> <span className="text-[#D4AF37]">Standard.</span></h2>
           <p className="text-gray-500 text-lg leading-relaxed">
             We don't just provide apartments; we curate experiences. Every property in our collection undergoes a 50-point inspection to ensure it meets the highest global standards.
           </p>
-        </div>
+        </motion.div>
         {features.map((f, i) => (
-          <div key={i} className="p-10 rounded-[2.5rem] bg-white border border-gray-100 hover:shadow-xl transition-all group">
+          <motion.div 
+            key={i}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.15, duration: 0.6 }}
+            className="p-10 rounded-[2.5rem] bg-white border border-gray-100 hover:shadow-xl transition-all group"
+          >
             <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${f.color} group-hover:scale-110 transition-transform`}>
               <f.icon className="w-7 h-7" />
             </div>
             <h3 className="font-black text-xl mb-3">{f.title}</h3>
             <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

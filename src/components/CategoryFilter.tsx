@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Palmtree, Building, Ship, Crown, Briefcase, Sparkles } from 'lucide-react';
 
 const categories = [
@@ -15,9 +16,13 @@ const categories = [
 const CategoryFilter = () => {
   return (
     <div className="flex items-center justify-center gap-10 py-16 overflow-x-auto no-scrollbar px-6 bg-[#FAF7F2]">
-      {categories.map((cat) => (
-        <button 
+      {categories.map((cat, index) => (
+        <motion.button 
           key={cat.name}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: index * 0.1, duration: 0.5 }}
           className="flex flex-col items-center gap-4 group min-w-fit"
         >
           <div className="w-20 h-20 rounded-[2rem] bg-white border border-[#2D1B08]/5 flex items-center justify-center group-hover:bg-[#8B4513] group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:-translate-y-2">
@@ -26,7 +31,7 @@ const CategoryFilter = () => {
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2D1B08]/40 group-hover:text-[#2D1B08] transition-colors">
             {cat.name}
           </span>
-        </button>
+        </motion.button>
       ))}
     </div>
   );
