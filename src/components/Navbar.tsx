@@ -1,26 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Menu, ShieldCheck } from 'lucide-react';
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex justify-center ${isScrolled ? 'p-4' : 'p-8'}`}>
-      <div className={`w-full max-w-7xl flex items-center justify-between px-8 py-4 transition-all duration-500 rounded-2xl ${
-        isScrolled 
-          ? 'bg-black/80 backdrop-blur-xl border border-white/10 shadow-2xl' 
-          : 'bg-transparent border border-transparent'
-      }`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 p-8 flex justify-center">
+      <div className="w-full max-w-7xl flex items-center justify-between px-8 py-4 bg-transparent">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-[#D4AF37] rounded-lg rotate-45 flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.3)]">
             <ShieldCheck className="text-black w-5 h-5 -rotate-45" />
