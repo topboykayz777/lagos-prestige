@@ -15,11 +15,10 @@ const Features = () => {
   return (
     <section className="max-w-7xl mx-auto px-6 py-32 overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Left side slides from left */}
         <motion.div 
           initial={{ x: -200, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col justify-center"
         >
@@ -29,11 +28,10 @@ const Features = () => {
           </p>
         </motion.div>
 
-        {/* Right side slides from right */}
         <motion.div 
           initial={{ x: 200, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="grid grid-cols-2 gap-6"
         >

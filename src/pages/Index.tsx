@@ -21,13 +21,12 @@ const Index = () => {
         <Features />
         <FeaturedListings />
         
-        {/* Call to Action Section */}
         <section className="max-w-7xl mx-auto px-6 py-24 overflow-hidden">
           <div className="relative h-[600px] rounded-[4rem] overflow-hidden flex items-center justify-center text-center px-6">
             <motion.img 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ delay: 1.1, duration: 1 }}
               src="https://images.unsplash.com/photo-1618828665011-0abd973f7bb8?auto=format&fit=crop&q=80&w=2000" 
               alt="Lagos Skyline" 
@@ -35,11 +34,10 @@ const Index = () => {
             />
             
             <div className="relative z-10 max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              {/* Left side slides from left */}
               <motion.div
                 initial={{ x: -200, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 className="text-left"
               >
@@ -51,11 +49,10 @@ const Index = () => {
                 </h2>
               </motion.div>
 
-              {/* Right side slides from right */}
               <motion.div
                 initial={{ x: 200, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 className="text-left md:text-right"
               >

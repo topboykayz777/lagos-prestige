@@ -17,11 +17,10 @@ const CategoryFilter = () => {
   return (
     <div className="bg-[#FAF7F2] py-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 flex justify-center gap-10">
-        {/* Left half slides from left */}
         <motion.div 
           initial={{ x: -200, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="flex gap-10"
         >
@@ -35,11 +34,10 @@ const CategoryFilter = () => {
           ))}
         </motion.div>
 
-        {/* Right half slides from right */}
         <motion.div 
           initial={{ x: 200, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="flex gap-10"
         >
