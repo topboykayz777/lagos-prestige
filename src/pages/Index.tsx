@@ -22,62 +22,54 @@ const Index = () => {
         <FeaturedListings />
         
         {/* Call to Action Section */}
-        <section className="max-w-7xl mx-auto px-6 py-24">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95, y: 50 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-[600px] rounded-[4rem] overflow-hidden flex items-center justify-center text-center px-6"
-          >
+        <section className="max-w-7xl mx-auto px-6 py-24 overflow-hidden">
+          <div className="relative h-[600px] rounded-[4rem] overflow-hidden flex items-center justify-center text-center px-6">
             <motion.img 
-              initial={{ scale: 1.2 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.1, duration: 1 }}
               src="https://images.unsplash.com/photo-1618828665011-0abd973f7bb8?auto=format&fit=crop&q=80&w=2000" 
               alt="Lagos Skyline" 
               className="absolute inset-0 w-full h-full object-cover brightness-[0.3]"
             />
-            <div className="relative z-10 max-w-4xl">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="inline-block px-6 py-2 bg-[#D4AF37] text-black text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-8"
+            
+            <div className="relative z-10 max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              {/* Left side slides from left */}
+              <motion.div
+                initial={{ x: -200, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="text-left"
               >
-                Partner with us
+                <div className="inline-block px-6 py-2 bg-[#D4AF37] text-black text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-8">
+                  Partner with us
+                </div>
+                <h2 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter leading-none">
+                  Own a Piece of <br /> <span className="text-[#D4AF37]">The Future.</span>
+                </h2>
               </motion.div>
-              <motion.h2 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-6xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-none"
+
+              {/* Right side slides from right */}
+              <motion.div
+                initial={{ x: 200, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="text-left md:text-right"
               >
-                Own a Piece of <br /> <span className="text-[#D4AF37]">The Future.</span>
-              </motion.h2>
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="text-white/60 mb-12 text-xl font-medium max-w-2xl mx-auto"
-              >
-                Join our exclusive network of property investors and earn premium returns on your luxury assets.
-              </motion.p>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex flex-wrap justify-center gap-6"
-              >
-                <button className="bg-white text-black px-12 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-xl">
-                  Investment Guide
-                </button>
-                <button className="bg-transparent border border-white/20 text-white px-12 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white/10 transition-all">
-                  Contact Sales
-                </button>
+                <p className="text-white/60 mb-12 text-xl font-medium max-w-md ml-auto">
+                  Join our exclusive network of property investors and earn premium returns.
+                </p>
+                <div className="flex flex-wrap justify-start md:justify-end gap-6">
+                  <button className="bg-white text-black px-12 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-[#D4AF37] transition-all shadow-xl">
+                    Investment Guide
+                  </button>
+                </div>
               </motion.div>
             </div>
-          </motion.div>
+          </div>
         </section>
       </main>
       

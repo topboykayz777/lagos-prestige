@@ -15,24 +15,44 @@ const categories = [
 
 const CategoryFilter = () => {
   return (
-    <div className="flex items-center justify-center gap-10 py-16 overflow-x-auto no-scrollbar px-6 bg-[#FAF7F2]">
-      {categories.map((cat, index) => (
-        <motion.button 
-          key={cat.name}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+    <div className="bg-[#FAF7F2] py-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 flex justify-center gap-10">
+        {/* Left half slides from left */}
+        <motion.div 
+          initial={{ x: -200, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: index * 0.1, duration: 0.5 }}
-          className="flex flex-col items-center gap-4 group min-w-fit"
+          transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="flex gap-10"
         >
-          <div className="w-20 h-20 rounded-[2rem] bg-white border border-[#2D1B08]/5 flex items-center justify-center group-hover:bg-[#8B4513] group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:-translate-y-2">
-            <cat.icon className="w-8 h-8" />
-          </div>
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2D1B08]/40 group-hover:text-[#2D1B08] transition-colors">
-            {cat.name}
-          </span>
-        </motion.button>
-      ))}
+          {categories.slice(0, 3).map((cat) => (
+            <button key={cat.name} className="flex flex-col items-center gap-4 group">
+              <div className="w-20 h-20 rounded-[2rem] bg-white border border-[#2D1B08]/5 flex items-center justify-center group-hover:bg-[#8B4513] group-hover:text-white transition-all duration-500 shadow-sm">
+                <cat.icon className="w-8 h-8" />
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2D1B08]/40">{cat.name}</span>
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Right half slides from right */}
+        <motion.div 
+          initial={{ x: 200, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="flex gap-10"
+        >
+          {categories.slice(3).map((cat) => (
+            <button key={cat.name} className="flex flex-col items-center gap-4 group">
+              <div className="w-20 h-20 rounded-[2rem] bg-white border border-[#2D1B08]/5 flex items-center justify-center group-hover:bg-[#8B4513] group-hover:text-white transition-all duration-500 shadow-sm">
+                <cat.icon className="w-8 h-8" />
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2D1B08]/40">{cat.name}</span>
+            </button>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 };

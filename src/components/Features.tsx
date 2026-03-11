@@ -5,64 +5,48 @@ import { motion } from 'framer-motion';
 import { Shield, Zap, Coffee, Car } from 'lucide-react';
 
 const features = [
-  {
-    icon: Shield,
-    title: "Vetted Security",
-    desc: "24/7 armed security and smart surveillance in all locations.",
-    color: "bg-blue-500/10 text-blue-500"
-  },
-  {
-    icon: Zap,
-    title: "Uninterrupted Power",
-    desc: "Dual-grid systems and solar backups for 100% uptime.",
-    color: "bg-yellow-500/10 text-yellow-500"
-  },
-  {
-    icon: Coffee,
-    title: "Premium Concierge",
-    desc: "Private chefs, laundry, and airport pickups on demand.",
-    color: "bg-emerald-500/10 text-emerald-500"
-  },
-  {
-    icon: Car,
-    title: "Prime Locations",
-    desc: "The heart of Ikoyi, Lekki, and Maitama at your doorstep.",
-    color: "bg-purple-500/10 text-purple-500"
-  }
+  { icon: Shield, title: "Vetted Security", desc: "24/7 armed security.", color: "bg-blue-500/10 text-blue-500" },
+  { icon: Zap, title: "Uninterrupted Power", desc: "Dual-grid systems.", color: "bg-yellow-500/10 text-yellow-500" },
+  { icon: Coffee, title: "Premium Concierge", desc: "Private chefs.", color: "bg-emerald-500/10 text-emerald-500" },
+  { icon: Car, title: "Prime Locations", desc: "Heart of Ikoyi.", color: "bg-purple-500/10 text-purple-500" }
 ];
 
 const Features = () => {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-32">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section className="max-w-7xl mx-auto px-6 py-32 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {/* Left side slides from left */}
         <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ x: -200, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="lg:col-span-2 flex flex-col justify-center pr-12"
+          transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col justify-center"
         >
           <h2 className="text-5xl font-black tracking-tighter text-black mb-6">The ILE <br /> <span className="text-[#D4AF37]">Standard.</span></h2>
           <p className="text-gray-500 text-lg leading-relaxed">
-            We don't just provide apartments; we curate experiences. Every property in our collection undergoes a 50-point inspection to ensure it meets the highest global standards.
+            We don't just provide apartments; we curate experiences. Every property in our collection undergoes a 50-point inspection.
           </p>
         </motion.div>
-        {features.map((f, i) => (
-          <motion.div 
-            key={i}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.15, duration: 0.6 }}
-            className="p-10 rounded-[2.5rem] bg-white border border-gray-100 hover:shadow-xl transition-all group"
-          >
-            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${f.color} group-hover:scale-110 transition-transform`}>
-              <f.icon className="w-7 h-7" />
+
+        {/* Right side slides from right */}
+        <motion.div 
+          initial={{ x: 200, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="grid grid-cols-2 gap-6"
+        >
+          {features.map((f, i) => (
+            <div key={i} className="p-8 rounded-[2rem] bg-white border border-gray-100 shadow-sm">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${f.color}`}>
+                <f.icon className="w-6 h-6" />
+              </div>
+              <h3 className="font-black text-lg mb-2">{f.title}</h3>
+              <p className="text-gray-400 text-xs leading-relaxed">{f.desc}</p>
             </div>
-            <h3 className="font-black text-xl mb-3">{f.title}</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
-          </motion.div>
-        ))}
+          ))}
+        </motion.div>
       </div>
     </section>
   );
