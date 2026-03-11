@@ -15,21 +15,24 @@ const categories = [
 
 const CategoryFilter = () => {
   return (
-    <div className="bg-[#FAF7F2] py-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 flex justify-center gap-10">
+    <div className="relative py-24 overflow-hidden bg-gradient-to-b from-black to-[#1A1510]">
+      <div className="absolute inset-0 opacity-10 pointer-events-none" 
+           style={{ backgroundImage: `radial-gradient(#D4AF37 0.5px, transparent 0.5px)`, backgroundSize: '30px 30px' }} />
+      
+      <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-8 md:gap-16 relative z-10">
         <motion.div 
           initial={{ x: -200, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex gap-10"
+          className="flex gap-8 md:gap-16"
         >
           {categories.slice(0, 3).map((cat) => (
             <button key={cat.name} className="flex flex-col items-center gap-4 group">
-              <div className="w-20 h-20 rounded-[2rem] bg-white border border-[#2D1B08]/5 flex items-center justify-center group-hover:bg-[#8B4513] group-hover:text-white transition-all duration-500 shadow-sm">
-                <cat.icon className="w-8 h-8" />
+              <div className="w-20 h-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:text-black transition-all duration-500 shadow-xl backdrop-blur-sm">
+                <cat.icon className="w-8 h-8 text-[#D4AF37] group-hover:text-black" />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2D1B08]/40">{cat.name}</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 group-hover:text-[#D4AF37] transition-colors">{cat.name}</span>
             </button>
           ))}
         </motion.div>
@@ -39,14 +42,14 @@ const CategoryFilter = () => {
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex gap-10"
+          className="flex gap-8 md:gap-16"
         >
           {categories.slice(3).map((cat) => (
             <button key={cat.name} className="flex flex-col items-center gap-4 group">
-              <div className="w-20 h-20 rounded-[2rem] bg-white border border-[#2D1B08]/5 flex items-center justify-center group-hover:bg-[#8B4513] group-hover:text-white transition-all duration-500 shadow-sm">
-                <cat.icon className="w-8 h-8" />
+              <div className="w-20 h-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:text-black transition-all duration-500 shadow-xl backdrop-blur-sm">
+                <cat.icon className="w-8 h-8 text-[#D4AF37] group-hover:text-black" />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2D1B08]/40">{cat.name}</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 group-hover:text-[#D4AF37] transition-colors">{cat.name}</span>
             </button>
           ))}
         </motion.div>
