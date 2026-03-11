@@ -4,18 +4,13 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import ApartmentCard from './ApartmentCard';
 
-const listings = [
-  { image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=800", title: "Eko Penthouse", location: "VI, Lagos", price: "₦450k", rating: "5.0" },
-  { image: "https://images.unsplash.com/photo-1600607687940-4ad236f759ca?q=80&w=800", title: "Maitama Suite", location: "Maitama, Abuja", price: "₦320k", rating: "4.9" },
-  { image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=800", title: "Banana Island", location: "Ikoyi, Lagos", price: "₦750k", rating: "5.0" },
-  { image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800", title: "Heritage Loft", location: "Lekki, Lagos", price: "₦180k", rating: "4.8" },
-  { image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800", title: "Azure Villa", location: "Oniru, Lagos", price: "₦280k", rating: "4.9" },
-  { image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=800", title: "The Zenith", location: "Asokoro, Abuja", price: "₦400k", rating: "5.0" },
-  { image: "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?q=80&w=800", title: "Ocean View", location: "Eko Atlantic", price: "₦550k", rating: "4.9" },
-  { image: "https://images.unsplash.com/photo-1600607687644-c7171b42498f?q=80&w=800", title: "Royal Garden", location: "GRA, Ikeja", price: "₦150k", rating: "4.7" },
-  { image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=800", title: "Skyline Hub", location: "Central Area, Abuja", price: "₦220k", rating: "4.8" },
-  { image: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?q=80&w=800", title: "The Sanctuary", location: "Enugu, Nigeria", price: "₦120k", rating: "4.9" }
-];
+const listings = Array.from({ length: 20 }).map((_, i) => ({
+  image: `https://images.unsplash.com/photo-${1600000000000 + i * 100000}?auto=format&fit=crop&q=80&w=800`,
+  title: ["Eko Suite", "Maitama Loft", "Banana Villa", "Lekki Penthouse", "Azure Hub", "Zenith Stay", "Ocean View", "Royal Garden", "Skyline", "Sanctuary", "Emerald", "Ivory", "Marble", "Onyx", "Pearl", "Ruby", "Sapphire", "Topaz", "Amber", "Jade"][i],
+  location: ["VI, Lagos", "Abuja", "Ikoyi", "Lekki", "Oniru", "Asokoro", "Eko Atlantic", "Ikeja", "Central Area", "Enugu", "Calabar", "Port Harcourt", "Ibadan", "Kano", "Kaduna", "Jos", "Benin", "Warri", "Uyo", "Abeokuta"][i],
+  price: `₦${150 + i * 20}k`,
+  rating: (4.5 + (i % 5) * 0.1).toFixed(1)
+}));
 
 const FeaturedListings = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,64 +19,74 @@ const FeaturedListings = () => {
     offset: ["start start", "end end"]
   });
 
-  const pyramidY = useTransform(scrollYProgress, [0, 1], ["10%", "-80%"]);
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
-  const headerY = useTransform(scrollYProgress, [0, 0.15], [0, -50]);
+  const pyramidY = useTransform(scrollYProgress, [0, 1], ["5%", "-85%"]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   return (
-    <section ref={containerRef} className="relative h-[350vh] bg-black overflow-hidden">
-      {/* Dark Gold Mural Background */}
-      <div className="absolute inset-0 opacity-30">
-        <img 
-          src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=2000" 
-          alt="Dark Gold Mural" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+    <section ref={containerRef} className="relative h-[500vh] bg-[#F8F9F8] overflow-hidden">
+      {/* Clean Aesthetic Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(16,185,129,0.03)_0%,_transparent_50%)]" />
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-900/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-emerald-900/5 blur-[120px] rounded-full" />
       </div>
 
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
-        {/* Fixed Header - Fades out on scroll */}
+        {/* Fixed Header */}
         <motion.div 
-          style={{ opacity: headerOpacity, y: headerY }}
+          style={{ opacity: headerOpacity }}
           className="absolute top-32 left-0 right-0 z-20 pointer-events-none"
         >
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-8">
             <div className="max-w-xl">
-              <h2 className="text-6xl font-black tracking-tighter text-white mb-4 leading-none">Curated <br /> <span className="text-indigo-500">Collections.</span></h2>
-              <p className="text-white/40 text-lg leading-relaxed">
-                Handpicked luxury spaces across Nigeria's most prestigious neighborhoods.
+              <h2 className="text-6xl font-black tracking-tighter text-emerald-950 mb-4 leading-none">Curated <br /> <span className="text-emerald-600">Collections.</span></h2>
+              <p className="text-emerald-900/40 text-lg leading-relaxed font-medium">
+                Twenty handpicked sanctuaries across Nigeria's most prestigious postcodes.
               </p>
             </div>
-            <button className="px-10 py-5 bg-indigo-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all shadow-2xl pointer-events-auto">
+            <button className="px-10 py-5 bg-emerald-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-emerald-800 transition-all shadow-xl pointer-events-auto">
               View All Suites
             </button>
           </div>
         </motion.div>
 
-        {/* Scrolling Pyramid Content */}
+        {/* Scrolling Pyramid Content (6-5-4-3-2 = 20 items) */}
         <motion.div 
           style={{ y: pyramidY }}
-          className="max-w-5xl mx-auto px-6 w-full space-y-16 pt-[40vh] pb-32"
+          className="max-w-7xl mx-auto px-6 w-full space-y-20 pt-[45vh] pb-32"
         >
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {listings.slice(0, 4).map((listing, i) => (
+          {/* Row 1: 6 items */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {listings.slice(0, 6).map((listing, i) => (
               <ApartmentCard key={i} {...listing} index={i} />
             ))}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-[80%] mx-auto">
-            {listings.slice(4, 7).map((listing, i) => (
-              <ApartmentCard key={i + 4} {...listing} index={i} />
+
+          {/* Row 2: 5 items */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-[90%] mx-auto">
+            {listings.slice(6, 11).map((listing, i) => (
+              <ApartmentCard key={i + 6} {...listing} index={i} />
             ))}
           </div>
-          <div className="grid grid-cols-2 gap-6 max-w-[55%] mx-auto">
-            {listings.slice(7, 9).map((listing, i) => (
-              <ApartmentCard key={i + 7} {...listing} index={i} />
+
+          {/* Row 3: 4 items */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-[75%] mx-auto">
+            {listings.slice(11, 15).map((listing, i) => (
+              <ApartmentCard key={i + 11} {...listing} index={i} />
             ))}
           </div>
-          <div className="grid grid-cols-1 gap-6 max-w-[25%] mx-auto">
-            {listings.slice(9, 10).map((listing, i) => (
-              <ApartmentCard key={i + 9} {...listing} index={i} />
+
+          {/* Row 4: 3 items */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-[55%] mx-auto">
+            {listings.slice(15, 18).map((listing, i) => (
+              <ApartmentCard key={i + 15} {...listing} index={i} />
+            ))}
+          </div>
+
+          {/* Row 5: 2 items */}
+          <div className="grid grid-cols-2 gap-4 max-w-[35%] mx-auto">
+            {listings.slice(18, 20).map((listing, i) => (
+              <ApartmentCard key={i + 18} {...listing} index={i} />
             ))}
           </div>
         </motion.div>
