@@ -25,52 +25,60 @@ const FeaturedListings = () => {
   });
 
   const pyramidY = useTransform(scrollYProgress, [0, 1], ["10%", "-80%"]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const headerY = useTransform(scrollYProgress, [0, 0.15], [0, -50]);
 
   return (
-    <section ref={containerRef} className="relative h-[350vh] bg-[#FAF9F6]">
+    <section ref={containerRef} className="relative h-[350vh] bg-black overflow-hidden">
+      {/* Dark Gold Mural Background */}
+      <div className="absolute inset-0 opacity-30">
+        <img 
+          src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=2000" 
+          alt="Dark Gold Mural" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+      </div>
+
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
-        {/* Fixed Header - Does not move with scroll */}
-        <div className="absolute top-32 left-0 right-0 z-20">
+        {/* Fixed Header - Fades out on scroll */}
+        <motion.div 
+          style={{ opacity: headerOpacity, y: headerY }}
+          className="absolute top-32 left-0 right-0 z-20 pointer-events-none"
+        >
           <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-8">
             <div className="max-w-xl">
-              <h2 className="text-6xl font-black tracking-tighter text-black mb-4 leading-none">Curated <br /> <span className="text-[#D4AF37]">Collections.</span></h2>
-              <p className="text-black/50 text-lg leading-relaxed">
+              <h2 className="text-6xl font-black tracking-tighter text-white mb-4 leading-none">Curated <br /> <span className="text-indigo-500">Collections.</span></h2>
+              <p className="text-white/40 text-lg leading-relaxed">
                 Handpicked luxury spaces across Nigeria's most prestigious neighborhoods.
               </p>
             </div>
-            <button className="px-10 py-5 bg-black text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[#D4AF37] hover:text-black transition-all shadow-2xl">
+            <button className="px-10 py-5 bg-indigo-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all shadow-2xl pointer-events-auto">
               View All Suites
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Scrolling Pyramid Content */}
         <motion.div 
           style={{ y: pyramidY }}
           className="max-w-5xl mx-auto px-6 w-full space-y-16 pt-[40vh] pb-32"
         >
-          {/* Row 1: 4 items */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {listings.slice(0, 4).map((listing, i) => (
               <ApartmentCard key={i} {...listing} index={i} />
             ))}
           </div>
-
-          {/* Row 2: 3 items */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-[80%] mx-auto">
             {listings.slice(4, 7).map((listing, i) => (
               <ApartmentCard key={i + 4} {...listing} index={i} />
             ))}
           </div>
-
-          {/* Row 3: 2 items */}
           <div className="grid grid-cols-2 gap-6 max-w-[55%] mx-auto">
             {listings.slice(7, 9).map((listing, i) => (
               <ApartmentCard key={i + 7} {...listing} index={i} />
             ))}
           </div>
-
-          {/* Row 4: 1 item */}
           <div className="grid grid-cols-1 gap-6 max-w-[25%] mx-auto">
             {listings.slice(9, 10).map((listing, i) => (
               <ApartmentCard key={i + 9} {...listing} index={i} />
