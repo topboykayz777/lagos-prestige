@@ -10,7 +10,7 @@ import { MadeWithDyad } from "@/components/made-with-dyad";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white font-sans selection:bg-black selection:text-white">
+    <div className="min-h-screen bg-[#FAF7F2] font-sans selection:bg-[#8B4513] selection:text-white">
       <Navbar />
       
       <main>
@@ -19,18 +19,18 @@ const Index = () => {
         <FeaturedListings />
         
         {/* Call to Action Section */}
-        <section className="max-w-7xl mx-auto px-6 py-20">
-          <div className="relative h-[400px] rounded-[3rem] overflow-hidden flex items-center justify-center text-center px-6">
+        <section className="max-w-7xl mx-auto px-6 py-24">
+          <div className="relative h-[500px] rounded-[4rem] overflow-hidden flex items-center justify-center text-center px-6">
             <img 
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2000" 
-              alt="Host" 
-              className="absolute inset-0 w-full h-full object-cover brightness-50"
+              src="https://images.unsplash.com/photo-1618828665011-0abd973f7bb8?auto=format&fit=crop&q=80&w=2000" 
+              alt="Lagos Skyline" 
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
             />
-            <div className="relative z-10 max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Become a host.</h2>
-              <p className="text-white/80 mb-8 text-lg">Earn extra income and unlock new opportunities by sharing your space.</p>
-              <button className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-colors">
-                Learn More
+            <div className="relative z-10 max-w-3xl">
+              <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-none">Host with <br /> <span className="text-[#D4AF37]">Distinction.</span></h2>
+              <p className="text-white/70 mb-10 text-xl font-medium max-w-xl mx-auto">Join Nigeria's most exclusive network of luxury property owners.</p>
+              <button className="bg-[#D4AF37] text-[#2D1B08] px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all shadow-xl">
+                Start Hosting
               </button>
             </div>
           </div>
