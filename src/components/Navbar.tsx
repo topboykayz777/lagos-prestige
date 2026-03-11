@@ -1,33 +1,37 @@
 "use client";
 
 import React from 'react';
-import { Search, Menu, User, MapPin } from 'lucide-react';
+import { Search, Menu, User, ShieldCheck } from 'lucide-react';
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-6">
-      <div className="w-full max-w-7xl flex items-center justify-between px-6 py-3 bg-[#FAF7F2]/80 backdrop-blur-2xl border border-white/20 rounded-full shadow-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-[#8B4513] rounded-full flex items-center justify-center">
-            <MapPin className="text-white w-5 h-5" />
+    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-8">
+      <div className="w-full max-w-7xl flex items-center justify-between px-8 py-4 bg-black/90 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-[#D4AF37] rounded-lg rotate-45 flex items-center justify-center">
+            <ShieldCheck className="text-black w-5 h-5 -rotate-45" />
           </div>
-          <span className="font-black text-2xl tracking-tighter text-[#2D1B08]">ILE.</span>
+          <span className="font-black text-2xl tracking-tighter text-white">ILE<span className="text-[#D4AF37]">.</span></span>
         </div>
 
-        <div className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-[#2D1B08]/60">
-          <a href="#" className="hover:text-[#8B4513] transition-colors">The Island</a>
-          <a href="#" className="hover:text-[#8B4513] transition-colors">The Mainland</a>
-          <a href="#" className="hover:text-[#8B4513] transition-colors">Abuja Luxury</a>
+        <div className="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-white/50">
+          <a href="#" className="hover:text-[#D4AF37] transition-colors">Collections</a>
+          <a href="#" className="hover:text-[#D4AF37] transition-colors">Investment</a>
+          <a href="#" className="hover:text-[#D4AF37] transition-colors">Concierge</a>
+          <a href="#" className="hover:text-[#D4AF37] transition-colors">Support</a>
         </div>
 
-        <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-[#8B4513]/10 rounded-full transition-colors">
-            <Search className="w-5 h-5 text-[#2D1B08]" />
+        <div className="flex items-center gap-6">
+          <button className="hidden sm:block text-[10px] font-black uppercase tracking-widest text-[#D4AF37] border border-[#D4AF37]/30 px-4 py-2 rounded-lg hover:bg-[#D4AF37] hover:text-black transition-all">
+            List Property
           </button>
-          <div className="flex items-center gap-2 p-1 pl-3 border border-[#2D1B08]/10 rounded-full hover:shadow-md transition-shadow cursor-pointer bg-white">
-            <Menu className="w-4 h-4 text-[#2D1B08]" />
-            <div className="w-8 h-8 bg-[#2E4635] rounded-full flex items-center justify-center">
-              <User className="w-4 h-4 text-white" />
+          <div className="flex items-center gap-3 cursor-pointer group">
+            <div className="text-right hidden sm:block">
+              <p className="text-[10px] font-black text-white/40 uppercase">Account</p>
+              <p className="text-xs font-bold text-white">Sign In</p>
+            </div>
+            <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-[#D4AF37] transition-colors">
+              <Menu className="w-5 h-5 text-white group-hover:text-black" />
             </div>
           </div>
         </div>

@@ -2,65 +2,75 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Search, Calendar, MapPin } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <section className="relative h-[95vh] min-h-[700px] flex items-center justify-center px-6 pt-20">
-      <div className="absolute inset-0 overflow-hidden rounded-[3rem] m-4">
+    <section className="relative h-screen flex items-center px-6 pt-20 bg-black overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
         <img 
-          src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&q=80&w=2000" 
-          alt="Modern Lekki Villa" 
-          className="w-full h-full object-cover brightness-[0.65]"
+          src="https://images.unsplash.com/photo-1600607687940-4ad236f759ca?auto=format&fit=crop&q=80&w=2000" 
+          alt="Luxury Penthouse" 
+          className="w-full h-full object-cover opacity-60 scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#2D1B08]/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
       </div>
       
-      <div className="relative z-10 text-center max-w-5xl">
+      <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-6 inline-block px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          <span className="text-white text-xs font-bold uppercase tracking-[0.3em]">Premium Shortlets in Nigeria</span>
+          <div className="flex items-center gap-4 mb-8">
+            <span className="h-[1px] w-12 bg-[#D4AF37]" />
+            <span className="text-[#D4AF37] text-xs font-black uppercase tracking-[0.4em]">The Gold Standard of Gidi</span>
+          </div>
+          
+          <h1 className="text-7xl md:text-9xl font-black text-white mb-8 tracking-tighter leading-[0.85]">
+            Beyond <br /> 
+            <span className="text-transparent stroke-white stroke-1" style={{ WebkitTextStroke: '1px white' }}>Living.</span>
+          </h1>
+          
+          <p className="text-white/60 text-xl max-w-md mb-12 leading-relaxed font-medium">
+            Curated luxury shortlets for the discerning traveler. Experience the pinnacle of Nigerian hospitality.
+          </p>
+          
+          <div className="flex flex-wrap gap-6">
+            <button className="bg-[#D4AF37] text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white transition-all flex items-center gap-3 group">
+              Explore Suites
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </button>
+            <button className="flex items-center gap-4 text-white group">
+              <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                <Play className="w-5 h-5 fill-current" />
+              </div>
+              <span className="text-xs font-black uppercase tracking-widest">Virtual Tour</span>
+            </button>
+          </div>
         </motion.div>
-        
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-6xl md:text-8xl font-black text-white mb-10 tracking-tighter leading-[0.9]"
-        >
-          Experience <br /> <span className="text-[#D4AF37]">Modern Gidi.</span>
-        </motion.h1>
-        
+
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="bg-white p-3 rounded-[2.5rem] shadow-2xl flex flex-col md:flex-row items-center gap-2 max-w-4xl mx-auto"
+          transition={{ duration: 1.2, delay: 0.2 }}
+          className="hidden lg:block relative"
         >
-          <div className="flex-1 flex items-center gap-4 px-6 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
-            <MapPin className="w-6 h-6 text-[#8B4513]" />
-            <div className="text-left">
-              <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Location</p>
-              <input type="text" placeholder="Lekki, Ikoyi, Victoria Island..." className="bg-transparent outline-none text-base font-bold text-[#2D1B08] w-full placeholder:text-gray-300" />
-            </div>
+          <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border-8 border-white/5 shadow-2xl">
+            <img 
+              src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1000" 
+              alt="Interior" 
+              className="w-full h-full object-cover"
+            />
           </div>
-          
-          <div className="flex-1 flex items-center gap-4 px-6 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
-            <Calendar className="w-6 h-6 text-[#8B4513]" />
-            <div className="text-left">
-              <p className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Stay Period</p>
-              <p className="text-base font-bold text-[#2D1B08]">Select dates</p>
+          <div className="absolute -bottom-10 -left-10 bg-white p-8 rounded-[2rem] shadow-2xl max-w-[280px]">
+            <div className="flex gap-1 mb-4">
+              {[1,2,3,4,5].map(i => <div key={i} className="w-4 h-1 bg-[#D4AF37] rounded-full" />)}
             </div>
+            <p className="text-black font-black text-lg leading-tight mb-2">"The best stay I've had in Lagos, period."</p>
+            <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">— Tunde O., CEO</p>
           </div>
-          
-          <button className="bg-[#2D1B08] text-white px-10 py-5 rounded-[2rem] font-black uppercase tracking-widest hover:bg-[#8B4513] transition-all w-full md:w-auto flex items-center justify-center gap-2">
-            <Search className="w-5 h-5" />
-            <span>Search</span>
-          </button>
         </motion.div>
       </div>
     </section>
