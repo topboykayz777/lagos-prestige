@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const AboutUs = () => {
   return (
-    <section className="relative py-24 overflow-hidden bg-white">
+    <section className="relative py-32 overflow-hidden bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
           <motion.div
@@ -14,27 +14,27 @@ const AboutUs = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="inline-block px-4 py-1 bg-[#F4F7F5] rounded-full mb-8">
-              <span className="text-[#7A9482] text-[10px] font-black uppercase tracking-widest">Our Heritage</span>
+            <div className="inline-block px-5 py-1.5 bg-[#FAF9F6] border border-[#C5A059]/20 rounded-full mb-8">
+              <span className="text-[#C5A059] text-[10px] font-black uppercase tracking-widest">Our Heritage</span>
             </div>
-            <h2 className="text-6xl md:text-7xl font-black tracking-tighter text-[#2D3A32] mb-10 leading-[0.9]">
+            <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-[#1A241E] mb-10 leading-[0.85]">
               Redefining <br /> 
-              <span className="text-transparent" style={{ WebkitTextStroke: '1px #7A9482' }}>Hospitality.</span>
+              <span className="text-transparent" style={{ WebkitTextStroke: '1.5px #C5A059' }}>Hospitality.</span>
             </h2>
-            <div className="space-y-6 text-[#2D3A32]/60 text-lg leading-relaxed font-medium">
+            <div className="space-y-6 text-[#1A241E]/60 text-xl leading-relaxed font-medium">
               <p>
                 Founded in the heart of Lagos, ILE was born from a simple observation: the discerning traveler deserves more than just a room; they deserve a sanctuary.
               </p>
             </div>
             
-            <div className="mt-12 grid grid-cols-2 gap-12">
+            <div className="mt-16 grid grid-cols-2 gap-12">
               <div>
-                <h4 className="text-4xl font-black text-[#2D3A32] mb-2">500+</h4>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#7A9482]">Curated Suites</p>
+                <h4 className="text-5xl font-black text-[#1A241E] mb-2">500+</h4>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#C5A059]">Curated Suites</p>
               </div>
               <div>
-                <h4 className="text-4xl font-black text-[#2D3A32] mb-2">12k</h4>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#7A9482]">Happy Guests</p>
+                <h4 className="text-5xl font-black text-[#1A241E] mb-2">12k</h4>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#C5A059]">Happy Guests</p>
               </div>
             </div>
           </motion.div>
@@ -46,15 +46,15 @@ const AboutUs = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative"
           >
-            <div className="aspect-[4/5] rounded-[4rem] overflow-hidden shadow-2xl border border-sage-100">
+            <div className="aspect-[4/5] rounded-[4rem] overflow-hidden shadow-2xl border border-[#C5A059]/10">
               <img 
                 src="https://images.unsplash.com/photo-1600607687940-4ad236f759ca?auto=format&fit=crop&q=80&w=1000" 
                 alt="Luxury Interior" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-8 -left-8 w-56 h-56 bg-[#7A9482] rounded-[3rem] p-8 flex flex-col justify-end shadow-xl hidden md:flex">
-              <p className="text-white font-black text-xl leading-tight">The New Standard of Gidi.</p>
+            <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-[#1A241E] rounded-[3.5rem] p-10 flex flex-col justify-end shadow-2xl hidden md:flex border border-[#C5A059]/20">
+              <p className="text-white font-black text-2xl leading-tight">The New Standard of <span className="text-[#C5A059]">Gidi.</span></p>
             </div>
           </motion.div>
         </div>
