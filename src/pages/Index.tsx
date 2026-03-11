@@ -1,14 +1,15 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import CategoryFilter from '@/components/CategoryFilter';
 import FeaturedListings from '@/components/FeaturedListings';
 import Features from '@/components/Features';
+import AboutUs from '@/components/AboutUs';
 import Footer from '@/components/Footer';
 import { MadeWithDyad } from "@/components/made-with-dyad";
+import { motion } from 'framer-motion';
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <main>
         <Hero />
         <CategoryFilter />
+        <AboutUs />
         <Features />
         <FeaturedListings />
         
