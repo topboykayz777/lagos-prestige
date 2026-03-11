@@ -3,8 +3,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Hero = () => {
+  const handleExplore = () => {
+    toast.info("Opening our exclusive collections...");
+    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative h-screen flex items-center justify-center px-6 overflow-hidden bg-[#FAF9F6]">
       {/* Full Background Image with Delay */}
@@ -15,11 +21,11 @@ const Hero = () => {
         className="absolute inset-0 z-0"
       >
         <img 
-          src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80&w=2000" 
-          alt="Luxury Interior" 
+          src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=2000" 
+          alt="Luxury Modern Apartment" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F6]/90 via-[#FAF9F6]/40 to-[#FAF9F6]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F6]/80 via-[#FAF9F6]/30 to-[#FAF9F6]" />
       </motion.div>
       
       <div className="relative z-10 max-w-4xl w-full text-center">
@@ -45,7 +51,10 @@ const Hero = () => {
             Experience the pinnacle of Nigerian hospitality.
           </p>
           
-          <button className="bg-[#1A241E] text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest hover:bg-[#C5A059] transition-all flex items-center gap-3 group shadow-2xl shadow-black/20">
+          <button 
+            onClick={handleExplore}
+            className="bg-[#1A241E] text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest hover:bg-[#C5A059] active:scale-95 transition-all flex items-center gap-3 group shadow-2xl shadow-black/20"
+          >
             Explore Suites
             <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform text-[#C5A059]" />
           </button>

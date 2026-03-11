@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ApartmentCard from './ApartmentCard';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from 'sonner';
 
 const listings = Array.from({ length: 20 }).map((_, i) => ({
   image: `https://images.unsplash.com/photo-${1600000000000 + i * 100000}?auto=format&fit=crop&q=80&w=800`,
@@ -15,10 +16,18 @@ const listings = Array.from({ length: 20 }).map((_, i) => ({
 
 const FeaturedListings = () => {
   return (
-    <section className="py-32 relative overflow-hidden bg-[#008080]">
-      {/* Shiny Teal Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#008080] via-[#00A8A8] to-[#006666]" />
-      <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
+    <section id="collections" className="py-32 relative overflow-hidden bg-[#050505]">
+      {/* Gold Shiny Black Glitter Effect */}
+      <div className="absolute inset-0 bg-[#050505]" />
+      <div 
+        className="absolute inset-0 opacity-30 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, #C5A059 1px, transparent 0)`,
+          backgroundSize: '40px 40px',
+          maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)'
+        }}
+      />
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#C5A059]/10 via-transparent to-[#C5A059]/5 pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
@@ -31,13 +40,16 @@ const FeaturedListings = () => {
               The <span className="text-[#C5A059]">Gallery.</span>
             </h2>
           </div>
-          <button className="px-10 py-5 bg-white text-[#008080] rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[#C5A059] hover:text-white transition-all shadow-2xl">
+          <button 
+            onClick={() => toast.info("Loading full catalog...")}
+            className="px-10 py-5 bg-white text-[#1A241E] rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[#C5A059] hover:text-white active:scale-95 transition-all shadow-2xl"
+          >
             View All 500+
           </button>
         </div>
 
         {/* Glassmorphism Scroll Container */}
-        <div className="relative rounded-[3rem] border border-white/20 bg-white/10 backdrop-blur-xl p-10 shadow-2xl overflow-hidden">
+        <div className="relative rounded-[3rem] border border-white/10 bg-white/5 backdrop-blur-2xl p-10 shadow-2xl overflow-hidden">
           <ScrollArea className="h-[650px] w-full pr-6">
             <div className="space-y-16 pb-12">
               {/* Row 1: 6 items */}
@@ -78,7 +90,7 @@ const FeaturedListings = () => {
           </ScrollArea>
           
           {/* Subtle Fade at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#008080]/40 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050505]/80 to-transparent pointer-events-none" />
         </div>
       </div>
     </section>

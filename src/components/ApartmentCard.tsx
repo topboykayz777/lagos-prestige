@@ -1,8 +1,9 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Star, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 interface ApartmentProps {
   image: string;
@@ -14,6 +15,18 @@ interface ApartmentProps {
 }
 
 const ApartmentCard = ({ image, title, location, price, rating, index = 0 }: ApartmentProps) => {
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsLiked(!isLiked);
+    toast.success(isLiked ? "Removed from favorites" : "Added to favorites");
+  };
+
+  const handleCardClick = () => {
+    toast.info(`Viewing details for ${title}`);
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -21,6 +34,7 @@ const ApartmentCard = ({ image, title, location, price, rating, index = 0 }: Apa
       viewport={{ once: true }}
       transition={{ delay: (index % 4) * 0.05, duration: 0.6 }}
       whileHover={{ y: -8 }}
+      onClick={handleCardClick}
       className="group cursor-pointer w-full"
     >
       <div className="relative aspect-[4/5] overflow-hidden rounded-3xl mb-4 shadow-xl bg-white/5">
@@ -30,8 +44,13 @@ const ApartmentCard = ({ image, title, location, price, rating, index = 0 }: Apa
           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
           loading="lazy"
         />
-        <button className="absolute top-4 right-4 p-2.5 bg-white/90 backdrop-blur-md rounded-full hover:bg-[#C5A059] hover:text-white transition-all shadow-lg">
-          <Heart className="w-4 h-4" />
+        <button 
+          onClick={handleLike}
+          className={`absolute top-4 right-4 p-2.5 backdrop-blur-md rounded-full transition-all shadow-lg ${
+            isLiked ? 'bg-[#C5A059] text-white' : 'bg-white/90 text-[#1A241E] hover:bg-[#C5A059] hover:text-white'
+          }`}
+        >
+          <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
         </button>
         <div className="absolute bottom-4 left-4 px-3 py-1.5 bg-white/90 backdrop-blur-md rounded-xl flex items-center gap-1.5 shadow-lg">
           <Star className="w-3 h-3 fill-[#C5A059] text-[#C5A059]" />
