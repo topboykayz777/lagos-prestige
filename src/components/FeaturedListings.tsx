@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import ApartmentCard from './ApartmentCard';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const listings = Array.from({ length: 20 }).map((_, i) => ({
   image: `https://images.unsplash.com/photo-${1600000000000 + i * 100000}?auto=format&fit=crop&q=80&w=800`,
@@ -13,83 +14,68 @@ const listings = Array.from({ length: 20 }).map((_, i) => ({
 }));
 
 const FeaturedListings = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const pyramidY = useTransform(scrollYProgress, [0, 1], ["5%", "-85%"]);
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
-
   return (
-    <section ref={containerRef} className="relative h-[500vh] bg-[#F8F9F8] overflow-hidden">
-      {/* Clean Aesthetic Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(16,185,129,0.03)_0%,_transparent_50%)]" />
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-900/5 blur-[120px] rounded-full" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-emerald-900/5 blur-[120px] rounded-full" />
-      </div>
-
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
-        {/* Fixed Header */}
-        <motion.div 
-          style={{ opacity: headerOpacity }}
-          className="absolute top-32 left-0 right-0 z-20 pointer-events-none"
-        >
-          <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-8">
-            <div className="max-w-xl">
-              <h2 className="text-6xl font-black tracking-tighter text-emerald-950 mb-4 leading-none">Curated <br /> <span className="text-emerald-600">Collections.</span></h2>
-              <p className="text-emerald-900/40 text-lg leading-relaxed font-medium">
-                Twenty handpicked sanctuaries across Nigeria's most prestigious postcodes.
-              </p>
+    <section className="py-24 bg-[#FAF9F6] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-12">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-4 mb-4">
+              <span className="h-[1px] w-8 bg-[#7A9482]" />
+              <span className="text-[#7A9482] text-[10px] font-black uppercase tracking-[0.4em]">Curated Collections</span>
             </div>
-            <button className="px-10 py-5 bg-emerald-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-emerald-800 transition-all shadow-xl pointer-events-auto">
-              View All Suites
-            </button>
+            <h2 className="text-5xl font-black tracking-tighter text-[#2D3A32] leading-none">
+              The <span className="text-[#7A9482]">Gallery.</span>
+            </h2>
           </div>
-        </motion.div>
+          <button className="px-8 py-4 bg-[#7A9482] text-white rounded-xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[#6B8372] transition-all shadow-md">
+            View All 500+
+          </button>
+        </div>
 
-        {/* Scrolling Pyramid Content (6-5-4-3-2 = 20 items) */}
-        <motion.div 
-          style={{ y: pyramidY }}
-          className="max-w-7xl mx-auto px-6 w-full space-y-20 pt-[45vh] pb-32"
-        >
-          {/* Row 1: 6 items */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {listings.slice(0, 6).map((listing, i) => (
-              <ApartmentCard key={i} {...listing} index={i} />
-            ))}
-          </div>
+        {/* Scrollable Container for the Pyramid Grid */}
+        <div className="relative rounded-[2.5rem] border border-sage-100 bg-white/50 backdrop-blur-sm p-8 shadow-inner overflow-hidden">
+          <ScrollArea className="h-[600px] w-full pr-4">
+            <div className="space-y-12 pb-12">
+              {/* Row 1: 6 items */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {listings.slice(0, 6).map((listing, i) => (
+                  <ApartmentCard key={i} {...listing} index={i} />
+                ))}
+              </div>
 
-          {/* Row 2: 5 items */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-[90%] mx-auto">
-            {listings.slice(6, 11).map((listing, i) => (
-              <ApartmentCard key={i + 6} {...listing} index={i} />
-            ))}
-          </div>
+              {/* Row 2: 5 items */}
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-[90%] mx-auto">
+                {listings.slice(6, 11).map((listing, i) => (
+                  <ApartmentCard key={i + 6} {...listing} index={i} />
+                ))}
+              </div>
 
-          {/* Row 3: 4 items */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-[75%] mx-auto">
-            {listings.slice(11, 15).map((listing, i) => (
-              <ApartmentCard key={i + 11} {...listing} index={i} />
-            ))}
-          </div>
+              {/* Row 3: 4 items */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-[75%] mx-auto">
+                {listings.slice(11, 15).map((listing, i) => (
+                  <ApartmentCard key={i + 11} {...listing} index={i} />
+                ))}
+              </div>
 
-          {/* Row 4: 3 items */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-[55%] mx-auto">
-            {listings.slice(15, 18).map((listing, i) => (
-              <ApartmentCard key={i + 15} {...listing} index={i} />
-            ))}
-          </div>
+              {/* Row 4: 3 items */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-[55%] mx-auto">
+                {listings.slice(15, 18).map((listing, i) => (
+                  <ApartmentCard key={i + 15} {...listing} index={i} />
+                ))}
+              </div>
 
-          {/* Row 5: 2 items */}
-          <div className="grid grid-cols-2 gap-4 max-w-[35%] mx-auto">
-            {listings.slice(18, 20).map((listing, i) => (
-              <ApartmentCard key={i + 18} {...listing} index={i} />
-            ))}
-          </div>
-        </motion.div>
+              {/* Row 5: 2 items */}
+              <div className="grid grid-cols-2 gap-4 max-w-[35%] mx-auto">
+                {listings.slice(18, 20).map((listing, i) => (
+                  <ApartmentCard key={i + 18} {...listing} index={i} />
+                ))}
+              </div>
+            </div>
+          </ScrollArea>
+          
+          {/* Subtle Fade at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/80 to-transparent pointer-events-none" />
+        </div>
       </div>
     </section>
   );
