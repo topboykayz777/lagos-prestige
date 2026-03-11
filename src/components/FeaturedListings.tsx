@@ -20,28 +20,28 @@ const FeaturedListings = () => {
       {/* Gold Shiny Black Glitter Effect */}
       <div className="absolute inset-0 bg-[#050505]" />
       <div 
-        className="absolute inset-0 opacity-30 pointer-events-none"
+        className="absolute inset-0 opacity-40 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, #C5A059 1px, transparent 0)`,
-          backgroundSize: '40px 40px',
-          maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)'
+          backgroundImage: `radial-gradient(circle at 2px 2px, #C5A059 1.5px, transparent 0)`,
+          backgroundSize: '32px 32px',
+          maskImage: 'radial-gradient(ellipse at center, black, transparent 90%)'
         }}
       />
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#C5A059]/10 via-transparent to-[#C5A059]/5 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#C5A059]/15 via-transparent to-[#C5A059]/5 pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
           <div className="max-w-xl">
             <div className="flex items-center gap-4 mb-4">
               <span className="h-[1px] w-8 bg-[#C5A059]" />
-              <span className="text-[#C5A059] text-[10px] font-black uppercase tracking-[0.4em]">Curated Collections</span>
+              <span className="text-[#C5A059] text-[10px] font-black uppercase tracking-[0.4em]">My Private Collection</span>
             </div>
             <h2 className="text-6xl font-black tracking-tighter text-white leading-none">
               The <span className="text-[#C5A059]">Gallery.</span>
             </h2>
           </div>
           <button 
-            onClick={() => toast.info("Loading full catalog...")}
+            onClick={() => toast.info("Opening full catalog...")}
             className="px-10 py-5 bg-white text-[#1A241E] rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[#C5A059] hover:text-white active:scale-95 transition-all shadow-2xl"
           >
             View All 500+
