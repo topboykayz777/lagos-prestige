@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Menu, Home, Sparkles, ChevronDown, Map, Shield, Zap, MessageSquare } from 'lucide-react';
+import { Menu, ChevronDown, Map, Shield, Zap, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -28,26 +29,11 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 p-6 md:p-10 flex justify-center"
+      className="fixed top-0 left-0 right-0 z-50 p-6 md:p-8 flex justify-center"
     >
       <div className="w-full max-w-7xl flex items-center justify-between bg-transparent">
-        {/* Logo */}
-        <div 
-          className="flex items-center gap-4 cursor-pointer group" 
-          onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
-        >
-          <div className="relative">
-            <div className="w-12 h-12 bg-[#C5A059] rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(197,160,89,0.4)] group-hover:scale-110 transition-transform duration-500">
-              <Home className="text-[#0A1128] w-6 h-6" />
-            </div>
-            <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <Sparkles className="text-[#C5A059] w-3.5 h-3.5" />
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-medium text-2xl tracking-tighter leading-none text-white group-hover:text-[#C5A059] transition-colors">LAGOS PRESTIGE</span>
-            <span className="text-[10px] font-bold tracking-[0.4em] text-[#C5A059] uppercase">Luxury Shortlets</span>
-          </div>
+        <div onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          <Logo />
         </div>
 
         {/* Desktop Hover Dropdown */}
@@ -96,7 +82,6 @@ const Navbar = () => {
             Book Now
           </button>
           
-          {/* Mobile Menu Button - Hidden on Desktop */}
           <div 
             onClick={() => toast.info("Opening Mobile Menu")}
             className="lg:hidden w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center hover:bg-[#C5A059] transition-all cursor-pointer group border border-white/10"
