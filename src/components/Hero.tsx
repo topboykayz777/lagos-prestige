@@ -12,6 +12,20 @@ const Hero = () => {
     toast.info("Exploring our premium collection...");
   };
 
+  // Animation variants for staggered side entry
+  const itemVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: (custom: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: custom * 0.2,
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    })
+  };
+
   return (
     <section className="relative h-[80vh] min-h-[550px] flex flex-col items-center pt-12 md:pt-16 px-6 overflow-hidden bg-navy">
       <motion.div 
@@ -29,53 +43,72 @@ const Hero = () => {
       </motion.div>
       
       <div className="relative z-10 max-w-3xl w-full text-center mt-12 md:mt-16">
+        {/* Premium Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          custom={1}
+          initial="hidden"
+          animate="visible"
+          variants={itemVariants}
+          className="inline-flex items-center gap-2.5 px-4 py-1 bg-white/5 border border-[#C5A059]/20 rounded-full mb-6 backdrop-blur-xl shadow-sm group cursor-default"
+          whileHover={{ scale: 1.02, borderColor: 'rgba(197, 160, 89, 0.4)' }}
         >
-          {/* Refined Premium Badge */}
-          <motion.div 
-            className="inline-flex items-center gap-2.5 px-4 py-1 bg-white/5 border border-[#C5A059]/20 rounded-full mb-6 backdrop-blur-xl shadow-sm group cursor-default"
-            whileHover={{ scale: 1.02, borderColor: 'rgba(197, 160, 89, 0.4)' }}
+          <div className="w-1 h-1 bg-[#C5A059] rounded-full animate-pulse" />
+          <span className="text-[#C5A059] text-[8px] font-black uppercase tracking-[0.3em]">Premium Stays in Lagos</span>
+          <Sparkles className="w-2 h-2 text-[#C5A059]/60 group-hover:text-[#C5A059] transition-colors" />
+        </motion.div>
+        
+        {/* Main Heading */}
+        <motion.h1 
+          custom={2}
+          initial="hidden"
+          animate="visible"
+          variants={itemVariants}
+          className="text-3xl md:text-5xl font-serif italic text-offwhite mb-4 tracking-tight leading-[1.1]"
+        >
+          Your Perfect Stay <br /> 
+          <span className="text-[#C5A059] not-italic font-sans font-medium tracking-tighter">In Lagos.</span>
+        </motion.h1>
+        
+        {/* Description Paragraph */}
+        <motion.p 
+          custom={3}
+          initial="hidden"
+          animate="visible"
+          variants={itemVariants}
+          className="text-offwhite/60 text-[13px] md:text-sm max-w-md mx-auto mb-8 leading-relaxed font-medium"
+        >
+          Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, Victoria Island, and Lekki Phase 1.
+        </motion.p>
+        
+        {/* Action Buttons */}
+        <motion.div 
+          custom={4}
+          initial="hidden"
+          animate="visible"
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3"
+        >
+          <button 
+            onClick={handleBook}
+            className="group relative bg-[#C5A059] text-navy px-7 py-3.5 rounded-xl font-bold uppercase tracking-widest text-[9px] overflow-hidden transition-all hover:shadow-lg active:scale-95"
           >
-            <div className="w-1 h-1 bg-[#C5A059] rounded-full animate-pulse" />
-            <span className="text-[#C5A059] text-[8px] font-black uppercase tracking-[0.3em]">Premium Stays in Lagos</span>
-            <Sparkles className="w-2 h-2 text-[#C5A059]/60 group-hover:text-[#C5A059] transition-colors" />
-          </motion.div>
-          
-          <h1 className="text-3xl md:text-5xl font-serif italic text-offwhite mb-4 tracking-tight leading-[1.1]">
-            Your Perfect Stay <br /> 
-            <span className="text-[#C5A059] not-italic font-sans font-medium tracking-tighter">In Lagos.</span>
-          </h1>
-          
-          <p className="text-offwhite/60 text-[13px] md:text-sm max-w-md mx-auto mb-8 leading-relaxed font-medium">
-            Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, Victoria Island, and Lekki Phase 1.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button 
-              onClick={handleBook}
-              className="group relative bg-[#C5A059] text-navy px-7 py-3.5 rounded-xl font-bold uppercase tracking-widest text-[9px] overflow-hidden transition-all hover:shadow-lg active:scale-95"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Explore Apartments
-                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-              </span>
-              <motion.div 
-                className="absolute inset-0 bg-offwhite"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </button>
-            <button 
-              onClick={() => toast.info("Opening our private gallery...")}
-              className="px-7 py-3.5 rounded-xl font-bold uppercase tracking-widest text-[9px] text-offwhite border border-offwhite/10 hover:bg-white/5 hover:border-offwhite/20 transition-all backdrop-blur-sm"
-            >
-              View Gallery
-            </button>
-          </div>
+            <span className="relative z-10 flex items-center gap-2">
+              Explore Apartments
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            </span>
+            <motion.div 
+              className="absolute inset-0 bg-offwhite"
+              initial={{ x: '-100%' }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          </button>
+          <button 
+            onClick={() => toast.info("Opening our private gallery...")}
+            className="px-7 py-3.5 rounded-xl font-bold uppercase tracking-widest text-[9px] text-offwhite border border-offwhite/10 hover:bg-white/5 hover:border-offwhite/20 transition-all backdrop-blur-sm"
+          >
+            View Gallery
+          </button>
         </motion.div>
       </div>
     </section>
