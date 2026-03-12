@@ -1,15 +1,26 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, ChevronDown, Map, Shield, Zap, MessageSquare, X, ArrowRight, Compass, UserCheck, Tag, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 
 const Navbar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const menuItems = [
     { path: '/rooms', label: 'Our Rooms', icon: Map, desc: 'Explore our curated collection of premium suites' },
@@ -54,9 +65,9 @@ const Navbar = () => {
             <Logo />
           </Link>
 
-          {/* Desktop Mega Menu Trigger */}
+          {/* Desktop Mega Menu Trigger - Only on Homepage and when NOT scrolled */}
           <div 
-            className="hidden lg:block" 
+            className={`hidden lg:block transition-all duration-500 ${(!isHomePage || isScrolled) ? 'opacity-0 pointer-events-none translate-y-[-20px]' : 'opacity-100 translate-y-0'}`}
             onMouseEnter={() => setIsHovered(true)} 
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -93,17 +104,6 @@ const Navbar = () => {
                         </div>
                       </button>
                     ))}
-                  </div>
-                  
-                  <div className="mt-10 pt-10 border-t border-border flex justify-between items-center">
-                    <div className="flex items-center gap-4">
-                      <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground/20">Lagos Prestige Experience</p>
-                    </div>
-                    <div className="flex gap-8">
-                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary cursor-pointer hover:text-foreground transition-colors">Virtual Tour</span>
-                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary cursor-pointer hover:text-foreground transition-colors">Private Gallery</span>
-                    </div>
                   </div>
                 </motion.div>
               )}
@@ -167,20 +167,6 @@ const Navbar = () => {
                     </div>
                   </motion.button>
                 ))}
-              </div>
-
-              <div className="mt-auto pt-8">
-                <button 
-                  onClick={() => handleNavigation('/contact')}
-                  className="w-full py-7 bg-primary text-background rounded-[2.5rem] font-black uppercase tracking-[0.2em] text-sm shadow-2xl active:scale-95 transition-transform"
-                >
-                  Book Your Stay
-                </button>
-                <div className="flex justify-center gap-8 mt-10">
-                  <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                  <p className="text-[10px] font-black uppercase tracking-[0.5em] text-foreground/20">Lagos Prestige © 2026</p>
-                  <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                </div>
               </div>
             </div>
           </motion.div>

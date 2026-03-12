@@ -7,7 +7,7 @@ import BookingBar from '@/components/BookingBar';
 import FeaturedListings from '@/components/FeaturedListings';
 import Amenities from '@/components/Amenities';
 import Testimonials from '@/components/Testimonials';
-import HowItWorks from '@/components/HowItWorks';
+import AboutUs from '@/components/AboutUs';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { MadeWithDyad } from "@/components/made-with-dyad";
@@ -23,7 +23,7 @@ const Index = () => {
         <FeaturedListings />
         <Amenities />
         <Testimonials />
-        <HowItWorks />
+        <AboutUs />
         <Contact />
       </main>
       

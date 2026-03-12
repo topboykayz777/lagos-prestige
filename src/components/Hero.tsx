@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
 const floatingRooms = [
@@ -26,24 +25,18 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleExplore = () => {
-    const element = document.getElementById('rooms');
-    element?.scrollIntoView({ behavior: 'smooth' });
-    toast.info("Exploring our premium rooms...");
-  };
-
   const darkImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
   const lightImage = "https://images.unsplash.com/photo-1600607687940-467f5b637a61?auto=format&fit=crop&q=80&w=2000";
 
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center px-6 overflow-hidden bg-background">
+    <section className="relative h-screen flex flex-col items-center justify-start pt-32 px-6 overflow-hidden bg-background">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
           <motion.div 
             key={theme}
             initial={{ opacity: 0 }}
-            animate={{ opacity: theme === 'dark' ? 0.2 : 0.35 }}
+            animate={{ opacity: theme === 'dark' ? 0.2 : 0.4 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5 }}
             className="absolute inset-0"
@@ -88,7 +81,7 @@ const Hero = () => {
         </AnimatePresence>
       </div>
       
-      {/* Central Content */}
+      {/* Central Content - Moved Upwards */}
       <div className="relative z-20 max-w-2xl w-full flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -96,30 +89,13 @@ const Hero = () => {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="flex flex-col items-center"
         >
-          <button 
-            onClick={handleExplore}
-            className="group bg-foreground text-background px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-xs transition-all hover:bg-primary hover:shadow-[0_0_30px_rgba(197,160,89,0.3)] active:scale-95 mb-6"
-          >
-            <span className="flex items-center gap-3">
-              Discover
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </button>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="flex flex-col items-center"
-          >
-            <h1 className="text-3xl md:text-4xl font-black text-foreground tracking-tighter uppercase mb-2">
-              Lagos <span className="text-primary">Prestige</span>
-            </h1>
-            <p className="text-foreground/60 text-sm md:text-base max-w-xs leading-relaxed font-medium">
-              A curated luxury short-let experience in the heart of Ikoyi.
-            </p>
-            <div className="w-12 h-[1px] bg-primary/30 mt-4" />
-          </motion.div>
+          <h1 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter uppercase mb-2">
+            Lagos <span className="text-primary">Prestige</span>
+          </h1>
+          <p className="text-foreground/60 text-sm md:text-base max-w-xs leading-relaxed font-medium">
+            A curated luxury short-let experience in the heart of Ikoyi.
+          </p>
+          <div className="w-12 h-[1px] bg-primary/30 mt-4" />
         </motion.div>
       </div>
     </section>

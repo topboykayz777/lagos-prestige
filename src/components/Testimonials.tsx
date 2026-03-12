@@ -1,70 +1,66 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const reviews = [
-  {
-    name: "Sarah Jenkins",
-    role: "Digital Nomad",
-    text: "The attention to detail is unlike anything I've seen in Lagos. From the fiber-optic internet to the private chef, everything was seamless.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    name: "Chidi Okoro",
-    role: "Business Executive",
-    text: "Lagos Prestige is my go-to for every business trip. The security is top-notch and the locations in Ikoyi are unbeatable.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    name: "Elena Rodriguez",
-    role: "Travel Blogger",
-    text: "A true sanctuary in the heart of the city. The interior design is world-class and the concierge service is incredibly responsive.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200"
-  }
+  { name: "Sarah Jenkins", text: "The attention to detail is unlike anything I've seen in Lagos. Seamless stay." },
+  { name: "Chidi Okoro", text: "Lagos Prestige is my go-to for every business trip. Top-notch security." },
+  { name: "Elena Rodriguez", text: "A true sanctuary in the heart of the city. World-class design." },
+  { name: "David Adeleke", text: "The private chef service was the highlight of my stay. Exceptional." },
+  { name: "Amina Bello", text: "Fastest internet I've experienced in Ikoyi. Perfect for remote work." },
+  { name: "John Smith", text: "The concierge team is incredibly responsive. Highly recommended." }
 ];
 
 const Testimonials = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % reviews.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Get 3 reviews at a time
+  const visibleReviews = [
+    reviews[index % reviews.length],
+    reviews[(index + 1) % reviews.length],
+    reviews[(index + 2) % reviews.length],
+  ];
+
   return (
-    <section id="journal" className="py-32 bg-background overflow-hidden">
+    <section id="journal" className="py-24 bg-background overflow-hidden border-y border-border/50">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col items-center text-center mb-20">
-          <div className="inline-block px-4 py-1 bg-primary/5 border border-primary/20 rounded-full mb-6">
-            <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em]">Guest Journal</span>
+        <div className="flex flex-col items-center text-center mb-16">
+          <div className="inline-block px-4 py-1 bg-primary/5 border border-primary/20 rounded-full mb-4">
+            <span className="text-primary text-[9px] font-black uppercase tracking-[0.4em]">Guest Journal</span>
           </div>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-none">
-            Stories from <br /> <span className="text-primary">Our Guests.</span>
+          <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-foreground leading-none">
+            What Our <span className="text-primary">Guests Say.</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.map((review, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2, duration: 0.8 }}
-              className="p-10 rounded-[3rem] bg-card border border-border shadow-sm hover:shadow-xl transition-all duration-500 group relative"
-            >
-              <Quote className="absolute top-8 right-8 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
-              
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-primary/20">
-                  <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <h4 className="font-black text-foreground text-lg leading-tight">{review.name}</h4>
-                  <p className="text-primary text-[10px] font-black uppercase tracking-widest">{review.role}</p>
-                </div>
-              </div>
-              
-              <p className="text-foreground/60 text-lg font-medium leading-relaxed italic">
-                "{review.text}"
-              </p>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-48">
+          <AnimatePresence mode="popLayout">
+            {visibleReviews.map((review, i) => (
+              <motion.div
+                key={`${review.name}-${index}-${i}`}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="p-8 rounded-[2.5rem] bg-card border border-border flex flex-col justify-center items-center text-center shadow-sm"
+              >
+                <p className="text-foreground/70 text-sm font-medium leading-relaxed italic mb-4">
+                  "{review.text}"
+                </p>
+                <h4 className="font-black text-primary text-[10px] uppercase tracking-widest">
+                  — {review.name}
+                </h4>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>
