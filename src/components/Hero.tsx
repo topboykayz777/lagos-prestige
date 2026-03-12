@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'mramer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 
