@@ -15,7 +15,6 @@ const Hero = () => {
     toast.info("Exploring our premium collection...");
   };
 
-  // Dramatic side animation variant
   const lineVariant = {
     hidden: { x: -300, opacity: 0 },
     visible: (i: number) => ({
@@ -29,19 +28,17 @@ const Hero = () => {
     })
   };
 
-  // Dark mode uses the original image, Light mode uses a new bright luxury shot
   const darkImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
   const lightImage = "https://images.unsplash.com/photo-1600607687940-467f5b637a61?auto=format&fit=crop&q=80&w=2000";
 
   return (
     <section className="relative h-screen flex flex-col items-center pt-28 md:pt-32 px-6 overflow-hidden bg-background">
-      {/* Background Images with Crossfade */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
           <motion.div 
             key={theme}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.25 }}
+            animate={{ opacity: theme === 'dark' ? 0.25 : 0.4 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5 }}
             className="absolute inset-0"
@@ -56,10 +53,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       </div>
       
-      {/* Centered Minimalist Content */}
       <div className="relative z-10 max-w-md w-full flex flex-col items-center text-center">
-        
-        {/* Line 1: Badge */}
         <motion.div
           custom={0}
           initial="hidden"
@@ -71,7 +65,6 @@ const Hero = () => {
           <Sparkles className="w-2 h-2 text-[#C5A059]/60" />
         </motion.div>
         
-        {/* Line 2: Small Title */}
         <motion.h1
           custom={1}
           initial="hidden"
@@ -82,7 +75,6 @@ const Hero = () => {
           Your Perfect Stay
         </motion.h1>
         
-        {/* Line 3: Main Brand Text */}
         <motion.h1
           custom={2}
           initial="hidden"
@@ -93,7 +85,6 @@ const Hero = () => {
           In Lagos.
         </motion.h1>
         
-        {/* Line 4: Description */}
         <motion.p
           custom={3}
           initial="hidden"
@@ -104,7 +95,6 @@ const Hero = () => {
           Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, VI, and Lekki.
         </motion.p>
         
-        {/* Line 5: Action Buttons */}
         <motion.div
           custom={4}
           initial="hidden"

@@ -2,88 +2,76 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import ApartmentCard from './ApartmentCard';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-const listings = [
-  {
-    image: "https://images.unsplash.com/photo-1600607687940-467f5b637a61?auto=format&fit=crop&q=80&w=800",
-    title: "The Azure Penthouse",
-    location: "Eko Atlantic, VI",
-    price: "₦150,000",
-    rating: "4.9"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800",
-    title: "Royal Garden Suite",
-    location: "Old Ikoyi, Lagos",
-    price: "₦120,000",
-    rating: "5.0"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800",
-    title: "Modern Lekki Loft",
-    location: "Lekki Phase 1",
-    price: "₦85,000",
-    rating: "4.8"
-  }
+const allApartments = [
+  { image: "https://images.unsplash.com/photo-1600607687940-467f5b637a61?auto=format&fit=crop&q=80&w=400", title: "Azure Penthouse", location: "Eko Atlantic, VI", price: "₦150k", rating: "4.9" },
+  { image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=400", title: "Royal Garden", location: "Old Ikoyi, Lagos", price: "₦120k", rating: "5.0" },
+  { image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=400", title: "Modern Loft", location: "Lekki Phase 1", price: "₦85k", rating: "4.8" },
+  { image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=400", title: "Skyline View", location: "Victoria Island", price: "₦110k", rating: "4.7" },
+  { image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80&w=400", title: "The Sanctuary", location: "Banana Island", price: "₦200k", rating: "5.0" },
+  { image: "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&q=80&w=400", title: "Urban Oasis", location: "Oniru, VI", price: "₦95k", rating: "4.6" },
+  { image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80&w=400", title: "Gold Coast", location: "Eko Atlantic", price: "₦140k", rating: "4.9" },
+  { image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=400", title: "Palm Suite", location: "Lekki Phase 1", price: "₦75k", rating: "4.5" },
+  { image: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&q=80&w=400", title: "The Zenith", location: "Ikoyi, Lagos", price: "₦180k", rating: "5.0" },
+  { image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80&w=400", title: "Harbor Light", location: "Victoria Island", price: "₦105k", rating: "4.7" },
+  { image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&q=80&w=400", title: "Ivory Tower", location: "Banana Island", price: "₦250k", rating: "5.0" },
+  { image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&q=80&w=400", title: "The Retreat", location: "Old Ikoyi", price: "₦130k", rating: "4.8" },
+  { image: "https://images.unsplash.com/photo-1600047509358-9dc75507daeb?auto=format&fit=crop&q=80&w=400", title: "Neon Loft", location: "Lekki Phase 1", price: "₦90k", rating: "4.6" },
+  { image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=400", title: "Ocean Breeze", location: "Eko Atlantic", price: "₦160k", rating: "4.9" },
+  { image: "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?auto=format&fit=crop&q=80&w=400", title: "The Manor", location: "Ikoyi, Lagos", price: "₦195k", rating: "5.0" },
 ];
 
 const FeaturedListings = () => {
-  const navigate = useNavigate();
+  // Pyramid rows: 5, 4, 3, 2, 1 = 15 items
+  const rows = [
+    allApartments.slice(0, 5),
+    allApartments.slice(5, 9),
+    allApartments.slice(9, 12),
+    allApartments.slice(12, 14),
+    allApartments.slice(14, 15),
+  ];
 
   return (
-    <section id="apartments" className="py-32 bg-background overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
-          <motion.div 
-            initial={{ x: -150, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ 
-              delay: 0.2, 
-              duration: 1.2, 
-              ease: [0.16, 1, 0.3, 1] 
-            }}
-            className="max-w-xl"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <span className="h-[1px] w-8 bg-primary" />
-              <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em]">Our Collection</span>
-            </div>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-none">
-              Featured <br /> <span className="text-primary">Apartments.</span>
-            </h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ x: 150, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ 
-              delay: 0.5, 
-              duration: 1.2, 
-              ease: [0.16, 1, 0.3, 1] 
-            }}
-            className="flex flex-col items-end gap-6"
-          >
-            <p className="text-foreground/40 text-lg max-w-xs font-medium leading-relaxed text-right">
-              Hand-picked spaces designed for comfort, style, and productivity.
-            </p>
-            <button 
-              onClick={() => navigate('/apartments')}
-              className="text-primary font-black uppercase tracking-[0.3em] text-[10px] flex items-center gap-3 group"
-            >
-              View All Suites
-              <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all" />
-            </button>
-          </motion.div>
+    <section id="apartments" className="py-24 bg-background">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="mb-12 text-center">
+          <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-4 block">The Collection</span>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-foreground leading-none">
+            Explore Our <span className="text-primary">Suites.</span>
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {listings.map((item, i) => (
-            <ApartmentCard key={i} {...item} index={i} />
-          ))}
+        {/* Shiny Teal Scrollable Section */}
+        <div className="relative rounded-[3rem] overflow-hidden bg-gradient-to-br from-[#004D4D] via-[#006064] to-[#004D4D] p-1 shadow-[0_30px_100px_rgba(0,77,77,0.3)] border border-white/10">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
+          
+          <ScrollArea className="h-[500px] w-full rounded-[2.8rem] bg-black/20 backdrop-blur-sm p-8 md:p-12">
+            <div className="flex flex-col gap-8 items-center">
+              {rows.map((row, rowIndex) => (
+                <div 
+                  key={rowIndex} 
+                  className="flex flex-wrap justify-center gap-4 md:gap-8 w-full"
+                >
+                  {row.map((apt, i) => (
+                    <ApartmentCard 
+                      key={apt.title} 
+                      {...apt} 
+                      index={rowIndex * 5 + i} 
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+            
+            {/* Bottom Fade for Scroll Hint */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#004D4D]/80 to-transparent pointer-events-none" />
+          </ScrollArea>
+        </div>
+        
+        <div className="mt-10 flex justify-center">
+          <p className="text-foreground/30 text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Scroll to explore the pyramid</p>
         </div>
       </div>
     </section>
