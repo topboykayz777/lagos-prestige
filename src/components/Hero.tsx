@@ -29,8 +29,9 @@ const Hero = () => {
     })
   };
 
-  const lightImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
-  const darkImage = "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=2000";
+  // Dark mode uses the original image, Light mode uses a new bright luxury shot
+  const darkImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
+  const lightImage = "https://images.unsplash.com/photo-1600607687940-467f5b637a61?auto=format&fit=crop&q=80&w=2000";
 
   return (
     <section className="relative h-screen flex flex-col items-center pt-28 md:pt-32 px-6 overflow-hidden bg-background">
