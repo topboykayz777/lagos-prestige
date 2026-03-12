@@ -18,7 +18,9 @@ const amenities = [
 const Amenities = () => {
   return (
     <section id="amenities" className="py-32 bg-[#0A1128] relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
+      {/* Background Glows */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 blur-[120px] rounded-full" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 blur-[120px] rounded-full" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
@@ -43,13 +45,19 @@ const Amenities = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.8 }}
-              className={`${item.size} p-8 md:p-10 rounded-[3rem] bg-white/5 border border-white/10 backdrop-blur-xl hover:border-primary/50 transition-all duration-500 group cursor-default`}
+              whileHover={{ y: -5, borderColor: 'rgba(197, 160, 89, 0.5)' }}
+              className={`${item.size} p-8 md:p-10 rounded-[3rem] bg-white/5 border border-white/10 backdrop-blur-xl transition-all duration-500 group cursor-default relative overflow-hidden`}
             >
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-all duration-500">
-                <item.icon className="w-6 h-6 text-primary group-hover:text-[#0A1128] transition-colors" />
+              {/* Subtle Inner Glow on Hover */}
+              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500" />
+              
+              <div className="relative z-10">
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
+                  <item.icon className="w-6 h-6 text-primary group-hover:text-[#0A1128] transition-colors" />
+                </div>
+                <h3 className="text-xl font-black text-white mb-3">{item.title}</h3>
+                <p className="text-white/30 text-sm font-medium leading-relaxed">{item.desc}</p>
               </div>
-              <h3 className="text-xl font-black text-white mb-3">{item.title}</h3>
-              <p className="text-white/30 text-sm font-medium leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}
         </div>
