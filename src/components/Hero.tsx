@@ -2,59 +2,65 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Hero = () => {
   const handleBook = () => {
-    toast.success("Checking availability for your stay...");
+    const element = document.getElementById('apartments');
+    element?.scrollIntoView({ behavior: 'smooth' });
+    toast.info("Exploring our premium collection...");
   };
 
   return (
-    <section className="relative h-screen flex items-center justify-center px-6 overflow-hidden bg-[#FAF9F6]">
+    <section className="relative h-[90vh] min-h-[700px] flex items-center justify-center px-6 overflow-hidden bg-[#0A1128]">
       <motion.div 
-        initial={{ opacity: 0, scale: 1.05 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 2.5, delay: 0.5 }}
+        initial={{ opacity: 0, scale: 1.1 }}
+        animate={{ opacity: 0.4, scale: 1 }}
+        transition={{ duration: 2, ease: "easeOut" }}
         className="absolute inset-0 z-0"
       >
         <img 
-          src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=2000" 
-          alt="The Obsidian Suite" 
+          src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000" 
+          alt="Luxury Lagos Apartment" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F6]/60 via-transparent to-[#FAF9F6]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A1128] via-transparent to-[#0A1128]" />
       </motion.div>
       
-      <div className="relative z-10 max-w-4xl w-full text-center">
+      <div className="relative z-10 max-w-5xl w-full text-center">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1, delay: 0.2 }}
         >
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="h-[1px] w-12 bg-[#C5A059]" />
-            <span className="text-[#C5A059] text-[10px] font-black uppercase tracking-[0.4em]">Private Residence No. 01</span>
-            <span className="h-[1px] w-12 bg-[#C5A059]" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-8 backdrop-blur-md">
+            <MapPin className="w-3 h-3 text-[#C5A059]" />
+            <span className="text-[#C5A059] text-[10px] font-bold uppercase tracking-[0.2em]">Premium Stays in Lagos, Nigeria</span>
           </div>
           
-          <h1 className="text-7xl md:text-9xl font-black text-[#1A241E] mb-8 tracking-tighter leading-[0.85]">
-            The <br /> 
-            <span className="text-transparent" style={{ WebkitTextStroke: '1.5px #C5A059' }}>Obsidian.</span>
+          <h1 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-[0.9]">
+            Your Perfect Stay <br /> 
+            <span className="text-[#C5A059]">In Lagos.</span>
           </h1>
           
-          <p className="text-[#1A241E]/70 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
-            A singular expression of luxury in the heart of Victoria Island. <br />
-            Designed for the individual who demands the extraordinary.
+          <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
+            Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, Victoria Island, and Lekki Phase 1.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <button 
               onClick={handleBook}
-              className="bg-[#1A241E] text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest hover:bg-[#C5A059] active:scale-95 transition-all flex items-center gap-3 group shadow-2xl"
+              className="bg-[#C5A059] text-[#0A1128] px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white active:scale-95 transition-all flex items-center gap-3 shadow-2xl"
             >
-              Reserve Your Stay
-              <Calendar className="w-5 h-5 text-[#C5A059]" />
+              Explore Apartments
+              <ArrowRight className="w-5 h-5" />
+            </button>
+            <button 
+              onClick={() => toast.info("Contacting our concierge...")}
+              className="px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-white border border-white/20 hover:bg-white/5 transition-all"
+            >
+              View Gallery
             </button>
           </div>
         </motion.div>

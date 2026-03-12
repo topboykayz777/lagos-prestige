@@ -4,35 +4,35 @@
 
 @layer base {
   :root {
-    --background: 60 30% 98%; /* Off-white */
-    --foreground: 160 20% 10%;
+    --background: 222 47% 11%; /* Deep Navy */
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 160 20% 10%;
+    --card: 222 47% 13%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 160 20% 10%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 160 20% 15%; /* Deep Forest Green */
-    --primary-foreground: 60 30% 98%;
+    --primary: 40 40% 55%; /* Gold Accent */
+    --primary-foreground: 222 47% 11%;
 
-    --secondary: 40 40% 55%; /* Muted Gold */
-    --secondary-foreground: 60 30% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 160 10% 90%;
-    --muted-foreground: 160 10% 40%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
     --accent: 40 40% 55%;
-    --accent-foreground: 60 30% 98%;
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 160 15% 90%;
-    --input: 160 15% 90%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
     --ring: 40 40% 55%;
 
-    --radius: 1.5rem;
+    --radius: 1rem;
   }
 }
 
@@ -43,5 +43,22 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
   }
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #C5A059 0%, #E8D1A7 50%, #C5A059 100%);
+}
+
+.text-gold {
+  color: #C5A059;
+}
+
+.bg-navy {
+  background-color: #0A1128;
+}
+
+.border-gold {
+  border-color: rgba(197, 160, 89, 0.3);
 }
