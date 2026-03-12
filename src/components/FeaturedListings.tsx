@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import RoomCard from './RoomCard';
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const allRooms = [
   { id: "1", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=400", title: "Executive Master Suite", location: "Floor 12", price: "₦150k", rating: "4.9" },
@@ -24,7 +23,6 @@ const allRooms = [
 ];
 
 const FeaturedListings = () => {
-  // Pyramid rows: 5, 4, 3, 2, 1 = 15 items
   const rows = [
     allRooms.slice(0, 5),
     allRooms.slice(5, 9),
@@ -34,20 +32,19 @@ const FeaturedListings = () => {
   ];
 
   return (
-    <section id="rooms" className="py-24 bg-background">
+    <section id="rooms" className="py-24 bg-[#050505]">
       <div className="max-w-6xl mx-auto px-6">
         <div className="mb-12 text-center">
           <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-4 block">The Collection</span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-foreground leading-none">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-white leading-none">
             Explore Our <span className="text-primary">Rooms.</span>
           </h2>
         </div>
 
-        {/* Shiny Teal Scrollable Section */}
-        <div className="relative rounded-[3rem] overflow-hidden bg-gradient-to-br from-[#004D4D] via-[#006064] to-[#004D4D] p-1 shadow-[0_30px_100px_rgba(0,77,77,0.3)] border border-white/10">
+        <div className="relative rounded-[3rem] overflow-hidden bg-gradient-to-br from-[#0A1128] via-[#1A1A1A] to-[#0A1128] p-1 shadow-[0_30px_100px_rgba(0,0,0,0.5)] border border-primary/20">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
           
-          <div className="h-[500px] w-full rounded-[2.8rem] bg-black/20 backdrop-blur-sm p-8 md:p-12 overflow-y-auto no-scrollbar">
+          <div className="h-[500px] w-full rounded-[2.8rem] bg-black/40 backdrop-blur-sm p-8 md:p-12 overflow-y-auto no-scrollbar">
             <div className="flex flex-col gap-8 items-center">
               {rows.map((row, rowIndex) => (
                 <div 
@@ -65,13 +62,12 @@ const FeaturedListings = () => {
               ))}
             </div>
             
-            {/* Bottom Fade for Scroll Hint */}
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#004D4D]/80 to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
           </div>
         </div>
         
         <div className="mt-10 flex justify-center">
-          <p className="text-foreground/30 text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Scroll to explore the pyramid</p>
+          <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Scroll to explore the pyramid</p>
         </div>
       </div>
     </section>
