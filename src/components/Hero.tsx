@@ -93,54 +93,28 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-full mb-8 backdrop-blur-xl"
-        >
-          <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em]">The Gold Standard</span>
-          <Sparkles className="w-3 h-3 text-primary" />
-        </motion.div>
-        
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 1 }}
-          className="text-6xl md:text-8xl font-black text-foreground tracking-tighter leading-[0.85] mb-8"
-        >
-          Lagos <br /> 
-          <span className="text-transparent" style={{ WebkitTextStroke: '1.5px hsl(var(--primary))' }}>Prestige.</span>
-        </motion.h1>
-        
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="text-foreground/60 text-lg md:text-xl max-w-md mb-12 leading-relaxed font-medium"
-        >
-          A curated luxury short-let experience in the heart of Lagos' most exclusive neighborhood.
-        </motion.p>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="flex flex-wrap justify-center gap-6"
+          className="flex flex-col items-center"
         >
           <button 
             onClick={handleExplore}
             className="group bg-foreground text-background px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-xs transition-all hover:bg-primary hover:shadow-[0_0_30px_rgba(197,160,89,0.3)] active:scale-95"
           >
             <span className="flex items-center gap-3">
-              Explore Rooms
+              Discover
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>
           
-          <button 
-            onClick={() => toast.info("Opening our private gallery...")}
-            className="px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-xs text-foreground border border-foreground/10 hover:bg-foreground/5 transition-all backdrop-blur-sm"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 1 }}
+            className="mt-6 flex flex-col items-center"
           >
-            View Gallery
-          </button>
+            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-primary">Lagos Prestige</span>
+            <div className="w-12 h-[1px] bg-primary/30 mt-2" />
+          </motion.div>
         </motion.div>
       </div>
     </section>
