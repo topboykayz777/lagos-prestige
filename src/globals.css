@@ -4,6 +4,38 @@
 
 @layer base {
   :root {
+    --background: 40 20% 98%; /* Light Cream */
+    --foreground: 222 47% 7%; /* Deep Navy */
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 7%;
+
+    --primary: 40 40% 55%; /* Gold */
+    --primary-foreground: 40 20% 98%;
+
+    --secondary: 222 47% 95%;
+    --secondary-foreground: 222 47% 7%;
+
+    --muted: 222 47% 95%;
+    --muted-foreground: 215 20% 45%;
+
+    --accent: 40 40% 55%;
+    --accent-foreground: 40 20% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 40 20% 98%;
+
+    --border: 222 47% 90%;
+    --input: 222 47% 90%;
+    --ring: 40 40% 55%;
+
+    --radius: 1.25rem;
+  }
+
+  .dark {
     --background: 222 47% 7%; /* Deeper Navy */
     --foreground: 40 20% 96%; /* Off-white */
 
@@ -13,7 +45,7 @@
     --popover: 222 47% 7%;
     --popover-foreground: 40 20% 96%;
 
-    --primary: 40 40% 55%; /* Gold Accent */
+    --primary: 40 40% 55%;
     --primary-foreground: 222 47% 7%;
 
     --secondary: 222 47% 15%;
@@ -31,8 +63,6 @@
     --border: 222 47% 15%;
     --input: 222 47% 15%;
     --ring: 40 40% 55%;
-
-    --radius: 1.25rem;
   }
 }
 
@@ -42,17 +72,17 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased transition-colors duration-500;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
   }
 }
 
 .text-offwhite {
-  color: #FAF9F6;
+  @apply text-foreground;
 }
 
 .bg-navy {
-  background-color: #070B18;
+  @apply bg-background;
 }
 
 .text-gold {
