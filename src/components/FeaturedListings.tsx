@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import ApartmentCard from './ApartmentCard';
 
 const listings = [
@@ -29,10 +30,20 @@ const listings = [
 
 const FeaturedListings = () => {
   return (
-    <section id="apartments" className="py-32 bg-[#0A1128]">
+    <section id="apartments" className="py-32 bg-[#0A1128] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
-          <div className="max-w-xl">
+          <motion.div 
+            initial={{ x: -150, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ 
+              delay: 0.2, 
+              duration: 1.2, 
+              ease: [0.16, 1, 0.3, 1] 
+            }}
+            className="max-w-xl"
+          >
             <div className="flex items-center gap-4 mb-4">
               <span className="h-[1px] w-8 bg-[#C5A059]" />
               <span className="text-[#C5A059] text-[10px] font-black uppercase tracking-[0.4em]">Our Collection</span>
@@ -40,10 +51,21 @@ const FeaturedListings = () => {
             <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white leading-none">
               Featured <br /> <span className="text-[#C5A059]">Apartments.</span>
             </h2>
-          </div>
-          <p className="text-white/40 text-lg max-w-xs font-medium leading-relaxed">
+          </motion.div>
+
+          <motion.p 
+            initial={{ x: 150, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ 
+              delay: 0.5, 
+              duration: 1.2, 
+              ease: [0.16, 1, 0.3, 1] 
+            }}
+            className="text-white/40 text-lg max-w-xs font-medium leading-relaxed"
+          >
             Hand-picked spaces designed for comfort, style, and productivity.
-          </p>
+          </motion.p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
