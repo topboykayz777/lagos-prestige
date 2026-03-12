@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import ApartmentCard from './ApartmentCard';
 
 const listings = [
@@ -29,8 +30,10 @@ const listings = [
 ];
 
 const FeaturedListings = () => {
+  const navigate = useNavigate();
+
   return (
-    <section id="apartments" className="py-32 bg-[#0A1128] overflow-hidden">
+    <section id="apartments" className="py-32 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
           <motion.div 
@@ -45,15 +48,15 @@ const FeaturedListings = () => {
             className="max-w-xl"
           >
             <div className="flex items-center gap-4 mb-4">
-              <span className="h-[1px] w-8 bg-[#C5A059]" />
-              <span className="text-[#C5A059] text-[10px] font-black uppercase tracking-[0.4em]">Our Collection</span>
+              <span className="h-[1px] w-8 bg-primary" />
+              <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em]">Our Collection</span>
             </div>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white leading-none">
-              Featured <br /> <span className="text-[#C5A059]">Apartments.</span>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-none">
+              Featured <br /> <span className="text-primary">Apartments.</span>
             </h2>
           </motion.div>
 
-          <motion.p 
+          <motion.div
             initial={{ x: 150, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -62,10 +65,19 @@ const FeaturedListings = () => {
               duration: 1.2, 
               ease: [0.16, 1, 0.3, 1] 
             }}
-            className="text-white/40 text-lg max-w-xs font-medium leading-relaxed"
+            className="flex flex-col items-end gap-6"
           >
-            Hand-picked spaces designed for comfort, style, and productivity.
-          </motion.p>
+            <p className="text-foreground/40 text-lg max-w-xs font-medium leading-relaxed text-right">
+              Hand-picked spaces designed for comfort, style, and productivity.
+            </p>
+            <button 
+              onClick={() => navigate('/apartments')}
+              className="text-primary font-black uppercase tracking-[0.3em] text-[10px] flex items-center gap-3 group"
+            >
+              View All Suites
+              <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all" />
+            </button>
+          </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">

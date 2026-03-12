@@ -3,6 +3,7 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import BookingBar from '@/components/BookingBar';
 import AboutUs from '@/components/AboutUs';
 import FeaturedListings from '@/components/FeaturedListings';
 import Amenities from '@/components/Amenities';
@@ -19,6 +20,7 @@ const Index = () => {
       
       <main>
         <Hero />
+        <BookingBar />
         <AboutUs />
         <FeaturedListings />
         <Amenities />
