@@ -12,27 +12,27 @@ const Hero = () => {
     toast.info("Exploring our premium collection...");
   };
 
-  // Animation variant for line-by-line entry from the left
+  // Dramatic side animation variant
   const lineVariant = {
-    hidden: { x: -30, opacity: 0 },
+    hidden: { x: -300, opacity: 0 },
     visible: (i: number) => ({
       x: 0,
       opacity: 1,
       transition: {
-        delay: 1.1 + (i * 0.15), // Starting after initial page load with staggered increments
-        duration: 0.8,
+        delay: 1.5 + (i * 0.3), // Much longer base delay and stagger
+        duration: 1.2,
         ease: [0.16, 1, 0.3, 1]
       }
     })
   };
 
   return (
-    <section className="relative h-screen flex flex-col items-center pt-40 md:pt-48 px-6 overflow-hidden bg-background">
+    <section className="relative h-screen flex flex-col items-center pt-28 md:pt-32 px-6 overflow-hidden bg-background">
       {/* Big Background Image */}
       <motion.div 
         initial={{ scale: 1.1, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.25 }}
-        transition={{ duration: 2.5, ease: "easeOut" }}
+        animate={{ scale: 1, opacity: 0.2 }}
+        transition={{ duration: 3, ease: "easeOut" }}
         className="absolute inset-0 z-0"
       >
         <img 
@@ -43,8 +43,8 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       </motion.div>
       
-      {/* Centered Minimalist Content */}
-      <div className="relative z-10 max-w-xl w-full flex flex-col items-center text-center">
+      {/* Centered Minimalist Content - Positioned high up */}
+      <div className="relative z-10 max-w-md w-full flex flex-col items-center text-center">
         
         {/* Line 1: Badge */}
         <motion.div
@@ -52,10 +52,10 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           variants={lineVariant}
-          className="inline-flex items-center gap-2 px-3 py-1 bg-[#1A241E]/5 dark:bg-white/5 border border-[#C5A059]/20 rounded-full mb-6 backdrop-blur-xl"
+          className="inline-flex items-center gap-2 px-2 py-0.5 bg-[#1A241E]/5 dark:bg-white/5 border border-[#C5A059]/20 rounded-full mb-4 backdrop-blur-xl"
         >
-          <span className="text-[#C5A059] text-[8px] font-black uppercase tracking-[0.4em]">Premium Stays</span>
-          <Sparkles className="w-2 h-2 text-[#C5A059]/60" />
+          <span className="text-[#C5A059] text-[7px] font-black uppercase tracking-[0.4em]">Premium</span>
+          <Sparkles className="w-1.5 h-1.5 text-[#C5A059]/60" />
         </motion.div>
         
         {/* Line 2: Small Title */}
@@ -64,7 +64,7 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           variants={lineVariant}
-          className="text-xl md:text-2xl font-serif italic text-[#1A241E] dark:text-white mb-1 tracking-tight leading-tight"
+          className="text-sm md:text-base font-serif italic text-[#1A241E] dark:text-white mb-0.5 tracking-tight leading-tight"
         >
           Your Perfect Stay
         </motion.h1>
@@ -75,7 +75,7 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           variants={lineVariant}
-          className="text-2xl md:text-3xl font-black text-[#C5A059] mb-6 tracking-tighter leading-tight uppercase"
+          className="text-lg md:text-xl font-black text-[#C5A059] mb-4 tracking-tighter leading-tight uppercase"
         >
           In Lagos.
         </motion.h1>
@@ -86,9 +86,9 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           variants={lineVariant}
-          className="text-[#1A241E]/60 dark:text-white/40 text-[11px] md:text-xs max-w-[320px] mb-10 leading-relaxed font-medium"
+          className="text-[#1A241E]/60 dark:text-white/40 text-[9px] max-w-[240px] mb-8 leading-relaxed font-medium"
         >
-          Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, Victoria Island, and Lekki.
+          Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, VI, and Lekki.
         </motion.p>
         
         {/* Line 5: Action Buttons */}
@@ -97,23 +97,23 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           variants={lineVariant}
-          className="flex flex-wrap justify-center gap-4"
+          className="flex flex-wrap justify-center gap-3"
         >
           <button 
             onClick={handleBook}
-            className="group relative bg-[#1A241E] dark:bg-[#C5A059] text-white dark:text-[#1A241E] px-6 py-3 rounded-xl font-black uppercase tracking-[0.2em] text-[9px] transition-all hover:shadow-xl active:scale-95"
+            className="group relative bg-[#1A241E] dark:bg-[#C5A059] text-white dark:text-[#1A241E] px-4 py-2 rounded-lg font-black uppercase tracking-[0.2em] text-[8px] transition-all hover:shadow-xl active:scale-95"
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5">
               Explore
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>
           
           <button 
             onClick={() => toast.info("Opening our private gallery...")}
-            className="px-6 py-3 rounded-xl font-black uppercase tracking-[0.2em] text-[9px] text-[#1A241E] dark:text-white border border-[#1A241E]/10 dark:border-white/10 hover:bg-[#1A241E]/5 dark:hover:bg-white/5 transition-all backdrop-blur-sm"
+            className="px-4 py-2 rounded-lg font-black uppercase tracking-[0.2em] text-[8px] text-[#1A241E] dark:text-white border border-[#1A241E]/10 dark:border-white/10 hover:bg-[#1A241E]/5 dark:hover:bg-white/5 transition-all backdrop-blur-sm"
           >
-            View Gallery
+            Gallery
           </button>
         </motion.div>
       </div>
