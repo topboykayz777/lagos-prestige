@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'mramer-motion';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -13,7 +13,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative h-[90vh] min-h-[700px] flex flex-col items-center pt-48 px-6 overflow-hidden bg-[#0A1128]">
+    <section className="relative h-[90vh] min-h-[700px] flex flex-col items-center pt-32 md:pt-40 px-6 overflow-hidden bg-[#0A1128]">
       <motion.div 
         initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 0.4, scale: 1 }}
