@@ -48,11 +48,11 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           variants={lineVariants}
-          className="inline-flex items-center gap-2 px-3 py-1 bg-foreground/5 border border-primary/20 rounded-full mb-6 backdrop-blur-xl"
+          className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#1A241E]/5 dark:bg-white/5 border border-[#C5A059]/20 rounded-full mb-8 backdrop-blur-xl"
         >
-          <div className="w-1 h-1 bg-primary rounded-full animate-pulse" />
-          <span className="text-primary text-[7px] font-black uppercase tracking-[0.3em]">Premium Stays in Lagos</span>
-          <Sparkles className="w-2 h-2 text-primary/60" />
+          <div className="w-1 h-1 bg-[#C5A059] rounded-full animate-pulse" />
+          <span className="text-[#C5A059] text-[9px] font-black uppercase tracking-[0.4em]">Premium Stays in Lagos</span>
+          <Sparkles className="w-2.5 h-2.5 text-[#C5A059]/60" />
         </motion.div>
         
         {/* 2. Heading Line 1 */}
@@ -62,7 +62,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             variants={lineVariants}
-            className="text-2xl md:text-4xl font-serif italic text-foreground mb-1 tracking-tight leading-tight"
+            className="text-4xl md:text-6xl font-serif italic text-[#1A241E] dark:text-white mb-2 tracking-tight leading-tight"
           >
             Your Perfect Stay
           </motion.h1>
@@ -75,7 +75,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             variants={lineVariants}
-            className="text-2xl md:text-4xl font-sans font-medium text-primary mb-4 tracking-tighter leading-tight"
+            className="text-4xl md:text-6xl font-black text-[#C5A059] mb-6 tracking-tighter leading-tight uppercase"
           >
             In Lagos.
           </motion.h1>
@@ -88,7 +88,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             variants={lineVariants}
-            className="text-foreground/60 text-[11px] md:text-xs max-w-xs mx-auto mb-8 leading-relaxed font-medium"
+            className="text-[#1A241E]/60 dark:text-white/40 text-sm md:text-base max-w-md mx-auto mb-10 leading-relaxed font-medium"
           >
             Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, Victoria Island, and Lekki Phase 1.
           </motion.p>
@@ -100,20 +100,20 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           variants={lineVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <button 
             onClick={handleBook}
-            className="group relative bg-primary text-background px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-[8px] overflow-hidden transition-all hover:shadow-lg active:scale-95"
+            className="group relative bg-[#1A241E] dark:bg-[#C5A059] text-white dark:text-[#1A241E] px-10 py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] overflow-hidden transition-all hover:shadow-[0_20px_40px_rgba(26,36,30,0.3)] active:scale-95"
           >
-            <span className="relative z-10 flex items-center gap-2">
+            <span className="relative z-10 flex items-center gap-3">
               Explore Apartments
-              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>
           <button 
             onClick={() => toast.info("Opening our private gallery...")}
-            className="px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-[8px] text-foreground border border-foreground/10 hover:bg-foreground/5 transition-all backdrop-blur-sm"
+            className="px-10 py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] text-[#1A241E] dark:text-white border border-[#1A241E]/10 dark:border-white/10 hover:bg-[#1A241E]/5 dark:hover:bg-white/5 transition-all backdrop-blur-sm"
           >
             View Gallery
           </button>
