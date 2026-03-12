@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Menu, ChevronDown, Map, Shield, Zap, MessageSquare, X, ArrowRight } from 'lucide-react';
+import { Menu, ChevronDown, Map, Shield, Zap, MessageSquare, X, ArrowRight, Compass, UserCheck, Tag, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
@@ -14,8 +14,12 @@ const Navbar = () => {
   const menuItems = [
     { path: '/apartments', label: 'Our Apartments', icon: Map, desc: 'Explore our curated collection of premium suites' },
     { path: '/amenities', label: 'Luxury Amenities', icon: Shield, desc: 'Everything you need for a perfect, seamless stay' },
+    { path: '/neighborhoods', label: 'Neighborhood Guide', icon: Compass, desc: 'Discover the best of Ikoyi, VI, and Lekki' },
+    { path: '/concierge', label: 'Private Concierge', icon: UserCheck, desc: 'Personalized services from chefs to chauffeurs' },
     { path: '/how-it-works', label: 'How It Works', icon: Zap, desc: 'Our simple 3-step booking and check-in process' },
+    { path: '/offers', label: 'Special Offers', icon: Tag, desc: 'Exclusive rates for extended stays and corporate' },
     { path: '/contact', label: 'Contact Us', icon: MessageSquare, desc: '24/7 concierge support for all your needs' },
+    { path: '/', label: 'Guest Journal', icon: BookOpen, desc: 'Stories and reviews from our global community' },
   ];
 
   const handleNavigation = (path: string) => {
@@ -33,7 +37,6 @@ const Navbar = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 right-0 z-50 p-6 md:p-8 flex justify-center"
       >
-        {/* Main Container - Now relative so the mega menu can position against it */}
         <div className="w-full max-w-7xl flex items-center justify-between bg-transparent relative">
           <Link to="/" onClick={() => window.scrollTo(0, 0)}>
             <Logo />
@@ -59,22 +62,22 @@ const Navbar = () => {
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute top-full left-0 right-0 w-full bg-navy/95 backdrop-blur-3xl border border-offwhite/5 rounded-[3rem] p-10 shadow-[0_40px_100px_rgba(0,0,0,0.6)] mt-2"
                 >
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {menuItems.map((item) => (
                       <button
-                        key={item.path}
+                        key={item.path + item.label}
                         onClick={() => handleNavigation(item.path)}
-                        className="flex items-start gap-6 p-8 rounded-[2.5rem] hover:bg-white/5 transition-all text-left group border border-transparent hover:border-white/5"
+                        className="flex flex-col gap-4 p-6 rounded-[2rem] hover:bg-white/5 transition-all text-left group border border-transparent hover:border-white/5"
                       >
-                        <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059] transition-all duration-500">
-                          <item.icon className="w-6 h-6 text-[#C5A059] group-hover:text-navy transition-colors" />
+                        <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059] transition-all duration-500">
+                          <item.icon className="w-5 h-5 text-[#C5A059] group-hover:text-navy transition-colors" />
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="text-offwhite font-black text-xl tracking-tight">{item.label}</p>
-                            <ArrowRight className="w-5 h-5 text-[#C5A059] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                        <div>
+                          <div className="flex items-center justify-between mb-1">
+                            <p className="text-offwhite font-black text-sm tracking-tight">{item.label}</p>
+                            <ArrowRight className="w-3 h-3 text-[#C5A059] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                           </div>
-                          <p className="text-offwhite/30 text-xs font-medium leading-relaxed">{item.desc}</p>
+                          <p className="text-offwhite/30 text-[10px] font-medium leading-relaxed">{item.desc}</p>
                         </div>
                       </button>
                     ))}
@@ -113,7 +116,7 @@ const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay - Fixed to ensure it covers everything */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -133,22 +136,22 @@ const Navbar = () => {
                 </button>
               </div>
 
-              <div className="flex flex-col gap-4 mb-12">
+              <div className="grid grid-cols-1 gap-3 mb-12">
                 {menuItems.map((item, i) => (
                   <motion.button
-                    key={item.path}
+                    key={item.path + item.label}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     onClick={() => handleNavigation(item.path)}
-                    className="flex items-center gap-6 p-7 rounded-[2.5rem] bg-white/5 border border-white/5 text-left active:bg-[#C5A059] active:text-navy transition-all group"
+                    className="flex items-center gap-5 p-5 rounded-[2rem] bg-white/5 border border-white/5 text-left active:bg-[#C5A059] active:text-navy transition-all group"
                   >
-                    <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-active:bg-navy/20">
-                      <item.icon className="w-7 h-7 text-[#C5A059] group-active:text-navy" />
+                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center group-active:bg-navy/20">
+                      <item.icon className="w-6 h-6 text-[#C5A059] group-active:text-navy" />
                     </div>
                     <div>
-                      <p className="text-offwhite font-black text-2xl tracking-tight group-active:text-navy">{item.label}</p>
-                      <p className="text-offwhite/30 text-[10px] font-black uppercase tracking-[0.3em] group-active:text-navy/40">Explore Now</p>
+                      <p className="text-offwhite font-black text-lg tracking-tight group-active:text-navy">{item.label}</p>
+                      <p className="text-offwhite/30 text-[9px] font-black uppercase tracking-[0.2em] group-active:text-navy/40">Explore</p>
                     </div>
                   </motion.button>
                 ))}
