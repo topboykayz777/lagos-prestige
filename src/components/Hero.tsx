@@ -5,30 +5,31 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
-const floatingSuites = [
-  { id: 1, img: "https://images.unsplash.com/photo-1600607687940-467f5b637a61?w=400", rating: "5.0", pos: { top: '15%', left: '10%' } },
-  { id: 2, img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400", rating: "4.9", pos: { top: '20%', right: '12%' } },
-  { id: 3, img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400", rating: "4.8", pos: { bottom: '25%', left: '15%' } },
-  { id: 4, img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400", rating: "5.0", pos: { bottom: '20%', right: '10%' } },
-  { id: 5, img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400", rating: "4.9", pos: { top: '50%', right: '5%' } },
+const floatingRooms = [
+  { id: 'executive-suite', img: "https://images.unsplash.com/photo-1600607687940-467f5b637a61?w=400", rating: "5.0", pos: { top: '15%', left: '10%' } },
+  { id: 'deluxe-king', img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400", rating: "4.9", pos: { top: '20%', right: '12%' } },
+  { id: 'penthouse-master', img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400", rating: "4.8", pos: { bottom: '25%', left: '15%' } },
+  { id: 'skyline-studio', img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400", rating: "5.0", pos: { bottom: '20%', right: '10%' } },
+  { id: 'garden-view', img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400", rating: "4.9", pos: { top: '50%', right: '5%' } },
 ];
 
 const Hero = () => {
   const { theme } = useTheme();
-  const [activeSuite, setActiveSuite] = useState(0);
+  const [activeRoom, setActiveRoom] = useState(0);
   
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveSuite((prev) => (prev + 1) % floatingSuites.length);
+      setActiveRoom((prev) => (prev + 1) % floatingRooms.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
-  const handleBook = () => {
-    const element = document.getElementById('apartments');
+  const handleExplore = () => {
+    const element = document.getElementById('rooms');
     element?.scrollIntoView({ behavior: 'smooth' });
-    toast.info("Exploring our premium collection...");
+    toast.info("Exploring our premium rooms...");
   };
 
   const darkImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
@@ -57,27 +58,30 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       </div>
 
-      {/* Scattered Flashing Apartments */}
+      {/* Scattered Flashing Rooms */}
       <div className="absolute inset-0 pointer-events-none z-10 hidden md:block">
         <AnimatePresence mode="wait">
-          {floatingSuites.map((suite, i) => (
-            i === activeSuite && (
+          {floatingRooms.map((room, i) => (
+            i === activeRoom && (
               <motion.div
-                key={suite.id}
+                key={room.id}
                 initial={{ opacity: 0, scale: 0.8, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 1.1, y: -20 }}
                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                style={{ ...suite.pos, position: 'absolute' }}
-                className="w-32 h-32 rounded-3xl overflow-hidden border-2 border-primary/30 shadow-2xl bg-background/80 backdrop-blur-md p-1"
+                style={{ ...room.pos, position: 'absolute' }}
+                className="w-32 h-32 rounded-3xl overflow-hidden border-2 border-primary/30 shadow-2xl bg-background/80 backdrop-blur-md p-1 pointer-events-auto"
               >
-                <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                  <img src={suite.img} alt="Suite" className="w-full h-full object-cover" />
+                <Link to={`/rooms`} className="block w-full h-full relative rounded-2xl overflow-hidden group">
+                  <img src={room.img} alt="Room" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="text-[8px] font-black text-white uppercase tracking-widest">View Room</span>
+                  </div>
                   <div className="absolute top-1 right-1 bg-black/60 backdrop-blur-md px-1.5 py-0.5 rounded-lg flex items-center gap-1">
                     <Star className="w-2 h-2 fill-primary text-primary" />
-                    <span className="text-[8px] font-black text-white">{suite.rating}</span>
+                    <span className="text-[8px] font-black text-white">{room.rating}</span>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             )
           ))}
@@ -112,7 +116,7 @@ const Hero = () => {
           transition={{ delay: 1, duration: 1 }}
           className="text-foreground/60 text-lg md:text-xl max-w-md mb-12 leading-relaxed font-medium"
         >
-          Curated luxury short-term stays in Nigeria's most exclusive neighborhoods.
+          A curated luxury short-let experience in the heart of Lagos' most exclusive neighborhood.
         </motion.p>
         
         <motion.div
@@ -122,11 +126,11 @@ const Hero = () => {
           className="flex flex-wrap justify-center gap-6"
         >
           <button 
-            onClick={handleBook}
+            onClick={handleExplore}
             className="group bg-foreground text-background px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-xs transition-all hover:bg-primary hover:shadow-[0_0_30px_rgba(197,160,89,0.3)] active:scale-95"
           >
             <span className="flex items-center gap-3">
-              Explore Suites
+              Explore Rooms
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>

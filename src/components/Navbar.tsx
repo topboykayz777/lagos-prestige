@@ -12,7 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { path: '/apartments', label: 'Our Apartments', icon: Map, desc: 'Explore our curated collection of premium suites' },
+    { path: '/rooms', label: 'Our Rooms', icon: Map, desc: 'Explore our curated collection of premium suites' },
     { path: '/amenities', label: 'Luxury Amenities', icon: Shield, desc: 'Everything you need for a perfect, seamless stay' },
     { path: '/neighborhoods', label: 'Neighborhood Guide', icon: Compass, desc: 'Discover the best of Ikoyi, VI, and Lekki' },
     { path: '/concierge', label: 'Private Concierge', icon: UserCheck, desc: 'Personalized services from chefs to chauffeurs' },

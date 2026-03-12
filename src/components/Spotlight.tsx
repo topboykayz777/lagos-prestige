@@ -4,38 +4,38 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronRight } from 'lucide-react';
 
-const spotlightSuites = [
+const spotlightRooms = [
   {
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1200",
-    title: "The Azure Penthouse",
+    title: "The Executive Master Suite",
     rating: "5.0",
-    review: "Absolute perfection. The view of Eko Atlantic at night is unmatched.",
+    review: "Absolute perfection. The view of the city at night is unmatched.",
     author: "Marcus T."
   },
   {
     image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1200",
-    title: "Royal Garden Suite",
+    title: "Deluxe King Room",
     rating: "4.9",
     review: "The private chef service was the highlight of our stay. Truly world-class.",
     author: "Elena R."
   },
   {
     image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1200",
-    title: "Modern Lekki Loft",
+    title: "Modern Studio",
     rating: "4.8",
     review: "Sleek, modern, and incredibly secure. Perfect for my business trip.",
     author: "Chidi O."
   },
   {
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200",
-    title: "Skyline View VI",
+    title: "Skyline View Suite",
     rating: "5.0",
     review: "The attention to detail in the interior design is simply breathtaking.",
     author: "Sarah J."
   },
   {
     image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80&w=1200",
-    title: "The Sanctuary",
+    title: "The Sanctuary Room",
     rating: "4.9",
     review: "A true oasis in the heart of the city. We'll definitely be back.",
     author: "David K."
@@ -47,12 +47,12 @@ const Spotlight = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % spotlightSuites.length);
+      setIndex((prev) => (prev + 1) % spotlightRooms.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
 
-  const current = spotlightSuites[index];
+  const current = spotlightRooms[index];
 
   return (
     <section className="relative py-32 bg-[#050505] overflow-hidden">
@@ -121,7 +121,7 @@ const Spotlight = () => {
           </div>
 
           <div className="absolute top-10 right-10 flex gap-2">
-            {spotlightSuites.map((_, i) => (
+            {spotlightRooms.map((_, i) => (
               <button 
                 key={i} 
                 onClick={() => setIndex(i)}

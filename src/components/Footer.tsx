@@ -16,17 +16,17 @@ const Footer = () => {
               <span className="font-black text-2xl tracking-tighter text-white">LAGOS PRESTIGE</span>
             </div>
             <p className="text-white/40 max-w-xs leading-relaxed font-medium">
-              Redefining luxury short-term stays in Nigeria's most vibrant city. Experience the prestige you deserve.
+              Redefining luxury short-let stays in Nigeria's most vibrant city. Experience the prestige you deserve.
             </p>
           </div>
           
           <div>
             <h4 className="font-black mb-8 uppercase text-[10px] tracking-[0.3em] text-[#C5A059]">Quick Links</h4>
             <ul className="space-y-4 text-sm font-bold text-white/60">
-              <li><a href="#apartments" className="hover:text-white transition-colors">Apartments</a></li>
-              <li><a href="#amenities" className="hover:text-white transition-colors">Amenities</a></li>
-              <li><a href="#how-it-works" className="hover:text-white transition-colors">How it Works</a></li>
-              <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="/rooms" className="hover:text-white transition-colors">Our Rooms</a></li>
+              <li><a href="/amenities" className="hover:text-white transition-colors">Amenities</a></li>
+              <li><a href="/how-it-works" className="hover:text-white transition-colors">How it Works</a></li>
+              <li><a href="/contact" className="hover:text-white transition-colors">Contact</a></li>
             </ul>
           </div>
           

@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 const BookingBar = () => {
   const handleSearch = () => {
-    toast.success("Searching for available suites...");
+    toast.success("Searching for available rooms...");
   };
 
   return (

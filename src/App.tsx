@@ -7,7 +7,7 @@ import { ThemeProvider } from "next-themes";
 import { useEffect } from "react";
 import { useTheme } from "next-themes";
 import Index from "./pages/Index";
-import ApartmentsPage from "./pages/ApartmentsPage";
+import RoomsPage from "./pages/RoomsPage";
 import AmenitiesPage from "./pages/AmenitiesPage";
 import ProcessPage from "./pages/ProcessPage";
 import ContactPage from "./pages/ContactPage";
@@ -40,7 +40,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/apartments" element={<ApartmentsPage />} />
+            <Route path="/rooms" element={<RoomsPage />} />
             <Route path="/amenities" element={<AmenitiesPage />} />
             <Route path="/how-it-works" element={<ProcessPage />} />
             <Route path="/contact" element={<ContactPage />} />

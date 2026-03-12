@@ -4,8 +4,10 @@ import React from 'react';
 import { Star, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
-interface ApartmentProps {
+interface RoomProps {
+  id: string;
   image: string;
   title: string;
   location: string;
@@ -14,9 +16,13 @@ interface ApartmentProps {
   index: number;
 }
 
-const ApartmentCard = ({ image, title, location, price, rating, index }: ApartmentProps) => {
+const RoomCard = ({ id, image, title, location, price, rating, index }: RoomProps) => {
+  const navigate = useNavigate();
+
   const handleDetails = () => {
     toast.info(`Viewing details for ${title}`);
+    // In a real app, this would navigate to /rooms/:id
+    navigate(`/rooms`); 
   };
 
   return (
@@ -45,7 +51,7 @@ const ApartmentCard = ({ image, title, location, price, rating, index }: Apartme
         <div className="flex justify-between items-center mt-1">
           <div className="flex items-center gap-1 text-white/40 text-[8px] font-bold uppercase tracking-tighter">
             <MapPin className="w-2 h-2 text-[#C5A059]" />
-            {location.split(',')[0]}
+            {location}
           </div>
           <p className="font-black text-[10px] text-[#C5A059]">{price}</p>
         </div>
@@ -54,4 +60,4 @@ const ApartmentCard = ({ image, title, location, price, rating, index }: Apartme
   );
 };
 
-export default ApartmentCard;
+export default RoomCard;
