@@ -6,11 +6,11 @@ import RoomCard from './RoomCard';
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const allRooms = [
-  { id: "1", image: "https://images.unsplash.com/photo-1600607687940-467f5b637a61?auto=format&fit=crop&q=80&w=400", title: "Executive Master Suite", location: "Floor 12", price: "₦150k", rating: "4.9" },
-  { id: "2", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=400", title: "Deluxe King Room", location: "Floor 10", price: "₦120k", rating: "5.0" },
-  { id: "3", image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=400", title: "Modern Studio", location: "Floor 8", price: "₦85k", rating: "4.8" },
-  { id: "4", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=400", title: "Skyline View Suite", location: "Floor 11", price: "₦110k", rating: "4.7" },
-  { id: "5", image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80&w=400", title: "The Sanctuary Room", location: "Floor 5", price: "₦200k", rating: "5.0" },
+  { id: "1", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=400", title: "Executive Master Suite", location: "Floor 12", price: "₦150k", rating: "4.9" },
+  { id: "2", image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=400", title: "Deluxe King Room", location: "Floor 10", price: "₦120k", rating: "5.0" },
+  { id: "3", image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=400", title: "Modern Studio", location: "Floor 8", price: "₦85k", rating: "4.8" },
+  { id: "4", image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=400", title: "Skyline View Suite", location: "Floor 11", price: "₦110k", rating: "4.7" },
+  { id: "5", image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=400", title: "The Sanctuary Room", location: "Floor 5", price: "₦200k", rating: "5.0" },
   { id: "6", image: "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&q=80&w=400", title: "Urban Oasis Suite", location: "Floor 7", price: "₦95k", rating: "4.6" },
   { id: "7", image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80&w=400", title: "Gold Coast Room", location: "Floor 9", price: "₦140k", rating: "4.9" },
   { id: "8", image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=400", title: "Palm View Suite", location: "Floor 6", price: "₦75k", rating: "4.5" },
@@ -47,7 +47,7 @@ const FeaturedListings = () => {
         <div className="relative rounded-[3rem] overflow-hidden bg-gradient-to-br from-[#004D4D] via-[#006064] to-[#004D4D] p-1 shadow-[0_30px_100px_rgba(0,77,77,0.3)] border border-white/10">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
           
-          <ScrollArea className="h-[500px] w-full rounded-[2.8rem] bg-black/20 backdrop-blur-sm p-8 md:p-12">
+          <div className="h-[500px] w-full rounded-[2.8rem] bg-black/20 backdrop-blur-sm p-8 md:p-12 overflow-y-auto no-scrollbar">
             <div className="flex flex-col gap-8 items-center">
               {rows.map((row, rowIndex) => (
                 <div 
@@ -67,7 +67,7 @@ const FeaturedListings = () => {
             
             {/* Bottom Fade for Scroll Hint */}
             <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#004D4D]/80 to-transparent pointer-events-none" />
-          </ScrollArea>
+          </div>
         </div>
         
         <div className="mt-10 flex justify-center">

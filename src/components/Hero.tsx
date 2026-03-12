@@ -8,11 +8,11 @@ import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
 const floatingRooms = [
-  { id: 'executive-suite', img: "https://images.unsplash.com/photo-1600607687940-467f5b637a61?w=400", rating: "5.0", pos: { top: '15%', left: '10%' } },
-  { id: 'deluxe-king', img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400", rating: "4.9", pos: { top: '20%', right: '12%' } },
-  { id: 'penthouse-master', img: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400", rating: "4.8", pos: { bottom: '25%', left: '15%' } },
-  { id: 'skyline-studio', img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400", rating: "5.0", pos: { bottom: '20%', right: '10%' } },
-  { id: 'garden-view', img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400", rating: "4.9", pos: { top: '50%', right: '5%' } },
+  { id: 'executive-suite', img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=800&auto=format&fit=crop", rating: "5.0", pos: { top: '12%', left: '8%' } },
+  { id: 'deluxe-king', img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop", rating: "4.9", pos: { top: '18%', right: '10%' } },
+  { id: 'penthouse-master', img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800&auto=format&fit=crop", rating: "4.8", pos: { bottom: '22%', left: '12%' } },
+  { id: 'skyline-studio', img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=800&auto=format&fit=crop", rating: "5.0", pos: { bottom: '18%', right: '8%' } },
+  { id: 'garden-view', img: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=800&auto=format&fit=crop", rating: "4.9", pos: { top: '45%', right: '4%' } },
 ];
 
 const Hero = () => {
@@ -22,7 +22,7 @@ const Hero = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveRoom((prev) => (prev + 1) % floatingRooms.length);
-    }, 3000);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
 
@@ -68,18 +68,18 @@ const Hero = () => {
                 initial={{ opacity: 0, scale: 0.8, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 1.1, y: -20 }}
-                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 style={{ ...room.pos, position: 'absolute' }}
-                className="w-32 h-32 rounded-3xl overflow-hidden border-2 border-primary/30 shadow-2xl bg-background/80 backdrop-blur-md p-1 pointer-events-auto"
+                className="w-44 h-44 rounded-[2.5rem] overflow-hidden border-2 border-primary/30 shadow-2xl bg-background/80 backdrop-blur-md p-1.5 pointer-events-auto"
               >
-                <Link to={`/rooms`} className="block w-full h-full relative rounded-2xl overflow-hidden group">
+                <Link to={`/rooms`} className="block w-full h-full relative rounded-[2rem] overflow-hidden group">
                   <img src={room.img} alt="Room" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="text-[8px] font-black text-white uppercase tracking-widest">View Room</span>
+                    <span className="text-[10px] font-black text-white uppercase tracking-widest">View Room</span>
                   </div>
-                  <div className="absolute top-1 right-1 bg-black/60 backdrop-blur-md px-1.5 py-0.5 rounded-lg flex items-center gap-1">
-                    <Star className="w-2 h-2 fill-primary text-primary" />
-                    <span className="text-[8px] font-black text-white">{room.rating}</span>
+                  <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-xl flex items-center gap-1">
+                    <Star className="w-2.5 h-2.5 fill-primary text-primary" />
+                    <span className="text-[10px] font-black text-white">{room.rating}</span>
                   </div>
                 </Link>
               </motion.div>
