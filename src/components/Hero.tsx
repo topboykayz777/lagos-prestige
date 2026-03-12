@@ -12,16 +12,16 @@ const Hero = () => {
     toast.info("Exploring our premium collection...");
   };
 
-  // Animation variants for staggered side entry
-  const itemVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: (custom: number) => ({
+  // Dramatic side-entry variants with longer delays
+  const lineVariants = {
+    hidden: { opacity: 0, x: -200 },
+    visible: (i: number) => ({
       opacity: 1,
       x: 0,
       transition: {
-        delay: custom * 0.2,
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
+        delay: i * 0.6, // Significant delay between lines
+        duration: 1.2,
+        ease: [0.16, 1, 0.3, 1] // Cinematic cubic-bezier easing
       }
     })
   };
@@ -29,9 +29,9 @@ const Hero = () => {
   return (
     <section className="relative h-[80vh] min-h-[550px] flex flex-col items-center pt-12 md:pt-16 px-6 overflow-hidden bg-navy">
       <motion.div 
-        initial={{ opacity: 0, scale: 1.05 }}
+        initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 0.3, scale: 1 }}
-        transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
+        transition={{ duration: 3, ease: "easeOut" }}
         className="absolute inset-0 z-0"
       >
         <img 
@@ -43,49 +43,64 @@ const Hero = () => {
       </motion.div>
       
       <div className="relative z-10 max-w-3xl w-full text-center mt-12 md:mt-16">
-        {/* Premium Badge */}
+        {/* 1. Premium Badge */}
         <motion.div
-          custom={1}
+          custom={0}
           initial="hidden"
           animate="visible"
-          variants={itemVariants}
-          className="inline-flex items-center gap-2.5 px-4 py-1 bg-white/5 border border-[#C5A059]/20 rounded-full mb-6 backdrop-blur-xl shadow-sm group cursor-default"
-          whileHover={{ scale: 1.02, borderColor: 'rgba(197, 160, 89, 0.4)' }}
+          variants={lineVariants}
+          className="inline-flex items-center gap-2.5 px-4 py-1 bg-white/5 border border-[#C5A059]/20 rounded-full mb-6 backdrop-blur-xl shadow-sm"
         >
           <div className="w-1 h-1 bg-[#C5A059] rounded-full animate-pulse" />
           <span className="text-[#C5A059] text-[8px] font-black uppercase tracking-[0.3em]">Premium Stays in Lagos</span>
-          <Sparkles className="w-2 h-2 text-[#C5A059]/60 group-hover:text-[#C5A059] transition-colors" />
+          <Sparkles className="w-2 h-2 text-[#C5A059]/60" />
         </motion.div>
         
-        {/* Main Heading */}
-        <motion.h1 
-          custom={2}
-          initial="hidden"
-          animate="visible"
-          variants={itemVariants}
-          className="text-3xl md:text-5xl font-serif italic text-offwhite mb-4 tracking-tight leading-[1.1]"
-        >
-          Your Perfect Stay <br /> 
-          <span className="text-[#C5A059] not-italic font-sans font-medium tracking-tighter">In Lagos.</span>
-        </motion.h1>
+        {/* 2. Heading Line 1 */}
+        <div className="overflow-hidden">
+          <motion.h1 
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            variants={lineVariants}
+            className="text-3xl md:text-5xl font-serif italic text-offwhite mb-1 tracking-tight leading-tight"
+          >
+            Your Perfect Stay
+          </motion.h1>
+        </div>
+
+        {/* 3. Heading Line 2 */}
+        <div className="overflow-hidden">
+          <motion.h1 
+            custom={2}
+            initial="hidden"
+            animate="visible"
+            variants={lineVariants}
+            className="text-3xl md:text-5xl font-sans font-medium text-[#C5A059] mb-4 tracking-tighter leading-tight"
+          >
+            In Lagos.
+          </motion.h1>
+        </div>
         
-        {/* Description Paragraph */}
-        <motion.p 
-          custom={3}
-          initial="hidden"
-          animate="visible"
-          variants={itemVariants}
-          className="text-offwhite/60 text-[13px] md:text-sm max-w-md mx-auto mb-8 leading-relaxed font-medium"
-        >
-          Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, Victoria Island, and Lekki Phase 1.
-        </motion.p>
+        {/* 4. Description Paragraph */}
+        <div className="overflow-hidden">
+          <motion.p 
+            custom={3}
+            initial="hidden"
+            animate="visible"
+            variants={lineVariants}
+            className="text-offwhite/60 text-[13px] md:text-sm max-w-md mx-auto mb-8 leading-relaxed font-medium"
+          >
+            Experience the pinnacle of Nigerian hospitality. Curated luxury apartments in Ikoyi, Victoria Island, and Lekki Phase 1.
+          </motion.p>
+        </div>
         
-        {/* Action Buttons */}
+        {/* 5. Action Buttons */}
         <motion.div 
           custom={4}
           initial="hidden"
           animate="visible"
-          variants={itemVariants}
+          variants={lineVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <button 
