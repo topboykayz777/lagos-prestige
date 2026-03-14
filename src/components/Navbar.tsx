@@ -65,7 +65,7 @@ const Navbar = () => {
             <Logo />
           </Link>
 
-          {/* Desktop Mega Menu Trigger - Only on Homepage and when NOT scrolled */}
+          {/* Desktop Mega Menu Trigger */}
           <div 
             className={`hidden lg:block transition-all duration-500 ${(!isHomePage || isScrolled) ? 'opacity-0 pointer-events-none translate-y-[-20px]' : 'opacity-100 translate-y-0'}`}
             onMouseEnter={() => setIsHovered(true)} 
@@ -79,10 +79,10 @@ const Navbar = () => {
             <AnimatePresence>
               {isHovered && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: 5, scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute top-full left-0 right-0 w-full bg-background/95 backdrop-blur-3xl border border-border rounded-[3rem] p-10 shadow-[0_40px_100px_rgba(0,0,0,0.1)] mt-2"
                 >
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

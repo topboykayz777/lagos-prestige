@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FeaturedListings from '@/components/FeaturedListings';
 import CategoryFilter from '@/components/CategoryFilter';
-import { MadeWithDyad } from "@/components/made-with-dyad";
 
 const RoomsPage = () => {
   return (
@@ -20,7 +19,6 @@ const RoomsPage = () => {
         <FeaturedListings />
       </main>
       <Footer />
-      <MadeWithDyad />
     </div>
   );
 };

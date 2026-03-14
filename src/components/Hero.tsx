@@ -81,22 +81,44 @@ const Hero = () => {
         </AnimatePresence>
       </div>
       
-      {/* Central Content - Moved Upwards */}
+      {/* Central Content */}
       <div className="relative z-20 max-w-2xl w-full flex flex-col items-center text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="flex flex-col items-center"
-        >
-          <h1 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter uppercase mb-2">
-            Lagos <span className="text-primary">Prestige</span>
-          </h1>
-          <p className="text-foreground/60 text-sm md:text-base max-w-xs leading-relaxed font-medium">
+        <div className="flex flex-col items-center overflow-hidden">
+          <div className="flex items-center gap-3 mb-2">
+            <motion.h1 
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              className="text-4xl md:text-6xl font-black text-foreground tracking-tighter uppercase"
+            >
+              Lagos
+            </motion.h1>
+            <motion.h1 
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              className="text-4xl md:text-6xl font-black text-primary tracking-tighter uppercase"
+            >
+              Prestige
+            </motion.h1>
+          </div>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="text-foreground/60 text-sm md:text-base max-w-xs leading-relaxed font-medium"
+          >
             A curated luxury short-let experience in the heart of Ikoyi.
-          </p>
-          <div className="w-12 h-[1px] bg-primary/30 mt-4" />
-        </motion.div>
+          </motion.p>
+          
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1, delay: 1.5 }}
+            className="w-12 h-[1px] bg-primary/30 mt-4 origin-center" 
+          />
+        </div>
       </div>
     </section>
   );
