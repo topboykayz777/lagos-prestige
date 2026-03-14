@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, ChevronDown, Map, Shield, Zap, MessageSquare, X, ArrowRight, Compass, UserCheck, Tag, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 
 const Navbar = () => {
@@ -12,7 +12,6 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,16 +47,16 @@ const Navbar = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 right-0 z-50 p-6 md:p-8 flex justify-center"
       >
-        <div className="w-full max-w-7xl flex items-center justify-between bg-transparent relative">
+        <div className="w-full max-w-7xl flex items-center justify-between bg-background/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] px-8 py-3 shadow-2xl relative">
           <Logo />
 
           {/* Desktop Mega Menu Trigger */}
           <div 
-            className={`hidden lg:block transition-all duration-500 ${(!isHomePage || isScrolled) ? 'opacity-0 pointer-events-none translate-y-[-20px]' : 'opacity-100 translate-y-0'}`}
+            className="hidden lg:block"
             onMouseEnter={() => setIsHovered(true)} 
             onMouseLeave={() => setIsHovered(false)}
           >
-            <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-foreground/70 hover:text-foreground transition-colors py-4">
+            <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-foreground/70 hover:text-primary transition-colors py-4">
               Discover
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isHovered ? 'rotate-180' : ''}`} />
             </button>
@@ -69,7 +68,7 @@ const Navbar = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 5, scale: 0.98 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute top-full left-0 right-0 w-full bg-background/95 backdrop-blur-3xl border border-border rounded-[3rem] p-10 shadow-[0_40px_100px_rgba(0,0,0,0.1)] mt-2"
+                  className="absolute top-full left-0 right-0 w-full bg-background/95 backdrop-blur-3xl border border-border rounded-[3rem] p-10 shadow-[0_40px_100px_rgba(0,0,0,0.1)] mt-4"
                 >
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {menuItems.map((item) => (
@@ -99,7 +98,7 @@ const Navbar = () => {
           <div className="flex items-center gap-6">
             <button 
               onClick={() => handleNavigation('/contact')}
-              className="hidden sm:block bg-foreground text-background px-8 py-3.5 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-primary hover:text-background transition-all shadow-2xl active:scale-95"
+              className="hidden sm:block bg-primary text-background px-8 py-3.5 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-xl active:scale-95"
             >
               Book Now
             </button>
