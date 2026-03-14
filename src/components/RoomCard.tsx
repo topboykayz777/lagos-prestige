@@ -3,7 +3,6 @@
 import React from 'react';
 import { Star, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
 interface RoomProps {
@@ -20,9 +19,8 @@ const RoomCard = ({ id, image, title, location, price, rating, index }: RoomProp
   const navigate = useNavigate();
 
   const handleDetails = () => {
-    toast.info(`Viewing details for ${title}`);
-    // In a real app, this would navigate to /rooms/:id
-    navigate(`/rooms`); 
+    navigate(`/rooms/${id}`);
+    window.scrollTo(0, 0);
   };
 
   return (

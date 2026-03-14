@@ -8,6 +8,7 @@ import FeaturedListings from '@/components/FeaturedListings';
 import Amenities from '@/components/Amenities';
 import Testimonials from '@/components/Testimonials';
 import AboutUs from '@/components/AboutUs';
+import FAQ from '@/components/FAQ';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
@@ -23,6 +24,7 @@ const Index = () => {
         <Amenities />
         <Testimonials />
         <AboutUs />
+        <FAQ />
         <Contact />
       </main>
       
