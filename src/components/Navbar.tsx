@@ -30,24 +30,12 @@ const Navbar = () => {
     { path: '/how-it-works', label: 'How It Works', icon: Zap, desc: 'Our simple 3-step booking and check-in process' },
     { path: '/offers', label: 'Special Offers', icon: Tag, desc: 'Exclusive rates for extended stays and corporate' },
     { path: '/contact', label: 'Contact Us', icon: MessageSquare, desc: '24/7 concierge support for all your needs' },
-    { path: '/#journal', label: 'Guest Journal', icon: BookOpen, desc: 'Stories and reviews from our global community' },
+    { path: '/journal', label: 'Guest Journal', icon: BookOpen, desc: 'Stories and reviews from our global community' },
   ];
 
   const handleNavigation = (path: string) => {
-    if (path.startsWith('/#')) {
-      const id = path.split('#')[1];
-      if (window.location.pathname === '/') {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        navigate('/');
-        setTimeout(() => {
-          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-    } else {
-      navigate(path);
-      window.scrollTo(0, 0);
-    }
+    navigate(path);
+    window.scrollTo(0, 0);
     setIsHovered(false);
     setIsMobileMenuOpen(false);
   };
@@ -61,9 +49,7 @@ const Navbar = () => {
         className="fixed top-0 left-0 right-0 z-50 p-6 md:p-8 flex justify-center"
       >
         <div className="w-full max-w-7xl flex items-center justify-between bg-transparent relative">
-          <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-            <Logo />
-          </Link>
+          <Logo />
 
           {/* Desktop Mega Menu Trigger */}
           <div 

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Instagram, Twitter, Facebook, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -24,10 +25,11 @@ const Footer = () => {
           <div>
             <h4 className="font-black mb-8 uppercase text-[10px] tracking-[0.3em] text-primary">Quick Links</h4>
             <ul className="space-y-4 text-sm font-bold text-foreground/60">
-              <li><a href="/rooms" className="hover:text-primary transition-colors">Our Rooms</a></li>
-              <li><a href="/amenities" className="hover:text-primary transition-colors">Amenities</a></li>
-              <li><a href="/how-it-works" className="hover:text-primary transition-colors">How it Works</a></li>
-              <li><a href="/contact" className="hover:text-primary transition-colors">Contact</a></li>
+              <li><Link to="/rooms" className="hover:text-primary transition-colors">Our Rooms</Link></li>
+              <li><Link to="/amenities" className="hover:text-primary transition-colors">Amenities</Link></li>
+              <li><Link to="/how-it-works" className="hover:text-primary transition-colors">How it Works</Link></li>
+              <li><Link to="/journal" className="hover:text-primary transition-colors">Guest Journal</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
             </ul>
           </div>
           
