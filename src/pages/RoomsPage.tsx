@@ -3,11 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import RoomCard from '@/components/RoomCard';
 import CategoryFilter from '@/components/CategoryFilter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { allRooms, Room } from '@/data/rooms';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 const RoomsPage = () => {
   const [filteredRooms, setFilteredRooms] = useState<Room[]>(allRooms);
@@ -39,10 +38,10 @@ const RoomsPage = () => {
                 <span className="text-primary text-[10px] font-black uppercase tracking-[0.4em]">The Collection</span>
               </div>
               <h1 className="text-6xl md:text-8xl font-black text-foreground tracking-tighter leading-none mb-6">
-                Our <span className="text-primary">Suites.</span>
+                Our <span className="text-primary">Rooms.</span>
               </h1>
               <p className="text-foreground/40 text-xl font-medium leading-relaxed">
-                Discover 13 hand-picked luxury apartments across Lagos' most prestigious neighborhoods.
+                Explore our hand-picked selection of 13 luxury rooms across the most prestigious neighborhoods in Lagos.
               </p>
             </div>
 
@@ -77,7 +76,6 @@ const RoomsPage = () => {
                   transition={{ duration: 0.4, delay: i * 0.05 }}
                   className="w-full"
                 >
-                  {/* We use a modified version of RoomCard logic here for a larger display */}
                   <div 
                     onClick={() => {
                       window.location.href = `/rooms/${room.id}`;
@@ -114,7 +112,7 @@ const RoomsPage = () => {
 
           {filteredRooms.length === 0 && (
             <div className="py-32 text-center">
-              <p className="text-foreground/30 font-black uppercase tracking-[0.3em]">No suites match your search.</p>
+              <p className="text-foreground/30 font-black uppercase tracking-[0.3em]">No rooms match your search.</p>
             </div>
           )}
         </section>
