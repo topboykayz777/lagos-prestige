@@ -4,16 +4,21 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import RoomCard from './RoomCard';
-import { allRooms } from '@/data/rooms';
+import { Room } from '@/data/rooms';
 
-const FeaturedListings = () => {
+interface FeaturedListingsProps {
+  rooms: Room[];
+}
+
+const FeaturedListings = ({ rooms }: FeaturedListingsProps) => {
   const { theme } = useTheme();
   
-  // Create a pyramid-like layout with the data
+  // Create a pyramid-like layout: 3 rooms in first row, 2 in second, 1 in third (if available)
   const rows = [
-    allRooms.slice(0, 3),
-    allRooms.slice(3, 5),
-  ];
+    rooms.slice(0, 3),
+    rooms.slice(3, 5),
+    rooms.slice(5, 6),
+  ].filter(row => row.length > 0);
 
   const darkBg = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1200";
   const lightBg = "https://images.unsplash.com/photo-1600607687940-467f5b637a61?auto=format&fit=crop&q=80&w=1200";
@@ -44,8 +49,8 @@ const FeaturedListings = () => {
             <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
           </div>
           
-          <div className="relative z-10 h-auto w-full p-8 md:p-12">
-            <div className="flex flex-col gap-8 items-center">
+          <div className="relative z-10 h-auto w-full p-6 md:p-12">
+            <div className="flex flex-col gap-6 md:gap-8 items-center">
               {rows.map((row, rowIndex) => (
                 <div 
                   key={rowIndex} 
@@ -60,6 +65,12 @@ const FeaturedListings = () => {
                   ))}
                 </div>
               ))}
+              
+              {rooms.length === 0 && (
+                <div className="py-20 text-center">
+                  <p className="text-foreground/40 font-black uppercase tracking-widest">No rooms found for these criteria.</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
