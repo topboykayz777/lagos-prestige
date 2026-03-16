@@ -118,5 +118,56 @@ export const allRooms: Room[] = [
     category: "Master Suite",
     description: "The pinnacle of luxury. A sprawling three-bedroom wing with a private dining room, cinema, and dedicated security quarters. Designed for heads of state and global icons who require the absolute best in security and service.",
     bookedDates: ["2024-06-10", "2024-06-11", "2024-06-12"]
+  },
+  { 
+    id: "7", 
+    image: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800", 
+    gallery: [
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=1200"
+    ],
+    title: "Garden Terrace Suite", 
+    location: "Old Ikoyi", 
+    price: "₦135k", 
+    priceRaw: 135000,
+    rating: "4.9",
+    reviews: "42",
+    category: "Living Lounge",
+    description: "A serene escape featuring a private garden terrace. Perfect for morning coffee or evening relaxation. The suite is decorated with local art and features a spacious living area with premium furnishings.",
+    bookedDates: []
+  },
+  { 
+    id: "8", 
+    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800", 
+    gallery: [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200"
+    ],
+    title: "Penthouse Studio", 
+    location: "Victoria Island", 
+    price: "₦95k", 
+    priceRaw: 95000,
+    rating: "4.8",
+    reviews: "88",
+    category: "Chef's Kitchen",
+    description: "High-altitude living with a modern touch. This studio offers a compact yet luxurious space with high-end appliances and a stunning view of the Atlantic Ocean.",
+    bookedDates: []
+  },
+  { 
+    id: "9", 
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800", 
+    gallery: [
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200"
+    ],
+    title: "Royal Guest Room", 
+    location: "Old Ikoyi", 
+    price: "₦115k", 
+    priceRaw: 115000,
+    rating: "4.9",
+    reviews: "64",
+    category: "Master Suite",
+    description: "Elegance meets comfort in this royal-themed guest room. Features a plush queen bed, antique-style furniture, and a modern ensuite bathroom.",
+    bookedDates: []
   }
 ];
