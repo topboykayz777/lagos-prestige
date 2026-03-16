@@ -28,7 +28,7 @@ const Hero = () => {
   const darkImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
 
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center lg:justify-start pt-0 lg:pt-32 px-6 overflow-hidden bg-background">
+    <section className="relative h-screen flex flex-col items-center justify-center lg:justify-start pt-0 lg:pt-44 px-6 overflow-hidden bg-background">
       {/* Background Image - Only for Dark Mode */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
