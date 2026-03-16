@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { MessageCircle, Phone, Mail, Calendar, ArrowRight } from 'lucide-react';
+import { MessageCircle, Phone, Mail, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
@@ -63,17 +63,6 @@ const Contact = () => {
               >
                 <MessageCircle className="w-6 h-6 md:w-8 md:h-8 fill-current" />
                 Chat on WhatsApp
-                <ArrowRight className="w-5 h-5 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-              </motion.button>
-              
-              <motion.button 
-                whileHover={{ scale: 1.02, y: -5 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => toast.info("Opening booking portal...")}
-                className="w-full py-8 md:py-10 bg-primary text-background rounded-[2rem] md:rounded-[2.5rem] font-black uppercase tracking-[0.2em] text-lg md:text-xl flex items-center justify-center gap-4 shadow-[0_20px_50px_rgba(197,160,89,0.3)] group"
-              >
-                <Calendar className="w-6 h-6 md:w-8 md:h-8" />
-                Book Online
                 <ArrowRight className="w-5 h-5 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
               </motion.button>
               
