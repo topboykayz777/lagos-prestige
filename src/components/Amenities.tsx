@@ -8,7 +8,7 @@ const amenities = [
   { icon: Wifi, title: "Fiber WiFi", desc: "High-speed connectivity.", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600" },
   { icon: Wind, title: "Climate Control", desc: "Central AC comfort.", img: "https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=600" },
   { icon: Zap, title: "24/7 Power", desc: "Dual-grid backup.", img: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800" },
-  { icon: ShieldCheck, title: "Elite Security", desc: "Vetted personnel.", img: "https://images.unsplash.com/photo-1557597774-9d2739f85a76?auto=format&fit=crop&q=80&w=800" },
+  { icon: ShieldCheck, title: "Elite Security", desc: "Vetted personnel.", img: "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&q=80&w=800" },
   { icon: Car, title: "Secure Parking", desc: "Dedicated spots.", img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&q=80&w=600" },
   { icon: Utensils, title: "Chef's Kitchen", desc: "Gourmet ready.", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=600" },
   { icon: Coffee, title: "Concierge", desc: "Lifestyle management.", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=600" },
