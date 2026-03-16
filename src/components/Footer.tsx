@@ -1,8 +1,9 @@
 "use client";
 
 import React from 'react';
-import { Instagram, Twitter, Facebook, ShieldCheck } from 'lucide-react';
+import { Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 
 const Footer = () => {
   return (
@@ -10,16 +11,13 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <ShieldCheck className="text-background w-5 h-5" />
-              </div>
-              <span className="font-black text-2xl tracking-tighter text-foreground">LAGOS PRESTIGE</span>
+            <div className="mb-8">
+              <Logo />
             </div>
-            <p className="text-foreground/40 max-w-xs leading-relaxed font-medium">
+            <p className="text-foreground/40 max-w-xs leading-relaxed font-medium mt-6">
               Redefining luxury short-let stays in Nigeria's most vibrant city. Experience the prestige you deserve.
             </p>
-            <p className="text-foreground/60 text-sm font-bold mt-4">topboykayz@gmail.com</p>
+            <p className="text-foreground/60 text-sm font-bold mt-6">kaelfelix0120@gmail.com</p>
           </div>
           
           <div>

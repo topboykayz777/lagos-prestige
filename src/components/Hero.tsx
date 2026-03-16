@@ -28,7 +28,7 @@ const Hero = () => {
   const darkImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
 
   return (
-    <section className="relative h-screen flex flex-col items-center justify-start pt-32 px-6 overflow-hidden bg-background">
+    <section className="relative h-screen flex flex-col items-center justify-center md:justify-start pt-0 md:pt-32 px-6 overflow-hidden bg-background">
       {/* Background Image - Only for Dark Mode */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -83,22 +83,22 @@ const Hero = () => {
       </div>
       
       {/* Central Content */}
-      <div className="relative z-20 max-w-2xl w-full flex flex-col items-center text-center">
+      <div className="relative z-20 max-w-4xl w-full flex flex-col items-center text-center">
         <div className="flex flex-col items-center overflow-hidden">
-          <div className="flex items-center gap-3 mb-2">
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 mb-4">
             <motion.h1 
-              initial={{ x: -100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-              className="text-4xl md:text-6xl font-black text-foreground tracking-tighter uppercase"
+              className="text-6xl md:text-7xl lg:text-9xl font-black text-foreground tracking-tighter uppercase leading-none"
             >
               Lagos
             </motion.h1>
             <motion.h1 
-              initial={{ x: 100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-              className="text-4xl md:text-6xl font-black text-primary tracking-tighter uppercase"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+              className="text-6xl md:text-7xl lg:text-9xl font-black text-primary tracking-tighter uppercase leading-none"
             >
               Prestige
             </motion.h1>
@@ -108,7 +108,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="text-foreground/60 text-sm md:text-base max-w-xs leading-relaxed font-medium"
+            className="text-foreground/60 text-base md:text-xl max-w-md leading-relaxed font-medium"
           >
             A curated luxury short-let experience in the heart of Ikoyi.
           </motion.p>
@@ -117,7 +117,7 @@ const Hero = () => {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1, delay: 1.5 }}
-            className="w-12 h-[1px] bg-primary/30 mt-4 origin-center" 
+            className="w-24 h-[1px] bg-primary/30 mt-8 origin-center" 
           />
         </div>
       </div>

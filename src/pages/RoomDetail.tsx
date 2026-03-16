@@ -1,45 +1,37 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { Star, MapPin, Shield, Zap, Wifi, Coffee, Utensils, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { allRooms } from '@/data/rooms';
 
 const RoomDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [selectedImg, setSelectedImg] = useState(0);
+  
+  const room = allRooms.find(r => r.id === id) || allRooms[0];
 
-  // Mock data for the demo
-  const room = {
-    title: "Executive Master Suite",
-    location: "Old Ikoyi, Lagos",
-    price: "₦150,000",
-    rating: "4.9",
-    reviews: "128",
-    description: "Experience the pinnacle of luxury in our flagship Executive Master Suite. Designed for the discerning traveler, this suite combines modern aesthetics with unparalleled comfort. Featuring a king-sized orthopedic bed, a private lounge area, and floor-to-ceiling windows offering breathtaking views of the Lagos skyline.",
-    images: [
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=1200"
-    ],
-    amenities: [
-      { icon: Zap, label: "24/7 Power" },
-      { icon: Shield, label: "Elite Security" },
-      { icon: Wifi, label: "Fiber Internet" },
-      { icon: Coffee, label: "Nespresso" },
-      { icon: Utensils, label: "Chef Service" },
-      { icon: CheckCircle2, label: "Smart TV" }
-    ]
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   const handleBooking = () => {
     toast.success("Inquiry sent! Our concierge will contact you shortly.");
   };
+
+  const amenities = [
+    { icon: Zap, label: "24/7 Power" },
+    { icon: Shield, label: "Elite Security" },
+    { icon: Wifi, label: "Fiber Internet" },
+    { icon: Coffee, label: "Nespresso" },
+    { icon: Utensils, label: "Chef Service" },
+    { icon: CheckCircle2, label: "Smart TV" }
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -47,7 +39,6 @@ const RoomDetail = () => {
       
       <main className="pt-32 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Back Button */}
           <button 
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors mb-8"
@@ -57,25 +48,22 @@ const RoomDetail = () => {
           </button>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            {/* Left: Gallery & Info */}
             <div className="lg:col-span-8">
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-6"
               >
-                {/* Main Image */}
                 <div className="aspect-[16/9] rounded-[3rem] overflow-hidden border border-border shadow-2xl">
                   <img 
-                    src={room.images[selectedImg]} 
+                    src={room.gallery[selectedImg] || room.image} 
                     alt={room.title} 
                     className="w-full h-full object-cover"
                   />
                 </div>
 
-                {/* Thumbnails */}
                 <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
-                  {room.images.map((img, i) => (
+                  {(room.gallery.length > 0 ? room.gallery : [room.image]).map((img, i) => (
                     <button 
                       key={i}
                       onClick={() => setSelectedImg(i)}
@@ -86,7 +74,6 @@ const RoomDetail = () => {
                   ))}
                 </div>
 
-                {/* Content */}
                 <div className="pt-8">
                   <div className="flex flex-wrap items-center gap-4 mb-4">
                     <div className="flex items-center gap-1 px-3 py-1 bg-primary/10 rounded-full">
@@ -100,7 +87,7 @@ const RoomDetail = () => {
                   
                   <div className="flex items-center gap-2 text-foreground/60 mb-8">
                     <MapPin className="w-4 h-4 text-primary" />
-                    <span className="font-bold">{room.location}</span>
+                    <span className="font-bold">{room.location}, Lagos</span>
                   </div>
 
                   <p className="text-foreground/60 text-lg leading-relaxed mb-12 max-w-3xl">
@@ -108,7 +95,7 @@ const RoomDetail = () => {
                   </p>
 
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                    {room.amenities.map((item, i) => (
+                    {amenities.map((item, i) => (
                       <div key={i} className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border">
                         <item.icon className="w-5 h-5 text-primary" />
                         <span className="text-xs font-black uppercase tracking-widest text-foreground/80">{item.label}</span>
@@ -119,7 +106,6 @@ const RoomDetail = () => {
               </motion.div>
             </div>
 
-            {/* Right: Booking Sidebar */}
             <div className="lg:col-span-4">
               <motion.div 
                 initial={{ opacity: 0, x: 20 }}

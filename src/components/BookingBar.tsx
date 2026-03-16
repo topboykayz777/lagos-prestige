@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Calendar as CalendarIcon, Users, Search, Plus, Minus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import { format, addDays, isBefore, startOfToday } from "date-fns";
+import { format, addDays, isBefore, startOfToday, isSameDay } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -12,6 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { allRooms } from '@/data/rooms';
 
 const BookingBar = () => {
   const [checkIn, setCheckIn] = useState<Date>();
@@ -23,7 +24,22 @@ const BookingBar = () => {
       toast.error("Please select both check-in and check-out dates.");
       return;
     }
-    toast.success(`Searching for stays for ${guests} guests from ${format(checkIn, "PPP")} to ${format(checkOut, "PPP")}`);
+
+    // Availability Logic: Check if any room is available for these dates
+    const availableRooms = allRooms.filter(room => {
+      const isBooked = room.bookedDates.some(dateStr => {
+        const bookedDate = new Date(dateStr);
+        return (isSameDay(bookedDate, checkIn) || isSameDay(bookedDate, checkOut) || 
+               (isBefore(checkIn, bookedDate) && isBefore(bookedDate, checkOut)));
+      });
+      return !isBooked;
+    });
+
+    if (availableRooms.length > 0) {
+      toast.success(`Found ${availableRooms.length} available suites for your dates!`);
+    } else {
+      toast.error("No rooms available for these specific dates. Try another range.");
+    }
   };
 
   const today = startOfToday();
@@ -38,7 +54,6 @@ const BookingBar = () => {
       <div className="bg-background/80 backdrop-blur-2xl border border-border rounded-[2.5rem] p-3 md:p-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex flex-col md:flex-row items-center gap-4">
         
         <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-2 w-full">
-          {/* Check In */}
           <Popover>
             <PopoverTrigger asChild>
               <div className="flex flex-col px-6 py-3 hover:bg-primary/5 rounded-2xl transition-colors cursor-pointer group">
@@ -68,7 +83,6 @@ const BookingBar = () => {
             </PopoverContent>
           </Popover>
           
-          {/* Check Out */}
           <Popover>
             <PopoverTrigger asChild>
               <div className="flex flex-col px-6 py-3 hover:bg-primary/5 rounded-2xl transition-colors cursor-pointer group border-l border-border/50">
@@ -93,7 +107,6 @@ const BookingBar = () => {
             </PopoverContent>
           </Popover>
 
-          {/* Guests Selector */}
           <Popover>
             <PopoverTrigger asChild>
               <div className="col-span-2 md:col-span-1 flex flex-col px-6 py-3 hover:bg-primary/5 rounded-2xl transition-colors cursor-pointer group border-l border-border/50">
