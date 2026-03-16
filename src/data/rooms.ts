@@ -16,8 +16,8 @@ export interface Room {
 export const allRooms: Room[] = [
   { 
     id: "1", 
-    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=1200"],
     title: "Executive Master Suite", 
     location: "Old Ikoyi", 
     price: "₦150k", 
@@ -30,8 +30,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "2", 
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200"],
     title: "Deluxe King Room", 
     location: "Victoria Island", 
     price: "₦120k", 
@@ -128,8 +128,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "9", 
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1200"],
     title: "Royal Guest Room", 
     location: "Old Ikoyi", 
     price: "₦115k", 
@@ -142,8 +142,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "10", 
-    image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=1200"],
     title: "Urban Loft", 
     location: "Lekki Phase 1", 
     price: "₦90k", 
@@ -156,8 +156,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "11", 
-    image: "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=1200"],
     title: "The Heritage Suite", 
     location: "Old Ikoyi", 
     price: "₦140k", 
@@ -170,8 +170,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "12", 
-    image: "https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200"],
     title: "Ocean Breeze Room", 
     location: "Victoria Island", 
     price: "₦105k", 
@@ -184,8 +184,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "13", 
-    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200"],
     title: "The Minimalist", 
     location: "Lekki Phase 1", 
     price: "₦80k", 

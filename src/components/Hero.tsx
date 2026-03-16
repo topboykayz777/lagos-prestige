@@ -7,8 +7,8 @@ import { useTheme } from 'next-themes';
 import { Link } from 'react-router-dom';
 
 const floatingRooms = [
-  { id: 'executive-suite', img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=800&auto=format&fit=crop", rating: "5.0", pos: { top: '12%', left: '8%' } },
-  { id: 'deluxe-king', img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop", rating: "4.9", pos: { top: '18%', right: '10%' } },
+  { id: 'executive-suite', img: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop", rating: "5.0", pos: { top: '12%', left: '8%' } },
+  { id: 'deluxe-king', img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop", rating: "4.9", pos: { top: '18%', right: '10%' } },
   { id: 'penthouse-master', img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800&auto=format&fit=crop", rating: "4.8", pos: { bottom: '22%', left: '12%' } },
   { id: 'skyline-studio', img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=800&auto=format&fit=crop", rating: "5.0", pos: { bottom: '18%', right: '8%' } },
   { id: 'garden-view', img: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=800&auto=format&fit=crop", rating: "4.9", pos: { top: '45%', right: '4%' } },
@@ -28,7 +28,7 @@ const Hero = () => {
   const darkImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
 
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center lg:justify-start pt-0 lg:pt-20 px-6 overflow-hidden bg-background">
+    <section className="relative h-screen flex flex-col items-center justify-center lg:justify-start pt-0 lg:pt-32 px-6 overflow-hidden bg-background">
       {/* Background Image - Only for Dark Mode */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -83,14 +83,14 @@ const Hero = () => {
       </div>
       
       {/* Central Content */}
-      <div className="relative z-20 max-w-4xl w-full flex flex-col items-center text-center lg:mt-12">
+      <div className="relative z-20 max-w-4xl w-full flex flex-col items-center text-center lg:mt-0">
         <div className="flex flex-col items-center overflow-hidden">
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 mb-4">
             <motion.h1 
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-              className="text-6xl md:text-7xl lg:text-5xl font-black text-foreground tracking-tighter uppercase leading-none"
+              className="text-6xl md:text-8xl lg:text-6xl font-serif italic text-foreground tracking-tighter leading-none"
             >
               Lagos
             </motion.h1>
@@ -98,7 +98,7 @@ const Hero = () => {
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-              className="text-6xl md:text-7xl lg:text-5xl font-black text-primary tracking-tighter uppercase leading-none"
+              className="text-6xl md:text-8xl lg:text-6xl font-black text-primary tracking-tighter uppercase leading-none"
             >
               Prestige
             </motion.h1>
@@ -108,7 +108,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="text-foreground/60 text-base md:text-xl lg:text-sm max-w-md leading-relaxed font-medium"
+            className="text-foreground/60 text-base md:text-2xl lg:text-sm max-w-md leading-relaxed font-medium tracking-wide"
           >
             A curated luxury short-let experience in the heart of Ikoyi.
           </motion.p>
