@@ -69,17 +69,17 @@ const Navbar = () => {
                       <button
                         key={item.path + item.label}
                         onClick={() => handleNavigation(item.path)}
-                        className="flex flex-col gap-4 p-6 rounded-[2rem] hover:bg-primary/5 transition-all text-left group border border-transparent hover:border-primary/10"
+                        className="flex flex-col gap-4 p-6 rounded-[2rem] transition-all text-left group border border-transparent hover:bg-[#1A241E] dark:hover:bg-white/5 hover:border-[#C5A059]/30"
                       >
-                        <div className="w-12 h-12 rounded-2xl bg-primary/5 flex items-center justify-center group-hover:bg-primary transition-all duration-500">
-                          <item.icon className="w-5 h-5 text-primary group-hover:text-background transition-colors" />
+                        <div className="w-12 h-12 rounded-2xl bg-primary/5 flex items-center justify-center group-hover:bg-[#C5A059] transition-all duration-500">
+                          <item.icon className="w-5 h-5 text-primary group-hover:text-[#1A241E] transition-colors" />
                         </div>
                         <div>
                           <div className="flex items-center justify-between mb-1">
-                            <p className="text-foreground font-black text-sm tracking-tight">{item.label}</p>
+                            <p className="text-foreground font-black text-sm tracking-tight group-hover:text-[#C5A059] transition-colors">{item.label}</p>
                             <ArrowRight className="w-3 h-3 text-primary opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                           </div>
-                          <p className="text-foreground/30 text-[10px] font-medium leading-relaxed">{item.desc}</p>
+                          <p className="text-foreground/30 text-[10px] font-medium leading-relaxed group-hover:text-[#C5A059]/60 transition-colors">{item.desc}</p>
                         </div>
                       </button>
                     ))}

@@ -128,8 +128,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "9", 
-    image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200"],
     title: "Royal Guest Room", 
     location: "Old Ikoyi", 
     price: "₦115k", 
@@ -142,8 +142,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "10", 
-    image: "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1200"],
     title: "Urban Loft", 
     location: "Lekki Phase 1", 
     price: "₦90k", 
@@ -156,8 +156,12 @@ export const allRooms: Room[] = [
   },
   { 
     id: "11", 
-    image: "https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=800", 
+    gallery: [
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1616137422495-1e9e46e2aa77?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&q=80&w=1200"
+    ],
     title: "The Heritage Suite", 
     location: "Old Ikoyi", 
     price: "₦140k", 
@@ -165,13 +169,13 @@ export const allRooms: Room[] = [
     rating: "4.9",
     reviews: "45",
     category: "Master Suite",
-    description: "A tribute to Lagosian history with modern luxury. Features hand-crafted furniture and local textiles.",
+    description: "A tribute to Lagosian history with modern luxury. Features hand-crafted furniture, local textiles, and a private library nook.",
     bookedDates: []
   },
   { 
     id: "12", 
-    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=1200"],
     title: "Ocean Breeze Room", 
     location: "Victoria Island", 
     price: "₦105k", 
@@ -184,8 +188,8 @@ export const allRooms: Room[] = [
   },
   { 
     id: "13", 
-    image: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800", 
-    gallery: ["https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200"],
+    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200"],
     title: "The Minimalist", 
     location: "Lekki Phase 1", 
     price: "₦80k", 
