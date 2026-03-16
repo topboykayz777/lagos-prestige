@@ -17,11 +17,7 @@ export const allRooms: Room[] = [
   { 
     id: "1", 
     image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=1200"],
     title: "Executive Master Suite", 
     location: "Old Ikoyi", 
     price: "₦150k", 
@@ -29,17 +25,13 @@ export const allRooms: Room[] = [
     rating: "4.9",
     reviews: "128",
     category: "Master Suite",
-    description: "Our flagship suite offering panoramic views of the Lagos skyline. Features a king-sized orthopedic bed, private lounge, and a spa-inspired bathroom with a walk-in rainfall shower and deep soaking tub. Perfect for high-profile executives seeking absolute privacy.",
-    bookedDates: ["2024-05-10", "2024-05-11", "2024-06-01"]
+    description: "Our flagship suite offering panoramic views of the Lagos skyline. Features a king-sized orthopedic bed and a spa-inspired bathroom.",
+    bookedDates: ["2024-05-10"]
   },
   { 
     id: "2", 
     image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200"],
     title: "Deluxe King Room", 
     location: "Victoria Island", 
     price: "₦120k", 
@@ -47,17 +39,13 @@ export const allRooms: Room[] = [
     rating: "5.0",
     reviews: "94",
     category: "Living Lounge",
-    description: "A perfect blend of business and leisure. This room features a dedicated workspace with ergonomic seating, high-speed fiber internet, and a private balcony overlooking the VI business district. Designed for the modern professional who values comfort and efficiency.",
-    bookedDates: ["2024-05-15", "2024-05-16"]
+    description: "A perfect blend of business and leisure with a dedicated workspace and high-speed fiber internet.",
+    bookedDates: []
   },
   { 
     id: "3", 
     image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200"],
     title: "Modern Studio", 
     location: "Lekki Phase 1", 
     price: "₦85k", 
@@ -65,16 +53,13 @@ export const allRooms: Room[] = [
     rating: "4.8",
     reviews: "210",
     category: "Chef's Kitchen",
-    description: "Chic, compact, and incredibly functional. Ideal for solo travelers or couples looking for a vibrant city stay. Features a fully equipped kitchenette, smart home controls, and premium linens. Located just minutes away from the best cafes and boutiques in Lekki.",
+    description: "Chic, compact, and incredibly functional. Ideal for solo travelers or couples looking for a vibrant city stay.",
     bookedDates: []
   },
   { 
     id: "4", 
     image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=1200"],
     title: "Skyline View Suite", 
     location: "Old Ikoyi", 
     price: "₦110k", 
@@ -82,16 +67,13 @@ export const allRooms: Room[] = [
     rating: "4.7",
     reviews: "56",
     category: "Cinema Room",
-    description: "Wake up to the sunrise over the Atlantic. This suite offers floor-to-ceiling windows, a premium sound system, and automated blackout curtains. The open-plan layout creates a sense of space and light that is unmatched in the city.",
-    bookedDates: ["2024-05-20"]
+    description: "Wake up to the sunrise over the Atlantic. This suite offers floor-to-ceiling windows and automated blackout curtains.",
+    bookedDates: []
   },
   { 
     id: "5", 
     image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=1200"],
     title: "The Sanctuary Room", 
     location: "Banana Island", 
     price: "₦200k", 
@@ -99,16 +81,13 @@ export const allRooms: Room[] = [
     rating: "5.0",
     reviews: "32",
     category: "Spa Bath",
-    description: "Ultimate privacy in Lagos' most exclusive neighborhood. Includes private elevator access, 24/7 butler service, and a private terrace. The interior is finished with rare marble and custom-made furniture for the discerning traveler.",
+    description: "Ultimate privacy in Lagos' most exclusive neighborhood. Includes private elevator access and 24/7 butler service.",
     bookedDates: []
   },
   { 
     id: "6", 
     image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=1200"],
     title: "Presidential Wing", 
     location: "Old Ikoyi", 
     price: "₦350k", 
@@ -116,16 +95,13 @@ export const allRooms: Room[] = [
     rating: "5.0",
     reviews: "18",
     category: "Master Suite",
-    description: "The pinnacle of luxury. A sprawling three-bedroom wing with a private dining room, cinema, and dedicated security quarters. Designed for heads of state and global icons who require the absolute best in security and service.",
-    bookedDates: ["2024-06-10", "2024-06-11", "2024-06-12"]
+    description: "The pinnacle of luxury. A sprawling three-bedroom wing with a private dining room and dedicated security quarters.",
+    bookedDates: []
   },
   { 
     id: "7", 
     image: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200"],
     title: "Garden Terrace Suite", 
     location: "Old Ikoyi", 
     price: "₦135k", 
@@ -133,16 +109,13 @@ export const allRooms: Room[] = [
     rating: "4.9",
     reviews: "42",
     category: "Living Lounge",
-    description: "A serene escape featuring a private garden terrace. Perfect for morning coffee or evening relaxation. The suite is decorated with local art and features a spacious living area with premium furnishings.",
+    description: "A serene escape featuring a private garden terrace. Perfect for morning coffee or evening relaxation.",
     bookedDates: []
   },
   { 
     id: "8", 
     image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=1200"],
     title: "Penthouse Studio", 
     location: "Victoria Island", 
     price: "₦95k", 
@@ -150,16 +123,13 @@ export const allRooms: Room[] = [
     rating: "4.8",
     reviews: "88",
     category: "Chef's Kitchen",
-    description: "High-altitude living with a modern touch. This studio offers a compact yet luxurious space with high-end appliances and a stunning view of the Atlantic Ocean.",
+    description: "High-altitude living with a modern touch. This studio offers a compact yet luxurious space with high-end appliances.",
     bookedDates: []
   },
   { 
     id: "9", 
     image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800", 
-    gallery: [
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200"
-    ],
+    gallery: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=1200"],
     title: "Royal Guest Room", 
     location: "Old Ikoyi", 
     price: "₦115k", 
@@ -167,7 +137,63 @@ export const allRooms: Room[] = [
     rating: "4.9",
     reviews: "64",
     category: "Master Suite",
-    description: "Elegance meets comfort in this royal-themed guest room. Features a plush queen bed, antique-style furniture, and a modern ensuite bathroom.",
+    description: "Elegance meets comfort in this royal-themed guest room. Features a plush queen bed and antique-style furniture.",
+    bookedDates: []
+  },
+  { 
+    id: "10", 
+    image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1200"],
+    title: "Urban Loft", 
+    location: "Lekki Phase 1", 
+    price: "₦90k", 
+    priceRaw: 90000,
+    rating: "4.7",
+    reviews: "112",
+    category: "Living Lounge",
+    description: "Industrial chic design with high ceilings and open spaces. Perfect for the creative traveler.",
+    bookedDates: []
+  },
+  { 
+    id: "11", 
+    image: "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=1200"],
+    title: "The Heritage Suite", 
+    location: "Old Ikoyi", 
+    price: "₦140k", 
+    priceRaw: 140000,
+    rating: "4.9",
+    reviews: "45",
+    category: "Master Suite",
+    description: "A tribute to Lagosian history with modern luxury. Features hand-crafted furniture and local textiles.",
+    bookedDates: []
+  },
+  { 
+    id: "12", 
+    image: "https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1536376074432-a228d0677e4f?auto=format&fit=crop&q=80&w=1200"],
+    title: "Ocean Breeze Room", 
+    location: "Victoria Island", 
+    price: "₦105k", 
+    priceRaw: 105000,
+    rating: "4.8",
+    reviews: "76",
+    category: "Spa Bath",
+    description: "Light and airy room with subtle nautical touches. Enjoy the refreshing breeze from your private balcony.",
+    bookedDates: []
+  },
+  { 
+    id: "13", 
+    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800", 
+    gallery: ["https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200"],
+    title: "The Minimalist", 
+    location: "Lekki Phase 1", 
+    price: "₦80k", 
+    priceRaw: 80000,
+    rating: "4.6",
+    reviews: "154",
+    category: "Chef's Kitchen",
+    description: "Clean lines and functional design. A peaceful retreat from the bustling city life.",
     bookedDates: []
   }
 ];
