@@ -26,27 +26,28 @@ const Hero = () => {
   }, []);
 
   const darkImage = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2000";
-  const lightImage = "https://images.unsplash.com/photo-1600607687940-467f5b637a61?auto=format&fit=crop&q=80&w=2000";
 
   return (
     <section className="relative h-screen flex flex-col items-center justify-start pt-32 px-6 overflow-hidden bg-background">
-      {/* Background Image */}
+      {/* Background Image - Only for Dark Mode */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
-          <motion.div 
-            key={theme}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: theme === 'dark' ? 0.2 : 0.4 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5 }}
-            className="absolute inset-0"
-          >
-            <img 
-              src={theme === 'dark' ? darkImage : lightImage} 
-              alt="Luxury Lagos" 
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+          {theme === 'dark' && (
+            <motion.div 
+              key="dark-hero-bg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.2 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5 }}
+              className="absolute inset-0"
+            >
+              <img 
+                src={darkImage} 
+                alt="Luxury Lagos" 
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          )}
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       </div>

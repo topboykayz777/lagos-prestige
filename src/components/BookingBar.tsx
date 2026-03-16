@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Calendar as CalendarIcon, Users, Search } from 'lucide-react';
+import { Calendar as CalendarIcon, Users, Search, Plus, Minus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import { format } from "date-fns";
+import { format, addDays, isBefore, startOfToday } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -16,14 +16,17 @@ import { cn } from "@/lib/utils";
 const BookingBar = () => {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
+  const [guests, setGuests] = useState(2);
 
   const handleSearch = () => {
     if (!checkIn || !checkOut) {
       toast.error("Please select both check-in and check-out dates.");
       return;
     }
-    toast.success(`Searching for stays from ${format(checkIn, "PPP")} to ${format(checkOut, "PPP")}`);
+    toast.success(`Searching for stays for ${guests} guests from ${format(checkIn, "PPP")} to ${format(checkOut, "PPP")}`);
   };
+
+  const today = startOfToday();
 
   return (
     <motion.div 
@@ -52,7 +55,13 @@ const BookingBar = () => {
               <Calendar
                 mode="single"
                 selected={checkIn}
-                onSelect={setCheckIn}
+                onSelect={(date) => {
+                  setCheckIn(date);
+                  if (date && checkOut && isBefore(checkOut, date)) {
+                    setCheckOut(undefined);
+                  }
+                }}
+                disabled={(date) => isBefore(date, today)}
                 initialFocus
                 className="rounded-3xl border-none"
               />
@@ -77,19 +86,48 @@ const BookingBar = () => {
                 mode="single"
                 selected={checkOut}
                 onSelect={setCheckOut}
+                disabled={(date) => checkIn ? isBefore(date, addDays(checkIn, 1)) : isBefore(date, today)}
                 initialFocus
                 className="rounded-3xl border-none"
               />
             </PopoverContent>
           </Popover>
 
-          <div className="col-span-2 md:col-span-1 flex flex-col px-6 py-3 hover:bg-primary/5 rounded-2xl transition-colors cursor-pointer group border-l border-border/50">
-            <span className="text-[9px] font-black uppercase tracking-widest text-primary mb-1">Guests</span>
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-foreground/40 group-hover:text-primary transition-colors" />
-              <span className="text-sm font-bold text-foreground">2 Guests</span>
-            </div>
-          </div>
+          {/* Guests Selector */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <div className="col-span-2 md:col-span-1 flex flex-col px-6 py-3 hover:bg-primary/5 rounded-2xl transition-colors cursor-pointer group border-l border-border/50">
+                <span className="text-[9px] font-black uppercase tracking-widest text-primary mb-1">Guests</span>
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-foreground/40 group-hover:text-primary transition-colors" />
+                  <span className="text-sm font-bold text-foreground">{guests} Guests</span>
+                </div>
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-64 p-6 rounded-3xl" align="end">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-black text-foreground">Guests</p>
+                  <p className="text-[10px] text-foreground/40 font-bold uppercase tracking-widest">Total capacity</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <button 
+                    onClick={() => setGuests(Math.max(1, guests - 1))}
+                    className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-primary/10 transition-colors"
+                  >
+                    <Minus className="w-3 h-3" />
+                  </button>
+                  <span className="text-sm font-black w-4 text-center">{guests}</span>
+                  <button 
+                    onClick={() => setGuests(Math.min(10, guests + 1))}
+                    className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-primary/10 transition-colors"
+                  >
+                    <Plus className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
 
         <button 
