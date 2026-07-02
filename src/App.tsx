@@ -53,7 +53,7 @@ const App = () => (
             <Route path="/concierge" element={<ConciergePage />} />
             <Route path="/offers" element={<OffersPage />} />
             <Route path="/journal" element={<JournalPage />} />
-            <Route path="/dashboard" element={<OwnerDashboard />} />
+            <Route path="/admin" element={<OwnerDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <AIChatbot />

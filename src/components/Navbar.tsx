@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Menu, ChevronDown, Map, Shield, MessageSquare, X, ArrowRight, UserCheck } from 'lucide-react';
+import { Menu, ChevronDown, Map, Shield, MessageSquare, X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
@@ -15,7 +15,6 @@ const Navbar = () => {
     { path: '/rooms', label: 'Our Rooms', icon: Map, desc: 'Explore our curated collection of premium suites' },
     { path: '/amenities', label: 'Luxury Amenities', icon: Shield, desc: 'Everything you need for a perfect, seamless stay' },
     { path: '/contact', label: 'Contact Us', icon: MessageSquare, desc: '24/7 concierge support for all your needs' },
-    { path: '/dashboard', label: 'Owner Portal', icon: UserCheck, desc: 'Private dashboard to manage booking inquiries' },
   ];
 
   const handleNavigation = (path: string) => {
@@ -60,7 +59,7 @@ const Navbar = () => {
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute top-full left-0 right-0 w-full bg-background/95 backdrop-blur-3xl border border-border rounded-[3rem] p-10 shadow-[0_40px_100px_rgba(0,0,0,0.1)] mt-4"
                 >
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                     {menuItems.map((item) => (
                       <button
                         key={item.path + item.label}

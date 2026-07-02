@@ -8,8 +8,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { allRooms, Room } from '@/data/rooms';
 import { Search, Calendar, X } from 'lucide-react';
 import { format, isBefore, isSameDay } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 const RoomsPage = () => {
+  const navigate = useNavigate();
   const [filteredRooms, setFilteredRooms] = useState<Room[]>(allRooms);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useState<{ checkIn: Date; checkOut: Date; guests: number } | null>(null);
@@ -134,7 +136,7 @@ const RoomsPage = () => {
                 >
                   <div 
                     onClick={() => {
-                      window.location.href = `/rooms/${room.id}`;
+                      navigate(`/rooms/${room.id}`);
                       window.scrollTo(0, 0);
                     }}
                     className="group cursor-pointer"
