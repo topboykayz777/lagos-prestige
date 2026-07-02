@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Instagram, Twitter, Facebook } from 'lucide-react';
+import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 
@@ -17,7 +17,6 @@ const Footer = () => {
             <p className="text-foreground/40 max-w-xs leading-relaxed font-medium mt-6">
               Redefining luxury short-let stays in Nigeria's most vibrant city. Experience the prestige you deserve.
             </p>
-            <p className="text-foreground/60 text-sm font-bold mt-6">kaelfelix0120@gmail.com</p>
           </div>
           
           <div>
@@ -32,11 +31,14 @@ const Footer = () => {
           </div>
           
           <div>
-            <h4 className="font-black mb-8 uppercase text-[10px] tracking-[0.3em] text-primary">Social</h4>
+            <h4 className="font-black mb-8 uppercase text-[10px] tracking-[0.3em] text-primary">Social & Contact</h4>
             <div className="flex gap-6">
               <Instagram className="w-6 h-6 text-foreground/40 hover:text-primary cursor-pointer transition-colors" />
               <Twitter className="w-6 h-6 text-foreground/40 hover:text-primary cursor-pointer transition-colors" />
               <Facebook className="w-6 h-6 text-foreground/40 hover:text-primary cursor-pointer transition-colors" />
+              <a href="mailto:kaelfelix0120@gmail.com" title="Email Us">
+                <Mail className="w-6 h-6 text-foreground/40 hover:text-primary cursor-pointer transition-colors" />
+              </a>
             </div>
           </div>
         </div>
