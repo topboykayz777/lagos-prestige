@@ -96,7 +96,7 @@ Please confirm availability and send payment details. Thank you!`;
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.95, y: 20, opacity: 0 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="relative w-full max-w-lg bg-card border border-border rounded-[3rem] p-8 md:p-10 shadow-2xl z-10 overflow-hidden"
+            className="relative w-full max-w-lg bg-card border border-border rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 shadow-2xl z-10 overflow-y-auto max-h-[calc(100vh-2rem)] no-scrollbar"
           >
             <button
               onClick={onClose}

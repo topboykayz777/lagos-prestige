@@ -97,7 +97,7 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 rounded-3xl" align="start">
+            <PopoverContent className="w-auto p-0 rounded-3xl max-w-[calc(100vw-2rem)]" align="center">
               <Calendar
                 mode="single"
                 selected={checkIn}
@@ -126,7 +126,7 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 rounded-3xl" align="start">
+            <PopoverContent className="w-auto p-0 rounded-3xl max-w-[calc(100vw-2rem)]" align="center">
               <Calendar
                 mode="single"
                 selected={checkOut}
@@ -148,7 +148,7 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverContent className="w-64 p-6 rounded-3xl" align="end">
+            <PopoverContent className="w-64 p-6 rounded-3xl max-w-[calc(100vw-2rem)]" align="center">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-black text-foreground">Guests</p>

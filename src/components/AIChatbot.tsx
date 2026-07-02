@@ -341,7 +341,7 @@ Please confirm availability and send payment details. Thank you!`;
             <MessageSquare className="w-6 h-6" key="open" />
           )}
         </AnimatePresence>
-        <span className="absolute right-full mr-3 bg-card border border-border text-foreground text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+        <span className="absolute right-full mr-3 bg-card border border-border text-foreground text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap hidden sm:inline-block">
           Ask Prestige Assistant
         </span>
       </motion.button>
@@ -353,7 +353,7 @@ Please confirm availability and send payment details. Thank you!`;
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="absolute bottom-20 right-0 w-[350px] h-[480px] bg-card border border-border rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden"
+            className="absolute bottom-20 -right-2 sm:right-0 w-[calc(100vw-2rem)] sm:w-[350px] h-[480px] max-h-[calc(100vh-120px)] bg-card border border-border rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="p-6 bg-primary/5 border-b border-border flex items-center gap-3 justify-center">
