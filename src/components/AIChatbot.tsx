@@ -126,7 +126,7 @@ const AIChatbot = () => {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            model: 'llama3-8b-8192',
+            model: 'llama-3.1-8b-instant',
             messages: apiMessages,
             temperature: 0.5,
             max_tokens: 150
@@ -135,6 +135,7 @@ const AIChatbot = () => {
 
         if (!response.ok) {
           const errText = await response.text();
+          console.error("Groq API Error Response Body:", errText);
           throw new Error(`Groq API error: ${response.status} - ${errText}`);
         }
 
