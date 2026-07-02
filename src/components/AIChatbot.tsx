@@ -21,73 +21,78 @@ const formattedRoomsContext = allRooms.map(room => (
    Category: ${room.category}`
 )).join('\n\n');
 
-const systemPrompt = `You are the Prestige Assistant, a highly professional luxury concierge for Lagos Prestige Shortlets in Ikoyi and Victoria Island, Lagos.
-Your goal is to answer guest questions politely, accurately, and encourage them to book.
+const systemPrompt = `You are the Prestige Assistant, an elite, ultra-premium virtual concierge for Lagos Prestige Shortlets. 
 
-Here is the EXACT real-time catalog of our 13 luxury rooms. Use this data to answer questions about specific rooms, prices, and locations:
+TONE & STYLE RULES:
+- Be extremely straightforward, sharp, and concise. No fluff, no long paragraphs.
+- Keep responses under 2 sentences whenever possible.
+- Speak with confident, quiet luxury. Do not over-explain.
+- Answer the question directly first, then stop.
+
+Here is the EXACT real-time catalog of our 13 luxury rooms:
 ${formattedRoomsContext}
 
 Key General Information:
-- Power: 24/7 uninterrupted power guaranteed by a dual-grid system and silent backup generators.
+- Power: 24/7 uninterrupted power guaranteed by a dual-grid system and silent backup generators. Blackouts are impossible here.
 - Security: 24/7 on-site vetted security, CCTV, and secure electronic access.
 - WiFi: Dedicated high-speed fiber-optic internet in all suites.
 - Private Chef: Available upon request to prepare curated gourmet meals in the suite's kitchen.
 - Chauffeur/Airport Pickup: Can be arranged by our private concierge.
 - Check-in: 2:00 PM. Check-out: 11:00 AM.
 
-Always nudge guests to click "Reserve Now" on any room page to secure their booking via WhatsApp. Keep responses concise, elegant, and extremely helpful.`;
+Nudge guests to click "Reserve Now" on any room page to secure their booking via WhatsApp.`;
 
 const localKnowledgeBase = [
   { 
     keywords: ['hello', 'hi', 'hey', 'greetings', 'yo', 'morning', 'evening', 'afternoon', 'howdy'], 
-    response: "Hello! Welcome to Lagos Prestige. I am your virtual concierge. How can I assist you with your luxury stay in Ikoyi today?" 
+    response: "Welcome to Lagos Prestige. How can I assist you with your luxury stay today?" 
   },
   { 
     keywords: ['thank', 'thanks', 'appreciate', 'awesome', 'great', 'cool', 'perfect'], 
-    response: "You are very welcome! It is my absolute pleasure. Let me know if you have any other questions or if you're ready to book your suite!" 
+    response: "My pleasure. Let me know when you are ready to book." 
   },
   { 
     keywords: ['who are you', 'what is this', 'your name', 'about you', 'what do you do'], 
-    response: "I am the Prestige Assistant, your dedicated virtual concierge. I can help you with details about our luxury suites, 24/7 power, elite security, private chefs, and booking process!" 
+    response: "I am the Prestige Assistant, your virtual concierge. I provide direct details on our luxury suites and amenities." 
   },
   { 
     keywords: ['power', 'light', 'electricity', 'generator', 'outage', 'blackout'], 
-    response: "We have 24/7 uninterrupted power guaranteed by a dual-grid system and high-capacity silent backup generators. You will never experience a blackout here!" 
+    response: "We guarantee 24/7 uninterrupted power via a dual-grid system and silent backup generators. Blackouts are impossible." 
   },
   { 
     keywords: ['security', 'safe', 'police', 'guard', 'secure', 'danger'], 
-    response: "Your safety is our top priority. We have 24/7 on-site vetted security personnel, CCTV in common areas, and secure electronic access to all rooms." 
+    response: "Your safety is absolute. We have 24/7 on-site vetted security, CCTV, and secure electronic access." 
   },
   { 
     keywords: ['wifi', 'internet', 'speed', 'fiber', 'connection'], 
-    response: "Every room is equipped with dedicated high-speed fiber-optic WiFi, perfect for video calls, streaming, and remote work." 
+    response: "Every suite features dedicated high-speed fiber-optic WiFi, optimized for remote work." 
   },
   { 
     keywords: ['chef', 'food', 'cook', 'meal', 'dining', 'eat'], 
-    response: "Yes! We offer private chef services. Our chefs can prepare curated gourmet menus directly in your suite's kitchen upon request." 
+    response: "Yes. Private chefs are available upon request to prepare curated gourmet meals in your suite." 
   },
   { 
     keywords: ['airport', 'pickup', 'car', 'chauffeur', 'transport', 'ride'], 
-    response: "Absolutely. Our private concierge can arrange luxury chauffeur services for airport transfers and city tours." 
+    response: "Absolutely. Our concierge can arrange luxury chauffeur services for airport transfers and city tours." 
   },
   { 
     keywords: ['check-in', 'check-out', 'time', 'arrive', 'leave'], 
-    response: "Standard check-in is at 2:00 PM and check-out is at 11:00 AM. Early check-in or late check-out can be arranged based on availability." 
+    response: "Check-in is at 2:00 PM. Check-out is at 11:00 AM. Early or late times can be arranged based on availability." 
   },
   { 
     keywords: ['price', 'cost', 'cheap', 'expensive', 'rate', 'night'], 
-    response: "Our luxury rooms start from ₦80k per night up to ₦350k per night for our Presidential Wing. You can view all pricing in the 'Our Rooms' section!" 
+    response: "Our luxury suites range from ₦80k to ₦350k per night. View exact pricing in the 'Our Rooms' section." 
   },
   { 
     keywords: ['book', 'reserve', 'stay', 'payment', 'pay'], 
-    response: "To book, simply navigate to any room page, click 'Reserve Now', fill in your details, and our concierge will finalize everything with you on WhatsApp instantly!" 
+    response: "To book, click 'Reserve Now' on any room page to finalize details instantly with our concierge on WhatsApp." 
   }
 ];
 
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: "Hello! I am your Prestige Assistant. Ask me anything about our luxury rooms, 24/7 power, security, or amenities!" }
+    { role: 'assistant', content: "Welcome to Lagos Prestige. Ask me anything about our luxury suites, 24/7 power, or security." }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -128,8 +133,8 @@ const AIChatbot = () => {
           body: JSON.stringify({
             model: 'llama-3.1-8b-instant',
             messages: apiMessages,
-            temperature: 0.5,
-            max_tokens: 150
+            temperature: 0.3,
+            max_tokens: 100
           })
         });
 
@@ -140,7 +145,7 @@ const AIChatbot = () => {
         }
 
         const data = await response.json();
-        const botResponse = data.choices[0]?.message?.content || "I'm here to help! Please let me know how I can assist with your stay.";
+        const botResponse = data.choices[0]?.message?.content || "I'm here to help. Let me know how I can assist.";
         setMessages(prev => [...prev, { role: 'assistant', content: botResponse }]);
       } catch (error) {
         console.error("Groq API failed, falling back to local knowledge base:", error);
@@ -157,7 +162,7 @@ const AIChatbot = () => {
   };
 
   const triggerFallback = (userText: string) => {
-    let botResponse = "I'm here to help! For specific booking inquiries, feel free to click 'Reserve Now' on any room page to chat directly with our human concierge on WhatsApp.";
+    let botResponse = "I'm here to help. Click 'Reserve Now' on any room page to chat directly with our concierge on WhatsApp.";
     const lowerText = userText.toLowerCase();
     for (const entry of localKnowledgeBase) {
       if (entry.keywords.some(keyword => lowerText.includes(keyword))) {
