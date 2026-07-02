@@ -93,10 +93,10 @@ const AIChatbot = () => {
 
     // Accessing the API key (Vite requires VITE_ prefix for client-side exposure)
     const apiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.GROQ_API_KEY;
+    console.log("Prestige Assistant - API Key Status:", apiKey ? "Found" : "Not Found");
 
     if (apiKey) {
       try {
-        // Format messages for Groq API including system prompt and full history
         const apiMessages = [
           { role: 'system', content: systemPrompt },
           ...updatedMessages.map(msg => ({
@@ -119,13 +119,16 @@ const AIChatbot = () => {
           })
         });
 
-        if (!response.ok) throw new Error('Groq API error');
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`Groq API error: ${response.status} - ${errText}`);
+        }
 
         const data = await response.json();
         const botResponse = data.choices[0]?.message?.content || "I'm here to help! Please let me know how I can assist with your stay.";
         setMessages(prev => [...prev, { role: 'assistant', content: botResponse }]);
       } catch (error) {
-        console.warn("Groq API failed, falling back to local knowledge base:", error);
+        console.error("Groq API failed, falling back to local knowledge base:", error);
         triggerFallback(userText);
       } finally {
         setIsTyping(false);
