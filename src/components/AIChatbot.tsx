@@ -22,14 +22,50 @@ Key Information:
 Always nudge guests to click "Reserve Now" on any room page to secure their booking via WhatsApp. Keep responses concise and elegant.`;
 
 const localKnowledgeBase = [
-  { keywords: ['power', 'light', 'electricity', 'generator'], response: "We have 24/7 uninterrupted power guaranteed by a dual-grid system and high-capacity silent backup generators. You will never experience a blackout here!" },
-  { keywords: ['security', 'safe', 'police', 'guard'], response: "Your safety is our top priority. We have 24/7 on-site vetted security personnel, CCTV in common areas, and secure electronic access to all rooms." },
-  { keywords: ['wifi', 'internet', 'speed', 'fiber'], response: "Every room is equipped with dedicated high-speed fiber-optic WiFi, perfect for video calls, streaming, and remote work." },
-  { keywords: ['chef', 'food', 'cook', 'meal'], response: "Yes! We offer private chef services. Our chefs can prepare curated gourmet menus directly in your suite's kitchen upon request." },
-  { keywords: ['airport', 'pickup', 'car', 'chauffeur'], response: "Absolutely. Our private concierge can arrange luxury chauffeur services for airport transfers and city tours." },
-  { keywords: ['check-in', 'check-out', 'time'], response: "Standard check-in is at 2:00 PM and check-out is at 11:00 AM. Early check-in or late check-out can be arranged based on availability." },
-  { keywords: ['price', 'cost', 'cheap', 'expensive'], response: "Our luxury rooms start from ₦80k per night up to ₦350k per night for our Presidential Wing. You can view all pricing in the 'Our Rooms' section!" },
-  { keywords: ['book', 'reserve', 'stay'], response: "To book, simply navigate to any room page, click 'Reserve Now', fill in your details, and our concierge will finalize everything with you on WhatsApp instantly!" }
+  { 
+    keywords: ['hello', 'hi', 'hey', 'greetings', 'yo', 'morning', 'evening', 'afternoon', 'howdy'], 
+    response: "Hello! Welcome to Lagos Prestige. I am your virtual concierge. How can I assist you with your luxury stay in Ikoyi today?" 
+  },
+  { 
+    keywords: ['thank', 'thanks', 'appreciate', 'awesome', 'great', 'cool', 'perfect'], 
+    response: "You are very welcome! It is my absolute pleasure. Let me know if you have any other questions or if you're ready to book your suite!" 
+  },
+  { 
+    keywords: ['who are you', 'what is this', 'your name', 'about you', 'what do you do'], 
+    response: "I am the Prestige Assistant, your dedicated virtual concierge. I can help you with details about our luxury suites, 24/7 power, elite security, private chefs, and booking process!" 
+  },
+  { 
+    keywords: ['power', 'light', 'electricity', 'generator', 'outage', 'blackout'], 
+    response: "We have 24/7 uninterrupted power guaranteed by a dual-grid system and high-capacity silent backup generators. You will never experience a blackout here!" 
+  },
+  { 
+    keywords: ['security', 'safe', 'police', 'guard', 'secure', 'danger'], 
+    response: "Your safety is our top priority. We have 24/7 on-site vetted security personnel, CCTV in common areas, and secure electronic access to all rooms." 
+  },
+  { 
+    keywords: ['wifi', 'internet', 'speed', 'fiber', 'connection'], 
+    response: "Every room is equipped with dedicated high-speed fiber-optic WiFi, perfect for video calls, streaming, and remote work." 
+  },
+  { 
+    keywords: ['chef', 'food', 'cook', 'meal', 'dining', 'eat'], 
+    response: "Yes! We offer private chef services. Our chefs can prepare curated gourmet menus directly in your suite's kitchen upon request." 
+  },
+  { 
+    keywords: ['airport', 'pickup', 'car', 'chauffeur', 'transport', 'ride'], 
+    response: "Absolutely. Our private concierge can arrange luxury chauffeur services for airport transfers and city tours." 
+  },
+  { 
+    keywords: ['check-in', 'check-out', 'time', 'arrive', 'leave'], 
+    response: "Standard check-in is at 2:00 PM and check-out is at 11:00 AM. Early check-in or late check-out can be arranged based on availability." 
+  },
+  { 
+    keywords: ['price', 'cost', 'cheap', 'expensive', 'rate', 'night'], 
+    response: "Our luxury rooms start from ₦80k per night up to ₦350k per night for our Presidential Wing. You can view all pricing in the 'Our Rooms' section!" 
+  },
+  { 
+    keywords: ['book', 'reserve', 'stay', 'payment', 'pay'], 
+    response: "To book, simply navigate to any room page, click 'Reserve Now', fill in your details, and our concierge will finalize everything with you on WhatsApp instantly!" 
+  }
 ];
 
 const AIChatbot = () => {
@@ -55,6 +91,7 @@ const AIChatbot = () => {
     setInput('');
     setIsTyping(true);
 
+    // Accessing the API key (Vite requires VITE_ prefix for client-side exposure)
     const apiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.GROQ_API_KEY;
 
     if (apiKey) {
