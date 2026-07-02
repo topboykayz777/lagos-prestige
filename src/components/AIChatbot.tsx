@@ -353,7 +353,7 @@ Please confirm availability and send payment details. Thank you!`;
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="absolute bottom-20 -right-2 sm:right-0 w-[calc(100vw-2rem)] sm:w-[350px] h-[480px] max-h-[calc(100vh-120px)] bg-card border border-border rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden"
+            className="absolute bottom-20 -right-2 sm:right-0 w-[calc(100vw-2rem)] sm:w-[350px] h-[480px] max-h-[calc(100dvh-120px)] bg-card border border-border rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="p-6 bg-primary/5 border-b border-border flex items-center gap-3 justify-center">
@@ -411,7 +411,7 @@ Please confirm availability and send payment details. Thank you!`;
                 placeholder={bookingStep !== 'idle' ? "Type your answer here..." : "Ask about power, security, wifi..."}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-xs font-bold focus:outline-none focus:border-primary/50 text-center"
+                className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-base md:text-xs font-bold focus:outline-none focus:border-primary/50 text-center"
               />
               <button
                 type="submit"
