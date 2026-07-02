@@ -309,11 +309,10 @@ Please confirm availability and send payment details. Thank you!`;
           content: "Perfect! Your booking request has been logged. I am opening WhatsApp now to finalize your stay with our concierge." 
         }]);
 
-        toast.success("Booking request saved! Redirecting to WhatsApp...");
+        toast.success("Booking request saved! Opening WhatsApp...");
         
-        setTimeout(() => {
-          window.open(whatsappUrl, '_blank');
-        }, 1500);
+        // Open directly in the same window to bypass popup blockers completely
+        window.location.href = whatsappUrl;
 
         // Reset booking state
         setBookingStep('idle');
@@ -413,7 +412,7 @@ Please confirm availability and send payment details. Thank you!`;
                 placeholder={bookingStep !== 'idle' ? "Type your answer here..." : "Ask about power, security, wifi..."}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-base md:text-xs font-bold focus:outline-none focus:border-primary/50 text-center"
+                className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-base font-bold focus:outline-none focus:border-primary/50 text-center"
               />
               <button
                 type="submit"

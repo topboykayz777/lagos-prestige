@@ -69,12 +69,11 @@ Please confirm availability and send payment details. Thank you!`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/2349157802693?text=${encodedMessage}`;
 
-    toast.success("Booking request saved! Redirecting to WhatsApp...");
+    toast.success("Booking request saved! Opening WhatsApp...");
     
-    setTimeout(() => {
-      window.open(whatsappUrl, '_blank');
-      onClose();
-    }, 1500);
+    // Open directly in the same window to bypass popup blockers completely
+    window.location.href = whatsappUrl;
+    onClose();
   };
 
   return (
@@ -127,7 +126,7 @@ Please confirm availability and send payment details. Thank you!`;
                     placeholder="e.g. Sarah Jenkins"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
+                    className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-base font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                   />
                 </div>
               </div>
@@ -143,7 +142,7 @@ Please confirm availability and send payment details. Thank you!`;
                     placeholder="e.g. +234 803 123 4567"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
+                    className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-base font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                   />
                 </div>
               </div>
@@ -159,7 +158,7 @@ Please confirm availability and send payment details. Thank you!`;
                       required
                       value={checkIn}
                       onChange={(e) => setCheckIn(e.target.value)}
-                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
+                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-base font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                     />
                   </div>
                 </div>
@@ -172,7 +171,7 @@ Please confirm availability and send payment details. Thank you!`;
                       required
                       value={checkOut}
                       onChange={(e) => setCheckOut(e.target.value)}
-                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
+                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-base font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                     />
                   </div>
                 </div>
@@ -187,7 +186,7 @@ Please confirm availability and send payment details. Thank you!`;
                     <select
                       value={guests}
                       onChange={(e) => setGuests(Number(e.target.value))}
-                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors appearance-none text-center"
+                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-base font-bold focus:outline-none focus:border-primary/50 transition-colors appearance-none text-center"
                     >
                       {[1, 2, 3, 4, 5, 6].map(n => (
                         <option key={n} value={n}>{n}</option>
@@ -204,7 +203,7 @@ Please confirm availability and send payment details. Thank you!`;
                       placeholder="e.g. Airport pickup, early check-in"
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
-                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
+                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-base font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                     />
                   </div>
                 </div>
