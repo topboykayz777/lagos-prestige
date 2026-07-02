@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, X, Send, Sparkles, Bot, User } from 'lucide-react';
+import { MessageSquare, X, Send, User } from 'lucide-react';
 import { allRooms } from '@/data/rooms';
 import { saveBooking } from '@/utils/bookings';
 import { toast } from 'sonner';
@@ -357,8 +357,10 @@ Please confirm availability and send payment details. Thank you!`;
           >
             {/* Header */}
             <div className="p-6 bg-primary/5 border-b border-border flex items-center gap-3 justify-center">
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-background" />
+              <div className="w-10 h-10 rounded-xl bg-[#1A241E] flex items-center justify-center shrink-0 border border-primary/20">
+                <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M30 25V75C30 80 35 85 40 85H70" stroke="#C5A059" strokeWidth="10" strokeLinecap="round" fill="none" />
+                </svg>
               </div>
               <div className="text-center">
                 <h4 className="font-black text-sm text-foreground leading-none text-center">Prestige Assistant</h4>
@@ -370,8 +372,14 @@ Please confirm availability and send payment details. Thank you!`;
             <div className="flex-1 p-6 overflow-y-auto space-y-4 no-scrollbar">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${msg.role === 'user' ? 'bg-primary/10' : 'bg-foreground/5'}`}>
-                    {msg.role === 'user' ? <User className="w-4 h-4 text-primary" /> : <Bot className="w-4 h-4 text-foreground" />}
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${msg.role === 'user' ? 'bg-primary/10' : 'bg-[#1A241E] border border-primary/10'}`}>
+                    {msg.role === 'user' ? (
+                      <User className="w-4 h-4 text-primary" />
+                    ) : (
+                      <svg width="16" height="16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 25V75C30 80 35 85 40 85H70" stroke="#C5A059" strokeWidth="12" strokeLinecap="round" fill="none" />
+                      </svg>
+                    )}
                   </div>
                   <div className={`p-4 rounded-2xl text-xs leading-relaxed max-w-[75%] ${msg.role === 'user' ? 'bg-primary text-background rounded-tr-none text-center' : 'bg-foreground/5 text-foreground/80 rounded-tl-none text-center'}`}>
                     {msg.content}
@@ -381,8 +389,10 @@ Please confirm availability and send payment details. Thank you!`;
 
               {isTyping && (
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-foreground/5 flex items-center justify-center shrink-0">
-                    <Bot className="w-4 h-4 text-foreground" />
+                  <div className="w-8 h-8 rounded-lg bg-[#1A241E] border border-primary/10 flex items-center justify-center shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M30 25V75C30 80 35 85 40 85H70" stroke="#C5A059" strokeWidth="12" strokeLinecap="round" fill="none" />
+                    </svg>
                   </div>
                   <div className="p-4 rounded-2xl bg-foreground/5 text-foreground/40 text-xs rounded-tl-none flex items-center gap-1 justify-center">
                     <span className="w-1.5 h-1.5 bg-foreground/40 rounded-full animate-bounce" />
