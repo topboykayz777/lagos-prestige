@@ -16,7 +16,9 @@ import NeighborhoodsPage from "./pages/NeighborhoodsPage";
 import ConciergePage from "./pages/ConciergePage";
 import OffersPage from "./pages/OffersPage";
 import JournalPage from "./pages/JournalPage";
+import OwnerDashboard from "./pages/OwnerDashboard";
 import NotFound from "./pages/NotFound";
+import AIChatbot from "./components/AIChatbot";
 
 const queryClient = new QueryClient();
 
@@ -51,8 +53,10 @@ const App = () => (
             <Route path="/concierge" element={<ConciergePage />} />
             <Route path="/offers" element={<OffersPage />} />
             <Route path="/journal" element={<JournalPage />} />
+            <Route path="/dashboard" element={<OwnerDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <AIChatbot />
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>

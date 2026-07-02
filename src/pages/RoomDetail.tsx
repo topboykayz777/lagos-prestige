@@ -4,25 +4,22 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import BookingModal from '@/components/BookingModal';
 import { motion } from 'framer-motion';
 import { Star, MapPin, Shield, Zap, Wifi, Coffee, Utensils, ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { toast } from 'sonner';
 import { allRooms } from '@/data/rooms';
 
 const RoomDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [selectedImg, setSelectedImg] = useState(0);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   
   const room = allRooms.find(r => r.id === id) || allRooms[0];
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
-
-  const handleBooking = () => {
-    toast.success("Inquiry sent! Our concierge will contact you shortly.");
-  };
 
   const amenities = [
     { icon: Zap, label: "24/7 Power" },
@@ -132,7 +129,7 @@ const RoomDetail = () => {
                 </div>
 
                 <button 
-                  onClick={handleBooking}
+                  onClick={() => setIsBookingOpen(true)}
                   className="w-full py-6 bg-primary text-background rounded-2xl font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl mb-4"
                 >
                   Reserve Now
@@ -157,6 +154,12 @@ const RoomDetail = () => {
           </div>
         </div>
       </main>
+
+      <BookingModal 
+        isOpen={isBookingOpen} 
+        onClose={() => setIsBookingOpen(false)} 
+        room={room} 
+      />
 
       <Footer />
     </div>
