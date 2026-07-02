@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Menu, ChevronDown, Map, Shield, Zap, MessageSquare, X, ArrowRight, Compass, UserCheck, Tag, BookOpen } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, ChevronDown, Map, Shield, MessageSquare, X, ArrowRight, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 
 const Navbar = () => {
@@ -14,12 +14,8 @@ const Navbar = () => {
   const menuItems = [
     { path: '/rooms', label: 'Our Rooms', icon: Map, desc: 'Explore our curated collection of premium suites' },
     { path: '/amenities', label: 'Luxury Amenities', icon: Shield, desc: 'Everything you need for a perfect, seamless stay' },
-    { path: '/neighborhoods', label: 'Neighborhood Guide', icon: Compass, desc: 'Discover the best of Ikoyi, VI, and Lekki' },
-    { path: '/concierge', label: 'Private Concierge', icon: UserCheck, desc: 'Personalized services from chefs to chauffeurs' },
-    { path: '/how-it-works', label: 'How It Works', icon: Zap, desc: 'Our simple 3-step booking and check-in process' },
-    { path: '/offers', label: 'Special Offers', icon: Tag, desc: 'Exclusive rates for extended stays and corporate' },
     { path: '/contact', label: 'Contact Us', icon: MessageSquare, desc: '24/7 concierge support for all your needs' },
-    { path: '/journal', label: 'Guest Journal', icon: BookOpen, desc: 'Stories and reviews from our global community' },
+    { path: '/dashboard', label: 'Owner Portal', icon: UserCheck, desc: 'Private dashboard to manage booking inquiries' },
   ];
 
   const handleNavigation = (path: string) => {
@@ -39,7 +35,7 @@ const Navbar = () => {
       >
         <div className="w-full max-w-7xl flex items-center justify-between bg-background/40 backdrop-blur-xl border border-white/10 rounded-[2rem] md:rounded-[2.5rem] px-4 md:px-8 py-2 md:py-3 shadow-2xl relative">
           
-          {/* Logo Container: Centered on mobile, Left on desktop */}
+          {/* Logo Container */}
           <div className="flex-1 flex justify-center lg:justify-start">
             <Logo />
           </div>

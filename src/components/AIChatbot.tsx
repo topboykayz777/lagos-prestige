@@ -3,13 +3,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Sparkles, Bot, User } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface Message {
   sender: 'bot' | 'user';
   text: string;
 }
 
-const knowledgeBase = [
+const systemPrompt = `You are the Prestige Assistant, a highly professional luxury concierge for Lagos Prestige Shortlets in Ikoyi and Victoria Island, Lagos.
+Your goal is to answer guest questions politely and encourage them to book.
+Key Information:
+- Power: 24/7 uninterrupted power guaranteed by a dual-grid system and silent backup generators.
+- Security: 24/7 on-site vetted security, CCTV, and secure electronic access.
+- WiFi: Dedicated high-speed fiber-optic internet in all suites.
+- Private Chef: Available upon request to prepare curated gourmet meals in the suite's kitchen.
+- Chauffeur/Airport Pickup: Can be arranged by our private concierge.
+- Check-in: 2:00 PM. Check-out: 11:00 AM.
+- Pricing: Starts from ₦80k/night up to ₦350k/night for the Presidential Wing.
+Always nudge guests to click "Reserve Now" on any room page to secure their booking via WhatsApp. Keep responses concise and elegant.`;
+
+const localKnowledgeBase = [
   { keywords: ['power', 'light', 'electricity', 'generator'], response: "We have 24/7 uninterrupted power guaranteed by a dual-grid system and high-capacity silent backup generators. You will never experience a blackout here!" },
   { keywords: ['security', 'safe', 'police', 'guard'], response: "Your safety is our top priority. We have 24/7 on-site vetted security personnel, CCTV in common areas, and secure electronic access to all rooms." },
   { keywords: ['wifi', 'internet', 'speed', 'fiber'], response: "Every room is equipped with dedicated high-speed fiber-optic WiFi, perfect for video calls, streaming, and remote work." },
@@ -23,7 +36,7 @@ const knowledgeBase = [
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { sender: 'bot', text: "Hello! I am your Prestige AI Concierge. Ask me anything about our luxury rooms, 24/7 power, security, or amenities!" }
+    { sender: 'bot', text: "Hello! I am your Prestige Assistant. Ask me anything about our luxury rooms, 24/7 power, security, or amenities!" }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -33,7 +46,7 @@ const AIChatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
@@ -42,21 +55,57 @@ const AIChatbot = () => {
     setInput('');
     setIsTyping(true);
 
-    // Simulate AI thinking and typing
-    setTimeout(() => {
-      let botResponse = "I'm here to help! For specific booking inquiries, feel free to click 'Reserve Now' on any room page to chat directly with our human concierge on WhatsApp.";
-      
-      const lowerText = userText.toLowerCase();
-      for (const entry of knowledgeBase) {
-        if (entry.keywords.some(keyword => lowerText.includes(keyword))) {
-          botResponse = entry.response;
-          break;
-        }
-      }
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.GROQ_API_KEY;
 
-      setMessages(prev => [...prev, { sender: 'bot', text: botResponse }]);
-      setIsTyping(false);
-    }, 1200);
+    if (apiKey) {
+      try {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'llama3-8b-8192',
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: userText }
+            ],
+            temperature: 0.5,
+            max_tokens: 150
+          })
+        });
+
+        if (!response.ok) throw new Error('Groq API error');
+
+        const data = await response.json();
+        const botResponse = data.choices[0]?.message?.content || "I'm here to help! Please let me know how I can assist with your stay.";
+        setMessages(prev => [...prev, { sender: 'bot', text: botResponse }]);
+      } catch (error) {
+        console.warn("Groq API failed, falling back to local knowledge base:", error);
+        triggerFallback(userText);
+      } finally {
+        setIsTyping(false);
+      }
+    } else {
+      // Fallback to local knowledge base if no API key is present
+      setTimeout(() => {
+        triggerFallback(userText);
+        setIsTyping(false);
+      }, 1000);
+    }
+  };
+
+  const triggerFallback = (userText: string) => {
+    let botResponse = "I'm here to help! For specific booking inquiries, feel free to click 'Reserve Now' on any room page to chat directly with our human concierge on WhatsApp.";
+    const lowerText = userText.toLowerCase();
+    for (const entry of localKnowledgeBase) {
+      if (entry.keywords.some(keyword => lowerText.includes(keyword))) {
+        botResponse = entry.response;
+        break;
+      }
+    }
+    setMessages(prev => [...prev, { sender: 'bot', text: botResponse }]);
   };
 
   return (
@@ -76,7 +125,7 @@ const AIChatbot = () => {
           )}
         </AnimatePresence>
         <span className="absolute right-full mr-3 bg-card border border-border text-foreground text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-          Ask Prestige AI
+          Ask Prestige Assistant
         </span>
       </motion.button>
 
@@ -95,7 +144,7 @@ const AIChatbot = () => {
                 <Sparkles className="w-5 h-5 text-background" />
               </div>
               <div>
-                <h4 className="font-black text-sm text-foreground leading-none">Prestige AI</h4>
+                <h4 className="font-black text-sm text-foreground leading-none">Prestige Assistant</h4>
                 <span className="text-[9px] font-bold text-primary uppercase tracking-widest mt-1 block">Smart Concierge</span>
               </div>
             </div>

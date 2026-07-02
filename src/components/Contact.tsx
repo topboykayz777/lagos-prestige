@@ -11,6 +11,16 @@ const Contact = () => {
     window.open('https://wa.me/2349157802693', '_blank');
   };
 
+  const handleCall = () => {
+    toast.success("Calling Lagos Prestige...");
+    window.location.href = 'tel:+2349157802693';
+  };
+
+  const handleEmail = () => {
+    toast.success("Opening email client...");
+    window.location.href = 'mailto:kaelfelix0120@gmail.com';
+  };
+
   return (
     <section id="contact" className="py-20 md:py-32 bg-background relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[800px] h-[300px] md:h-[800px] bg-primary/5 blur-[100px] md:blur-[150px] rounded-full pointer-events-none" />
@@ -32,25 +42,26 @@ const Contact = () => {
                 Our concierge team is available 24/7 to assist with your luxury stay in Lagos. Experience the prestige you deserve.
               </p>
               
-              <div className="space-y-6 md:space-y-8">
-                <div className="flex items-center gap-4 md:gap-6 group cursor-pointer">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-primary/5 flex items-center justify-center group-hover:bg-primary transition-all duration-500">
-                    <Phone className="w-5 h-5 md:w-6 md:h-6 text-primary group-hover:text-background" />
+              <div className="flex gap-6">
+                <button 
+                  onClick={handleCall}
+                  className="flex items-center gap-4 px-6 py-4 rounded-2xl bg-primary/5 border border-border hover:border-primary/30 transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+                    <Phone className="w-5 h-5 text-primary group-hover:text-background" />
                   </div>
-                  <div>
-                    <p className="text-[8px] md:text-[10px] font-black text-primary uppercase tracking-widest mb-0.5 md:mb-1">Call Us</p>
-                    <span className="text-lg md:text-xl font-black text-foreground">+234 915 780 2693</span>
+                  <span className="text-xs font-black uppercase tracking-widest text-foreground">Call Us</span>
+                </button>
+
+                <button 
+                  onClick={handleEmail}
+                  className="flex items-center gap-4 px-6 py-4 rounded-2xl bg-primary/5 border border-border hover:border-primary/30 transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+                    <Mail className="w-5 h-5 text-primary group-hover:text-background" />
                   </div>
-                </div>
-                <div className="flex items-center gap-4 md:gap-6 group cursor-pointer">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-primary/5 flex items-center justify-center group-hover:bg-primary transition-all duration-500">
-                    <Mail className="w-5 h-5 md:w-6 md:h-6 text-primary group-hover:text-background" />
-                  </div>
-                  <div>
-                    <p className="text-[8px] md:text-[10px] font-black text-primary uppercase tracking-widest mb-0.5 md:mb-1">Email Us</p>
-                    <span className="text-lg md:text-xl font-black text-foreground break-all">kaelfelix0120@gmail.com</span>
-                  </div>
-                </div>
+                  <span className="text-xs font-black uppercase tracking-widest text-foreground">Email Us</span>
+                </button>
               </div>
             </div>
 
