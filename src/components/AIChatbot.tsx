@@ -12,8 +12,6 @@ interface Message {
   content: string;
 }
 
-type BookingStep = 'idle' | 'awaiting_room' | 'awaiting_name' | 'awaiting_phone' | 'awaiting_checkin' | 'awaiting_checkout' | 'awaiting_guests' | 'awaiting_note';
-
 // Dynamically format all rooms into a clean text block for the AI
 const formattedRoomsContext = allRooms.map(room => (
   `- Room ID: ${room.id}
@@ -50,7 +48,20 @@ Key General Information:
 - Chauffeur/Airport Pickup: Can be arranged by our private concierge.
 - Check-in: 2:00 PM. Check-out: 11:00 AM.
 
-If a guest wants to book or reserve a room, tell them: "I can help you book that right now. Let's get started."`;
+CONVERSATIONAL BOOKING FLOW:
+If the user wants to book or reserve a room, you must guide them through collecting the following details naturally. You can answer any questions they ask at any point, but keep track of what details are still missing:
+1. Room Choice (Must match one of our 13 rooms. Help them choose if they ask!)
+2. Guest's Full Name
+3. WhatsApp Number
+4. Check-In Date (Must be today or in the future, formatted as YYYY-MM-DD)
+5. Check-Out Date (Must be after Check-In, formatted as YYYY-MM-DD)
+6. Number of Guests
+7. Special Note (Optional)
+
+Once (and ONLY once) you have collected ALL 6 required details (Room, Name, WhatsApp, Check-In, Check-Out, Guests), you must append the following exact tag at the very end of your response:
+[BOOKING_DATA: {"roomId": "ROOM_ID", "roomTitle": "ROOM_TITLE", "guestName": "GUEST_NAME", "whatsappNumber": "WHATSAPP_NUMBER", "checkIn": "YYYY-MM-DD", "checkOut": "YYYY-MM-DD", "guests": NUMBER_OF_GUESTS, "note": "SPECIAL_NOTE"}]
+
+Do not output this tag until you have all the details. If the user asks a question (e.g., "is room 10 a nice choice?"), answer it fully and politely, then ask for the next missing detail.`;
 };
 
 const localKnowledgeBase = [
@@ -105,94 +116,9 @@ const AIChatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Conversational Booking State
-  const [bookingStep, setBookingStep] = useState<BookingStep>('idle');
-  const [bookingData, setBookingData] = useState({
-    roomId: '',
-    roomTitle: '',
-    guestName: '',
-    whatsappNumber: '',
-    checkIn: '',
-    checkOut: '',
-    guests: 2,
-    note: ''
-  });
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
-
-  const parseDateInput = async (userInput: string, isCheckOut: boolean, checkInDate?: string): Promise<string> => {
-    const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
-    
-    const apiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.GROQ_API_KEY;
-    if (apiKey) {
-      try {
-        const prompt = `You are a precise date parser. Today's date is ${todayStr} (${today.toLocaleDateString('en-US', { weekday: 'long' })}).
-        The user input is: "${userInput}".
-        ${isCheckOut && checkInDate ? `This is for a check-out date. The check-in date is already set to ${checkInDate}. The check-out date MUST be after the check-in date.` : 'This is for a check-in date. It must be today or in the future.'}
-        
-        Convert the user's input into a standard YYYY-MM-DD format.
-        If the input is invalid, in the past, or before the check-in date, return "invalid".
-        Return ONLY the YYYY-MM-DD date or "invalid". Do not include any other text, explanation, or punctuation.`;
-
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            model: 'llama-3.1-8b-instant',
-            messages: [{ role: 'user', content: prompt }],
-            temperature: 0.0,
-            max_tokens: 10
-          })
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const result = data.choices[0]?.message?.content?.trim();
-          if (result && /^\d{4}-\d{2}-\d{2}$/.test(result)) {
-            return result;
-          }
-        }
-      } catch (e) {
-        console.error("AI date parsing failed, using local parser", e);
-      }
-    }
-
-    // Local fallback parser
-    try {
-      let parsedDate = new Date(userInput);
-      const lowerInput = userInput.toLowerCase();
-      if (lowerInput === 'today') {
-        parsedDate = today;
-      } else if (lowerInput === 'tomorrow') {
-        parsedDate = new Date(today);
-        parsedDate.setDate(today.getDate() + 1);
-      } else if (lowerInput === 'next week') {
-        parsedDate = new Date(today);
-        parsedDate.setDate(today.getDate() + 7);
-      }
-
-      if (!isNaN(parsedDate.getTime())) {
-        const formatted = parsedDate.toISOString().split('T')[0];
-        if (isCheckOut && checkInDate && formatted <= checkInDate) {
-          return 'invalid';
-        }
-        if (formatted < todayStr) {
-          return 'invalid';
-        }
-        return formatted;
-      }
-    } catch (e) {
-      // ignore
-    }
-
-    return 'invalid';
-  };
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -202,36 +128,6 @@ const AIChatbot = () => {
     const updatedMessages = [...messages, { role: 'user' as const, content: userText }];
     setMessages(updatedMessages);
     setInput('');
-
-    // Check if we are currently in a booking flow
-    if (bookingStep !== 'idle') {
-      await handleBookingFlow(userText);
-      return;
-    }
-
-    // Check if user wants to start booking
-    const lowerText = userText.toLowerCase();
-    if (lowerText.includes('book') || lowerText.includes('reserve') || lowerText.includes('rent') || lowerText.includes('stay at')) {
-      // Try to detect which room they want to book
-      const matchedRoom = allRooms.find(r => lowerText.includes(r.title.toLowerCase()) || lowerText.includes(r.id));
-      if (matchedRoom) {
-        setBookingData(prev => ({ ...prev, roomId: matchedRoom.id, roomTitle: matchedRoom.title }));
-        setBookingStep('awaiting_name');
-        setIsTyping(true);
-        setTimeout(() => {
-          setMessages(prev => [...prev, { role: 'assistant', content: `Excellent choice. Let's book the ${matchedRoom.title}. What is your full name?` }]);
-          setIsTyping(false);
-        }, 800);
-      } else {
-        setBookingStep('awaiting_room');
-        setIsTyping(true);
-        setTimeout(() => {
-          setMessages(prev => [...prev, { role: 'assistant', content: "I can help you book right now. Which suite would you like to reserve?" }]);
-          setIsTyping(false);
-        }, 800);
-      }
-      return;
-    }
 
     setIsTyping(true);
     const apiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.GROQ_API_KEY;
@@ -256,7 +152,7 @@ const AIChatbot = () => {
             model: 'llama-3.1-8b-instant',
             messages: apiMessages,
             temperature: 0.3,
-            max_tokens: 100
+            max_tokens: 250
           })
         });
 
@@ -267,8 +163,57 @@ const AIChatbot = () => {
         }
 
         const data = await response.json();
-        const botResponse = data.choices[0]?.message?.content || "I'm here to help. Let me know how I can assist.";
-        setMessages(prev => [...prev, { role: 'assistant', content: botResponse }]);
+        let botResponse = data.choices[0]?.message?.content || "I'm here to help. Let me know how I can assist.";
+        
+        // Check for booking data tag
+        const bookingMatch = botResponse.match(/\[BOOKING_DATA:\s*({.*?})\]/);
+        if (bookingMatch) {
+          try {
+            const bookingJson = JSON.parse(bookingMatch[1]);
+            // Save booking
+            saveBooking({
+              roomId: bookingJson.roomId,
+              roomTitle: bookingJson.roomTitle,
+              guestName: bookingJson.guestName,
+              whatsappNumber: bookingJson.whatsappNumber,
+              checkIn: bookingJson.checkIn,
+              checkOut: bookingJson.checkOut,
+              guests: bookingJson.guests,
+              note: bookingJson.note || ''
+            });
+
+            // Format WhatsApp Message
+            const message = `Hello Lagos Prestige! I would like to book the *${bookingJson.roomTitle}*.
+
+*Booking Details:*
+• *Name:* ${bookingJson.guestName}
+• *WhatsApp:* ${bookingJson.whatsappNumber}
+• *Check-In:* ${bookingJson.checkIn}
+• *Check-Out:* ${bookingJson.checkOut}
+• *Guests:* ${bookingJson.guests}
+${bookingJson.note ? `• *Special Request:* ${bookingJson.note}` : ''}
+
+Please confirm availability and send payment details. Thank you!`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/2349157802693?text=${encodedMessage}`;
+
+            // Remove the tag from the visible response
+            botResponse = botResponse.replace(/\[BOOKING_DATA:\s*({.*?})\]/, "").trim();
+            
+            setMessages(prev => [...prev, { role: 'assistant', content: botResponse }]);
+            
+            toast.success("Booking request saved! Redirecting to WhatsApp...");
+            setTimeout(() => {
+              window.open(whatsappUrl, '_blank');
+            }, 1500);
+          } catch (err) {
+            console.error("Failed to parse booking JSON", err);
+            setMessages(prev => [...prev, { role: 'assistant', content: botResponse.replace(/\[BOOKING_DATA:\s*({.*?})\]/, "").trim() }]);
+          }
+        } else {
+          setMessages(prev => [...prev, { role: 'assistant', content: botResponse }]);
+        }
       } catch (error) {
         console.error("Groq API failed, falling back to local knowledge base:", error);
         triggerFallback(userText);
@@ -280,128 +225,6 @@ const AIChatbot = () => {
         triggerFallback(userText);
         setIsTyping(false);
       }, 1000);
-    }
-  };
-
-  const handleBookingFlow = async (userInputText: string) => {
-    setIsTyping(true);
-
-    switch (bookingStep) {
-      case 'awaiting_room':
-        const matchedRoom = allRooms.find(r => r.title.toLowerCase().includes(userInputText.toLowerCase()) || userInputText.toLowerCase().includes(r.title.toLowerCase()) || r.id === userInputText);
-        if (matchedRoom) {
-          setBookingData(prev => ({ ...prev, roomId: matchedRoom.id, roomTitle: matchedRoom.title }));
-          setBookingStep('awaiting_name');
-          setMessages(prev => [...prev, { role: 'assistant', content: `Perfect. Let's book the ${matchedRoom.title}. What is your full name?` }]);
-        } else {
-          setMessages(prev => [...prev, { role: 'assistant', content: "I couldn't find that suite. Please specify which room you'd like to book (e.g., Executive Master Suite)." }]);
-        }
-        setIsTyping(false);
-        break;
-
-      case 'awaiting_name':
-        setBookingData(prev => ({ ...prev, guestName: userInputText }));
-        setBookingStep('awaiting_phone');
-        setMessages(prev => [...prev, { role: 'assistant', content: `Thank you, ${userInputText}. What is your WhatsApp number?` }]);
-        setIsTyping(false);
-        break;
-
-      case 'awaiting_phone':
-        setBookingData(prev => ({ ...prev, whatsappNumber: userInputText }));
-        setBookingStep('awaiting_checkin');
-        setMessages(prev => [...prev, { role: 'assistant', content: "Got it. What is your check-in date? (e.g., tomorrow, next Friday, or YYYY-MM-DD)" }]);
-        setIsTyping(false);
-        break;
-
-      case 'awaiting_checkin':
-        const parsedCheckIn = await parseDateInput(userInputText, false);
-        if (parsedCheckIn === 'invalid') {
-          setMessages(prev => [...prev, { role: 'assistant', content: "That doesn't seem to be a valid future date. Please specify a valid check-in date (e.g., tomorrow, next Friday, or YYYY-MM-DD)." }]);
-        } else {
-          setBookingData(prev => ({ ...prev, checkIn: parsedCheckIn }));
-          setBookingStep('awaiting_checkout');
-          setMessages(prev => [...prev, { role: 'assistant', content: `Got it. Check-in set to ${parsedCheckIn}. What is your check-out date? (e.g., tomorrow, next Friday, or YYYY-MM-DD)` }]);
-        }
-        setIsTyping(false);
-        break;
-
-      case 'awaiting_checkout':
-        const parsedCheckOut = await parseDateInput(userInputText, true, bookingData.checkIn);
-        if (parsedCheckOut === 'invalid') {
-          setMessages(prev => [...prev, { role: 'assistant', content: `That check-out date is invalid or before your check-in date (${bookingData.checkIn}). Please specify a valid check-out date.` }]);
-        } else {
-          setBookingData(prev => ({ ...prev, checkOut: parsedCheckOut }));
-          setBookingStep('awaiting_guests');
-          setMessages(prev => [...prev, { role: 'assistant', content: `Perfect. Check-out set to ${parsedCheckOut}. How many guests will be staying?` }]);
-        }
-        setIsTyping(false);
-        break;
-
-      case 'awaiting_guests':
-        const numGuests = parseInt(userInputText) || 2;
-        setBookingData(prev => ({ ...prev, guests: numGuests }));
-        setBookingStep('awaiting_note');
-        setMessages(prev => [...prev, { role: 'assistant', content: "Any special requests or notes? (Type 'none' if none)" }]);
-        setIsTyping(false);
-        break;
-
-      case 'awaiting_note':
-        const finalNote = userInputText.toLowerCase() === 'none' ? '' : userInputText;
-        const finalBooking = { ...bookingData, note: finalNote };
-        
-        // Save to local storage database
-        saveBooking({
-          roomId: finalBooking.roomId,
-          roomTitle: finalBooking.roomTitle,
-          guestName: finalBooking.guestName,
-          whatsappNumber: finalBooking.whatsappNumber,
-          checkIn: finalBooking.checkIn,
-          checkOut: finalBooking.checkOut,
-          guests: finalBooking.guests,
-          note: finalBooking.note
-        });
-
-        // Format WhatsApp Message
-        const message = `Hello Lagos Prestige! I would like to book the *${finalBooking.roomTitle}*.
-
-*Booking Details:*
-• *Name:* ${finalBooking.guestName}
-• *WhatsApp:* ${finalBooking.whatsappNumber}
-• *Check-In:* ${finalBooking.checkIn}
-• *Check-Out:* ${finalBooking.checkOut}
-• *Guests:* ${finalBooking.guests}
-${finalBooking.note ? `• *Special Request:* ${finalBooking.note}` : ''}
-
-Please confirm availability and send payment details. Thank you!`;
-
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/2349157802693?text=${encodedMessage}`;
-
-        setMessages(prev => [...prev, { 
-          role: 'assistant', 
-          content: "Perfect! Your booking request has been logged. I am opening WhatsApp now to finalize your stay with our concierge." 
-        }]);
-
-        toast.success("Booking request saved! Redirecting to WhatsApp...");
-        
-        setTimeout(() => {
-          window.open(whatsappUrl, '_blank');
-        }, 1500);
-
-        // Reset booking state
-        setBookingStep('idle');
-        setBookingData({
-          roomId: '',
-          roomTitle: '',
-          guestName: '',
-          whatsappNumber: '',
-          checkIn: '',
-          checkOut: '',
-          guests: 2,
-          note: ''
-        });
-        setIsTyping(false);
-        break;
     }
   };
 
@@ -450,9 +273,7 @@ Please confirm availability and send payment details. Thank you!`;
             {/* Header */}
             <div className="p-6 bg-primary/5 border-b border-border flex items-center gap-3 justify-center">
               <div className="w-10 h-10 rounded-xl bg-[#1A241E] flex items-center justify-center shrink-0 border border-primary/20">
-                <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M30 25V75C30 80 35 85 40 85H70" stroke="#C5A059" strokeWidth="10" strokeLinecap="round" fill="none" />
-                </svg>
+                <img src="/prestige.png" alt="Lagos Prestige Logo" className="w-8 h-8 object-contain" />
               </div>
               <div className="text-center">
                 <h4 className="font-black text-sm text-foreground leading-none text-center">Prestige Assistant</h4>
@@ -468,9 +289,7 @@ Please confirm availability and send payment details. Thank you!`;
                     {msg.role === 'user' ? (
                       <User className="w-4 h-4 text-primary" />
                     ) : (
-                      <svg width="16" height="16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M30 25V75C30 80 35 85 40 85H70" stroke="#C5A059" strokeWidth="12" strokeLinecap="round" fill="none" />
-                      </svg>
+                      <img src="/prestige.png" alt="Lagos Prestige Logo" className="w-5 h-5 object-contain" />
                     )}
                   </div>
                   <div className={`p-4 rounded-2xl text-xs leading-relaxed max-w-[75%] ${msg.role === 'user' ? 'bg-primary text-background rounded-tr-none text-center' : 'bg-foreground/5 text-foreground/80 rounded-tl-none text-center'}`}>
@@ -482,9 +301,7 @@ Please confirm availability and send payment details. Thank you!`;
               {isTyping && (
                 <div className="flex gap-3">
                   <div className="w-8 h-8 rounded-lg bg-[#1A241E] border border-primary/10 flex items-center justify-center shrink-0">
-                    <svg width="16" height="16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M30 25V75C30 80 35 85 40 85H70" stroke="#C5A059" strokeWidth="12" strokeLinecap="round" fill="none" />
-                    </svg>
+                    <img src="/prestige.png" alt="Lagos Prestige Logo" className="w-5 h-5 object-contain" />
                   </div>
                   <div className="p-4 rounded-2xl bg-foreground/5 text-foreground/40 text-xs rounded-tl-none flex items-center gap-1 justify-center">
                     <span className="w-1.5 h-1.5 bg-foreground/40 rounded-full animate-bounce" />
@@ -500,7 +317,7 @@ Please confirm availability and send payment details. Thank you!`;
             <form onSubmit={handleSend} className="p-4 border-t border-border flex gap-2">
               <input
                 type="text"
-                placeholder={bookingStep !== 'idle' ? "Type your answer here..." : "Ask about power, security, wifi..."}
+                placeholder="Ask about power, security, wifi, or book a room..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-base md:text-xs font-bold focus:outline-none focus:border-primary/50 text-center"
