@@ -3,23 +3,39 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Sparkles, Bot, User } from 'lucide-react';
+import { allRooms } from '@/data/rooms';
 
 interface Message {
   role: 'system' | 'user' | 'assistant';
   content: string;
 }
 
+// Dynamically format all rooms into a clean text block for the AI
+const formattedRoomsContext = allRooms.map(room => (
+  `- Room ID: ${room.id}
+   Title: ${room.title}
+   Location: ${room.location}
+   Price: ${room.price} per night
+   Rating: ${room.rating} (${room.reviews} reviews)
+   Description: ${room.description}
+   Category: ${room.category}`
+)).join('\n\n');
+
 const systemPrompt = `You are the Prestige Assistant, a highly professional luxury concierge for Lagos Prestige Shortlets in Ikoyi and Victoria Island, Lagos.
-Your goal is to answer guest questions politely and encourage them to book.
-Key Information:
+Your goal is to answer guest questions politely, accurately, and encourage them to book.
+
+Here is the EXACT real-time catalog of our 13 luxury rooms. Use this data to answer questions about specific rooms, prices, and locations:
+${formattedRoomsContext}
+
+Key General Information:
 - Power: 24/7 uninterrupted power guaranteed by a dual-grid system and silent backup generators.
 - Security: 24/7 on-site vetted security, CCTV, and secure electronic access.
 - WiFi: Dedicated high-speed fiber-optic internet in all suites.
 - Private Chef: Available upon request to prepare curated gourmet meals in the suite's kitchen.
 - Chauffeur/Airport Pickup: Can be arranged by our private concierge.
 - Check-in: 2:00 PM. Check-out: 11:00 AM.
-- Pricing: Starts from ₦80k/night up to ₦350k/night for the Presidential Wing.
-Always nudge guests to click "Reserve Now" on any room page to secure their booking via WhatsApp. Keep responses concise and elegant.`;
+
+Always nudge guests to click "Reserve Now" on any room page to secure their booking via WhatsApp. Keep responses concise, elegant, and extremely helpful.`;
 
 const localKnowledgeBase = [
   { 
@@ -91,9 +107,7 @@ const AIChatbot = () => {
     setInput('');
     setIsTyping(true);
 
-    // Accessing the API key (Vite requires VITE_ prefix for client-side exposure)
     const apiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.GROQ_API_KEY;
-    console.log("Prestige Assistant - API Key Status:", apiKey ? "Found" : "Not Found");
 
     if (apiKey) {
       try {
@@ -134,7 +148,6 @@ const AIChatbot = () => {
         setIsTyping(false);
       }
     } else {
-      // Fallback to local knowledge base if no API key is present
       setTimeout(() => {
         triggerFallback(userText);
         setIsTyping(false);
