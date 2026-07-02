@@ -6,19 +6,60 @@ import Footer from '@/components/Footer';
 import CategoryFilter from '@/components/CategoryFilter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { allRooms, Room } from '@/data/rooms';
-import { Search } from 'lucide-react';
+import { Search, Calendar, X } from 'lucide-react';
+import { format, isBefore, isSameDay } from 'date-fns';
 
 const RoomsPage = () => {
   const [filteredRooms, setFilteredRooms] = useState<Room[]>(allRooms);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams, setSearchParams] = useState<{ checkIn: Date; checkOut: Date; guests: number } | null>(null);
 
   useEffect(() => {
-    const filtered = allRooms.filter(room => 
-      room.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      room.location.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredRooms(filtered);
-  }, [searchQuery]);
+    // Load search params from sessionStorage
+    const saved = sessionStorage.getItem('prestige_search_params');
+    if (saved) {
+      const params = JSON.parse(saved);
+      setSearchParams({
+        checkIn: new Date(params.checkIn),
+        checkOut: new Date(params.checkOut),
+        guests: params.guests
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    let result = allRooms;
+
+    // Filter by search query
+    if (searchQuery) {
+      result = result.filter(room => 
+        room.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        room.location.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Filter by date availability if search params exist
+    if (searchParams) {
+      result = result.filter(room => {
+        const isBooked = room.bookedDates.some(dateStr => {
+          const bookedDate = new Date(dateStr);
+          return (
+            isSameDay(bookedDate, searchParams.checkIn) || 
+            isSameDay(bookedDate, searchParams.checkOut) || 
+            (isBefore(searchParams.checkIn, bookedDate) && isBefore(bookedDate, searchParams.checkOut))
+          );
+        });
+        return !isBooked;
+      });
+    }
+
+    setFilteredRooms(result);
+  }, [searchQuery, searchParams]);
+
+  const clearDateFilter = () => {
+    sessionStorage.removeItem('prestige_search_params');
+    setSearchParams(null);
+  };
 
   return (
     <div className="min-h-screen bg-background font-sans selection:bg-primary selection:text-background">
@@ -43,6 +84,21 @@ const RoomsPage = () => {
               <p className="text-foreground/40 text-xl font-medium leading-relaxed">
                 Explore our hand-picked selection of 13 luxury rooms across the most prestigious neighborhoods in Lagos.
               </p>
+
+              {searchParams && (
+                <div className="flex items-center gap-3 mt-6 p-3 bg-primary/5 border border-primary/20 rounded-2xl w-fit">
+                  <Calendar className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-bold text-foreground">
+                    Showing available rooms for {format(searchParams.checkIn, "MMM dd")} - {format(searchParams.checkOut, "MMM dd")} ({searchParams.guests} Guests)
+                  </span>
+                  <button 
+                    onClick={clearDateFilter}
+                    className="p-1 hover:bg-primary/10 rounded-full transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5 text-primary" />
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col gap-4 w-full md:w-80">
@@ -53,7 +109,7 @@ const RoomsPage = () => {
                   placeholder="Search by name or area..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-card border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-primary/50 transition-colors"
+                  className="w-full bg-card border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                 />
               </div>
             </div>
@@ -92,17 +148,17 @@ const RoomsPage = () => {
                       <div className="absolute top-4 right-4 px-3 py-1 bg-background/90 backdrop-blur-md rounded-xl flex items-center gap-1.5 shadow-sm">
                         <span className="text-[10px] font-black text-primary">★ {room.rating}</span>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <span className="text-[10px] font-black text-white uppercase tracking-widest">View Details →</span>
+                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <span className="text-[10px] font-black text-white uppercase tracking-widest text-center">View Details →</span>
                       </div>
                     </div>
                     
-                    <div className="px-2">
+                    <div className="px-2 text-center">
                       <div className="flex justify-between items-start mb-1">
-                        <h3 className="font-black text-lg text-foreground leading-tight group-hover:text-primary transition-colors">{room.title}</h3>
-                        <span className="font-black text-primary text-sm">{room.price}</span>
+                        <h3 className="font-black text-lg text-foreground leading-tight group-hover:text-primary transition-colors text-left truncate max-w-[70%]">{room.title}</h3>
+                        <span className="font-black text-primary text-sm text-right">{room.price}</span>
                       </div>
-                      <p className="text-foreground/40 text-[10px] font-black uppercase tracking-widest">{room.location}</p>
+                      <p className="text-foreground/40 text-[10px] font-black uppercase tracking-widest text-left">{room.location}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -112,7 +168,7 @@ const RoomsPage = () => {
 
           {filteredRooms.length === 0 && (
             <div className="py-32 text-center">
-              <p className="text-foreground/30 font-black uppercase tracking-[0.3em]">No rooms match your search.</p>
+              <p className="text-foreground/30 font-black uppercase tracking-[0.3em] text-center">No rooms match your search.</p>
             </div>
           )}
         </section>

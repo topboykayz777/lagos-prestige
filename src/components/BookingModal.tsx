@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, Users, MessageSquare, Phone, User, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
@@ -11,15 +11,27 @@ interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
   room: Room;
+  initialCheckIn?: string;
+  initialCheckOut?: string;
+  initialGuests?: number;
 }
 
-const BookingModal = ({ isOpen, onClose, room }: BookingModalProps) => {
+const BookingModal = ({ isOpen, onClose, room, initialCheckIn = '', initialCheckOut = '', initialGuests = 2 }: BookingModalProps) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [guests, setGuests] = useState(2);
+  const [checkIn, setCheckIn] = useState(initialCheckIn);
+  const [checkOut, setCheckOut] = useState(initialCheckOut);
+  const [guests, setGuests] = useState(initialGuests);
   const [note, setNote] = useState('');
+
+  // Sync with initial values when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setCheckIn(initialCheckIn);
+      setCheckOut(initialCheckOut);
+      setGuests(initialGuests);
+    }
+  }, [isOpen, initialCheckIn, initialCheckOut, initialGuests]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,12 +105,12 @@ Please confirm availability and send payment details. Thank you!`;
               <X className="w-5 h-5 text-foreground" />
             </button>
 
-            <div className="mb-8">
-              <span className="text-primary text-[9px] font-black uppercase tracking-[0.3em] block mb-2">Pre-Booking Request</span>
-              <h3 className="text-2xl font-black text-foreground tracking-tight leading-none">
+            <div className="mb-8 text-center">
+              <span className="text-primary text-[9px] font-black uppercase tracking-[0.3em] block mb-2 text-center">Pre-Booking Request</span>
+              <h3 className="text-2xl font-black text-foreground tracking-tight leading-none text-center">
                 Secure Your Stay
               </h3>
-              <p className="text-foreground/40 text-xs font-bold mt-2">
+              <p className="text-foreground/40 text-xs font-bold mt-2 text-center">
                 {room.title} • {room.price} / night
               </p>
             </div>
@@ -106,7 +118,7 @@ Please confirm availability and send payment details. Thank you!`;
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Guest Name */}
               <div className="space-y-1.5">
-                <label className="text-[9px] font-black text-primary uppercase tracking-widest block">Full Name *</label>
+                <label className="text-[9px] font-black text-primary uppercase tracking-widest block text-center">Full Name *</label>
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30" />
                   <input
@@ -115,14 +127,14 @@ Please confirm availability and send payment details. Thank you!`;
                     placeholder="e.g. Sarah Jenkins"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-primary/50 transition-colors"
+                    className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                   />
                 </div>
               </div>
 
               {/* WhatsApp Number */}
               <div className="space-y-1.5">
-                <label className="text-[9px] font-black text-primary uppercase tracking-widest block">WhatsApp Number *</label>
+                <label className="text-[9px] font-black text-primary uppercase tracking-widest block text-center">WhatsApp Number *</label>
                 <div className="relative">
                   <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30" />
                   <input
@@ -131,7 +143,7 @@ Please confirm availability and send payment details. Thank you!`;
                     placeholder="e.g. +234 803 123 4567"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-primary/50 transition-colors"
+                    className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                   />
                 </div>
               </div>
@@ -139,7 +151,7 @@ Please confirm availability and send payment details. Thank you!`;
               {/* Dates Grid */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-[9px] font-black text-primary uppercase tracking-widest block">Check-In *</label>
+                  <label className="text-[9px] font-black text-primary uppercase tracking-widest block text-center">Check-In *</label>
                   <div className="relative">
                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30" />
                     <input
@@ -147,12 +159,12 @@ Please confirm availability and send payment details. Thank you!`;
                       required
                       value={checkIn}
                       onChange={(e) => setCheckIn(e.target.value)}
-                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors"
+                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                     />
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[9px] font-black text-primary uppercase tracking-widest block">Check-Out *</label>
+                  <label className="text-[9px] font-black text-primary uppercase tracking-widest block text-center">Check-Out *</label>
                   <div className="relative">
                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30" />
                     <input
@@ -160,7 +172,7 @@ Please confirm availability and send payment details. Thank you!`;
                       required
                       value={checkOut}
                       onChange={(e) => setCheckOut(e.target.value)}
-                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors"
+                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                     />
                   </div>
                 </div>
@@ -169,13 +181,13 @@ Please confirm availability and send payment details. Thank you!`;
               {/* Guests & Notes */}
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-1 space-y-1.5">
-                  <label className="text-[9px] font-black text-primary uppercase tracking-widest block">Guests</label>
+                  <label className="text-[9px] font-black text-primary uppercase tracking-widest block text-center">Guests</label>
                   <div className="relative">
                     <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30" />
                     <select
                       value={guests}
                       onChange={(e) => setGuests(Number(e.target.value))}
-                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors appearance-none"
+                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors appearance-none text-center"
                     >
                       {[1, 2, 3, 4, 5, 6].map(n => (
                         <option key={n} value={n}>{n}</option>
@@ -184,7 +196,7 @@ Please confirm availability and send payment details. Thank you!`;
                   </div>
                 </div>
                 <div className="col-span-2 space-y-1.5">
-                  <label className="text-[9px] font-black text-primary uppercase tracking-widest block">Special Note</label>
+                  <label className="text-[9px] font-black text-primary uppercase tracking-widest block text-center">Special Note</label>
                   <div className="relative">
                     <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30" />
                     <input
@@ -192,7 +204,7 @@ Please confirm availability and send payment details. Thank you!`;
                       placeholder="e.g. Airport pickup, early check-in"
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
-                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors"
+                      className="w-full bg-background border border-border rounded-2xl py-3.5 pl-12 pr-4 text-xs font-bold focus:outline-none focus:border-primary/50 transition-colors text-center"
                     />
                   </div>
                 </div>
@@ -200,7 +212,7 @@ Please confirm availability and send payment details. Thank you!`;
 
               <button
                 type="submit"
-                className="w-full py-5 bg-primary text-background rounded-2xl font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-3 mt-4"
+                className="w-full py-5 bg-primary text-background rounded-2xl font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-3 mt-4 text-center"
               >
                 Confirm & Chat on WhatsApp
                 <ArrowRight className="w-4 h-4" />

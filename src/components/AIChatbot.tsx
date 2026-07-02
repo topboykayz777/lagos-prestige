@@ -3,11 +3,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Sparkles, Bot, User } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface Message {
-  sender: 'bot' | 'user';
-  text: string;
+  role: 'system' | 'user' | 'assistant';
+  content: string;
 }
 
 const systemPrompt = `You are the Prestige Assistant, a highly professional luxury concierge for Lagos Prestige Shortlets in Ikoyi and Victoria Island, Lagos.
@@ -36,7 +35,7 @@ const localKnowledgeBase = [
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { sender: 'bot', text: "Hello! I am your Prestige Assistant. Ask me anything about our luxury rooms, 24/7 power, security, or amenities!" }
+    { role: 'assistant', content: "Hello! I am your Prestige Assistant. Ask me anything about our luxury rooms, 24/7 power, security, or amenities!" }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -51,7 +50,8 @@ const AIChatbot = () => {
     if (!input.trim()) return;
 
     const userText = input;
-    setMessages(prev => [...prev, { sender: 'user', text: userText }]);
+    const updatedMessages = [...messages, { role: 'user' as const, content: userText }];
+    setMessages(updatedMessages);
     setInput('');
     setIsTyping(true);
 
@@ -59,6 +59,15 @@ const AIChatbot = () => {
 
     if (apiKey) {
       try {
+        // Format messages for Groq API including system prompt and full history
+        const apiMessages = [
+          { role: 'system', content: systemPrompt },
+          ...updatedMessages.map(msg => ({
+            role: msg.role,
+            content: msg.content
+          }))
+        ];
+
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -67,10 +76,7 @@ const AIChatbot = () => {
           },
           body: JSON.stringify({
             model: 'llama3-8b-8192',
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userText }
-            ],
+            messages: apiMessages,
             temperature: 0.5,
             max_tokens: 150
           })
@@ -80,7 +86,7 @@ const AIChatbot = () => {
 
         const data = await response.json();
         const botResponse = data.choices[0]?.message?.content || "I'm here to help! Please let me know how I can assist with your stay.";
-        setMessages(prev => [...prev, { sender: 'bot', text: botResponse }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: botResponse }]);
       } catch (error) {
         console.warn("Groq API failed, falling back to local knowledge base:", error);
         triggerFallback(userText);
@@ -105,7 +111,7 @@ const AIChatbot = () => {
         break;
       }
     }
-    setMessages(prev => [...prev, { sender: 'bot', text: botResponse }]);
+    setMessages(prev => [...prev, { role: 'assistant', content: botResponse }]);
   };
 
   return (
@@ -139,25 +145,25 @@ const AIChatbot = () => {
             className="absolute bottom-20 right-0 w-[350px] h-[480px] bg-card border border-border rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="p-6 bg-primary/5 border-b border-border flex items-center gap-3">
+            <div className="p-6 bg-primary/5 border-b border-border flex items-center gap-3 justify-center">
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-background" />
               </div>
-              <div>
-                <h4 className="font-black text-sm text-foreground leading-none">Prestige Assistant</h4>
-                <span className="text-[9px] font-bold text-primary uppercase tracking-widest mt-1 block">Smart Concierge</span>
+              <div className="text-center">
+                <h4 className="font-black text-sm text-foreground leading-none text-center">Prestige Assistant</h4>
+                <span className="text-[9px] font-bold text-primary uppercase tracking-widest mt-1 block text-center">Smart Concierge</span>
               </div>
             </div>
 
             {/* Messages */}
             <div className="flex-1 p-6 overflow-y-auto space-y-4 no-scrollbar">
               {messages.map((msg, i) => (
-                <div key={i} className={`flex gap-3 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${msg.sender === 'user' ? 'bg-primary/10' : 'bg-foreground/5'}`}>
-                    {msg.sender === 'user' ? <User className="w-4 h-4 text-primary" /> : <Bot className="w-4 h-4 text-foreground" />}
+                <div key={i} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${msg.role === 'user' ? 'bg-primary/10' : 'bg-foreground/5'}`}>
+                    {msg.role === 'user' ? <User className="w-4 h-4 text-primary" /> : <Bot className="w-4 h-4 text-foreground" />}
                   </div>
-                  <div className={`p-4 rounded-2xl text-xs leading-relaxed max-w-[75%] ${msg.sender === 'user' ? 'bg-primary text-background rounded-tr-none' : 'bg-foreground/5 text-foreground/80 rounded-tl-none'}`}>
-                    {msg.text}
+                  <div className={`p-4 rounded-2xl text-xs leading-relaxed max-w-[75%] ${msg.role === 'user' ? 'bg-primary text-background rounded-tr-none text-center' : 'bg-foreground/5 text-foreground/80 rounded-tl-none text-center'}`}>
+                    {msg.content}
                   </div>
                 </div>
               ))}
@@ -167,7 +173,7 @@ const AIChatbot = () => {
                   <div className="w-8 h-8 rounded-lg bg-foreground/5 flex items-center justify-center shrink-0">
                     <Bot className="w-4 h-4 text-foreground" />
                   </div>
-                  <div className="p-4 rounded-2xl bg-foreground/5 text-foreground/40 text-xs rounded-tl-none flex items-center gap-1">
+                  <div className="p-4 rounded-2xl bg-foreground/5 text-foreground/40 text-xs rounded-tl-none flex items-center gap-1 justify-center">
                     <span className="w-1.5 h-1.5 bg-foreground/40 rounded-full animate-bounce" />
                     <span className="w-1.5 h-1.5 bg-foreground/40 rounded-full animate-bounce [animation-delay:0.2s]" />
                     <span className="w-1.5 h-1.5 bg-foreground/40 rounded-full animate-bounce [animation-delay:0.4s]" />
@@ -184,7 +190,7 @@ const AIChatbot = () => {
                 placeholder="Ask about power, security, wifi..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-xs font-bold focus:outline-none focus:border-primary/50"
+                className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-xs font-bold focus:outline-none focus:border-primary/50 text-center"
               />
               <button
                 type="submit"

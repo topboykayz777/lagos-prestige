@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, Users, Search, Plus, Minus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -23,18 +23,36 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState(2);
 
+  // Load existing search params if any
+  useEffect(() => {
+    const saved = sessionStorage.getItem('prestige_search_params');
+    if (saved) {
+      const params = JSON.parse(saved);
+      if (params.checkIn) setCheckIn(new Date(params.checkIn));
+      if (params.checkOut) setCheckOut(new Date(params.checkOut));
+      if (params.guests) setGuests(params.guests);
+    }
+  }, []);
+
   const handleSearch = () => {
     if (!checkIn || !checkOut) {
       toast.error("Please select both check-in and check-out dates.");
-      onFilter?.(allRooms); // Reset to all if no dates
+      onFilter?.(allRooms);
       return;
     }
 
-    // Availability Logic: Check if any room is available for these dates
+    // Save search params to sessionStorage
+    const searchParams = {
+      checkIn: checkIn.toISOString(),
+      checkOut: checkOut.toISOString(),
+      guests
+    };
+    sessionStorage.setItem('prestige_search_params', JSON.stringify(searchParams));
+
+    // Availability Logic
     const availableRooms = allRooms.filter(room => {
       const isBooked = room.bookedDates.some(dateStr => {
         const bookedDate = new Date(dateStr);
-        // Check if booked date falls within the selected range
         return (isSameDay(bookedDate, checkIn) || isSameDay(bookedDate, checkOut) || 
                (isBefore(checkIn, bookedDate) && isBefore(bookedDate, checkOut)));
       });
@@ -45,7 +63,6 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
       toast.success(`Found ${availableRooms.length} available suites!`);
       onFilter?.(availableRooms);
       
-      // Scroll to rooms section
       const roomsSection = document.getElementById('rooms');
       if (roomsSection) {
         roomsSection.scrollIntoView({ behavior: 'smooth' });
@@ -70,11 +87,11 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
         <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-2 w-full">
           <Popover>
             <PopoverTrigger asChild>
-              <div className="flex flex-col px-4 md:px-6 py-2 md:py-3 hover:bg-primary/5 rounded-xl md:rounded-2xl transition-colors cursor-pointer group">
-                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-primary mb-1">Check In</span>
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col items-center justify-center px-4 md:px-6 py-2 md:py-3 hover:bg-primary/5 rounded-xl md:rounded-2xl transition-colors cursor-pointer group text-center">
+                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-primary mb-1 text-center">Check In</span>
+                <div className="flex items-center gap-2 justify-center">
                   <CalendarIcon className="w-3.5 h-3.5 md:w-4 h-4 text-foreground/40 group-hover:text-primary transition-colors" />
-                  <span className={cn("text-xs md:text-sm font-bold", !checkIn && "text-foreground/40")}>
+                  <span className={cn("text-xs md:text-sm font-bold text-center", !checkIn && "text-foreground/40")}>
                     {checkIn ? format(checkIn, "MMM dd") : "Add Date"}
                   </span>
                 </div>
@@ -99,11 +116,11 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
           
           <Popover>
             <PopoverTrigger asChild>
-              <div className="flex flex-col px-4 md:px-6 py-2 md:py-3 hover:bg-primary/5 rounded-xl md:rounded-2xl transition-colors cursor-pointer group border-l border-border/50">
-                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-primary mb-1">Check Out</span>
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col items-center justify-center px-4 md:px-6 py-2 md:py-3 hover:bg-primary/5 rounded-xl md:rounded-2xl transition-colors cursor-pointer group border-l border-border/50 text-center">
+                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-primary mb-1 text-center">Check Out</span>
+                <div className="flex items-center gap-2 justify-center">
                   <CalendarIcon className="w-3.5 h-3.5 md:w-4 h-4 text-foreground/40 group-hover:text-primary transition-colors" />
-                  <span className={cn("text-xs md:text-sm font-bold", !checkOut && "text-foreground/40")}>
+                  <span className={cn("text-xs md:text-sm font-bold text-center", !checkOut && "text-foreground/40")}>
                     {checkOut ? format(checkOut, "MMM dd") : "Add Date"}
                   </span>
                 </div>
@@ -123,11 +140,11 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
 
           <Popover>
             <PopoverTrigger asChild>
-              <div className="col-span-2 md:col-span-1 flex flex-col px-4 md:px-6 py-2 md:py-3 hover:bg-primary/5 rounded-xl md:rounded-2xl transition-colors cursor-pointer group border-l border-border/50">
-                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-primary mb-1">Guests</span>
-                <div className="flex items-center gap-2">
+              <div className="col-span-2 md:col-span-1 flex flex-col items-center justify-center px-4 md:px-6 py-2 md:py-3 hover:bg-primary/5 rounded-xl md:rounded-2xl transition-colors cursor-pointer group border-l border-border/50 text-center">
+                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-primary mb-1 text-center">Guests</span>
+                <div className="flex items-center gap-2 justify-center">
                   <Users className="w-3.5 h-3.5 md:w-4 h-4 text-foreground/40 group-hover:text-primary transition-colors" />
-                  <span className="text-xs md:text-sm font-bold text-foreground">{guests} Guests</span>
+                  <span className="text-xs md:text-sm font-bold text-foreground text-center">{guests} Guests</span>
                 </div>
               </div>
             </PopoverTrigger>
@@ -159,7 +176,7 @@ const BookingBar = ({ onFilter }: BookingBarProps) => {
 
         <button 
           onClick={handleSearch}
-          className="w-full md:w-auto bg-primary text-background px-6 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] md:text-[11px] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-xl"
+          className="w-full md:w-auto bg-primary text-background px-6 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] md:text-[11px] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-xl text-center"
         >
           <Search className="w-4 h-4" />
           Search

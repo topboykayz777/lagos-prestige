@@ -8,17 +8,30 @@ import BookingModal from '@/components/BookingModal';
 import { motion } from 'framer-motion';
 import { Star, MapPin, Shield, Zap, Wifi, Coffee, Utensils, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { allRooms } from '@/data/rooms';
+import { format } from 'date-fns';
 
 const RoomDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [selectedImg, setSelectedImg] = useState(0);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [searchParams, setSearchParams] = useState<{ checkIn: string; checkOut: string; guests: number } | null>(null);
   
   const room = allRooms.find(r => r.id === id) || allRooms[0];
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Load search params from sessionStorage
+    const saved = sessionStorage.getItem('prestige_search_params');
+    if (saved) {
+      const params = JSON.parse(saved);
+      setSearchParams({
+        checkIn: format(new Date(params.checkIn), "yyyy-MM-dd"),
+        checkOut: format(new Date(params.checkOut), "yyyy-MM-dd"),
+        guests: params.guests
+      });
+    }
   }, [id]);
 
   const amenities = [
@@ -93,9 +106,9 @@ const RoomDetail = () => {
 
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                     {amenities.map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border">
+                      <div key={i} className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border justify-center">
                         <item.icon className="w-5 h-5 text-primary" />
-                        <span className="text-xs font-black uppercase tracking-widest text-foreground/80">{item.label}</span>
+                        <span className="text-xs font-black uppercase tracking-widest text-foreground/80 text-center">{item.label}</span>
                       </div>
                     ))}
                   </div>
@@ -108,45 +121,47 @@ const RoomDetail = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="sticky top-32 p-10 rounded-[3rem] bg-card border border-border shadow-2xl"
+                className="sticky top-32 p-10 rounded-[3rem] bg-card border border-border shadow-2xl text-center"
               >
-                <div className="flex justify-between items-end mb-8">
-                  <div>
-                    <span className="text-[10px] font-black text-foreground/40 uppercase tracking-widest block mb-1">Price per night</span>
-                    <span className="text-4xl font-black text-primary">{room.price}</span>
-                  </div>
+                <div className="flex flex-col items-center justify-center mb-8 text-center">
+                  <span className="text-[10px] font-black text-foreground/40 uppercase tracking-widest block mb-1 text-center">Price per night</span>
+                  <span className="text-4xl font-black text-primary text-center">{room.price}</span>
                 </div>
 
                 <div className="space-y-4 mb-8">
-                  <div className="p-4 rounded-2xl bg-background border border-border">
-                    <span className="text-[9px] font-black text-primary uppercase tracking-widest block mb-1">Dates</span>
-                    <p className="text-sm font-bold">Select dates in search</p>
+                  <div className="p-4 rounded-2xl bg-background border border-border text-center">
+                    <span className="text-[9px] font-black text-primary uppercase tracking-widest block mb-1 text-center">Dates</span>
+                    <p className="text-sm font-bold text-center">
+                      {searchParams ? `${format(new Date(searchParams.checkIn), "MMM dd")} - ${format(new Date(searchParams.checkOut), "MMM dd")}` : "Select dates in search"}
+                    </p>
                   </div>
-                  <div className="p-4 rounded-2xl bg-background border border-border">
-                    <span className="text-[9px] font-black text-primary uppercase tracking-widest block mb-1">Guests</span>
-                    <p className="text-sm font-bold">2 Adults</p>
+                  <div className="p-4 rounded-2xl bg-background border border-border text-center">
+                    <span className="text-[9px] font-black text-primary uppercase tracking-widest block mb-1 text-center">Guests</span>
+                    <p className="text-sm font-bold text-center">
+                      {searchParams ? `${searchParams.guests} Guests` : "2 Adults"}
+                    </p>
                   </div>
                 </div>
 
                 <button 
                   onClick={() => setIsBookingOpen(true)}
-                  className="w-full py-6 bg-primary text-background rounded-2xl font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl mb-4"
+                  className="w-full py-6 bg-primary text-background rounded-2xl font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-xl mb-4 text-center"
                 >
                   Reserve Now
                 </button>
                 
-                <p className="text-center text-[9px] font-black text-foreground/30 uppercase tracking-widest">
+                <p className="text-center text-[9px] font-black text-foreground/30 uppercase tracking-widest text-center">
                   No payment required yet
                 </p>
 
-                <div className="mt-8 pt-8 border-t border-border/50 space-y-4">
-                  <div className="flex items-center gap-3 text-foreground/60">
+                <div className="mt-8 pt-8 border-t border-border/50 space-y-4 flex flex-col items-center">
+                  <div className="flex items-center gap-3 text-foreground/60 justify-center">
                     <Shield className="w-4 h-4 text-primary" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest">Vetted Security Guaranteed</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-center">Vetted Security Guaranteed</span>
                   </div>
-                  <div className="flex items-center gap-3 text-foreground/60">
+                  <div className="flex items-center gap-3 text-foreground/60 justify-center">
                     <Zap className="w-4 h-4 text-primary" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest">24/7 Power Backup</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-center">24/7 Power Backup</span>
                   </div>
                 </div>
               </motion.div>
@@ -159,6 +174,9 @@ const RoomDetail = () => {
         isOpen={isBookingOpen} 
         onClose={() => setIsBookingOpen(false)} 
         room={room} 
+        initialCheckIn={searchParams?.checkIn}
+        initialCheckOut={searchParams?.checkOut}
+        initialGuests={searchParams?.guests}
       />
 
       <Footer />
