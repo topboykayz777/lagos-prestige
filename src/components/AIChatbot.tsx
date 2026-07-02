@@ -26,7 +26,12 @@ const formattedRoomsContext = allRooms.map(room => (
    Booked Dates (Unavailable): ${room.bookedDates.join(', ')}`
 )).join('\n\n');
 
-const systemPrompt = `You are the Prestige Assistant, an elite, ultra-premium virtual concierge for Lagos Prestige Shortlets. 
+const getSystemPrompt = () => {
+  const todayStr = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  return `You are the Prestige Assistant, an elite, ultra-premium virtual concierge for Lagos Prestige Shortlets. 
+
+CURRENT DATE & TIME:
+Today is ${todayStr}. Use this to understand relative dates like "today", "tomorrow", "next weekend", etc.
 
 TONE & STYLE RULES:
 - Be extremely straightforward, sharp, and concise. No fluff, no long paragraphs.
@@ -46,6 +51,7 @@ Key General Information:
 - Check-in: 2:00 PM. Check-out: 11:00 AM.
 
 If a guest wants to book or reserve a room, tell them: "I can help you book that right now. Let's get started."`;
+};
 
 const localKnowledgeBase = [
   { 
@@ -116,6 +122,78 @@ const AIChatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
+  const parseDateInput = async (userInput: string, isCheckOut: boolean, checkInDate?: string): Promise<string> => {
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+    
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.GROQ_API_KEY;
+    if (apiKey) {
+      try {
+        const prompt = `You are a precise date parser. Today's date is ${todayStr} (${today.toLocaleDateString('en-US', { weekday: 'long' })}).
+        The user input is: "${userInput}".
+        ${isCheckOut && checkInDate ? `This is for a check-out date. The check-in date is already set to ${checkInDate}. The check-out date MUST be after the check-in date.` : 'This is for a check-in date. It must be today or in the future.'}
+        
+        Convert the user's input into a standard YYYY-MM-DD format.
+        If the input is invalid, in the past, or before the check-in date, return "invalid".
+        Return ONLY the YYYY-MM-DD date or "invalid". Do not include any other text, explanation, or punctuation.`;
+
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'llama-3.1-8b-instant',
+            messages: [{ role: 'user', content: prompt }],
+            temperature: 0.0,
+            max_tokens: 10
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const result = data.choices[0]?.message?.content?.trim();
+          if (result && /^\d{4}-\d{2}-\d{2}$/.test(result)) {
+            return result;
+          }
+        }
+      } catch (e) {
+        console.error("AI date parsing failed, using local parser", e);
+      }
+    }
+
+    // Local fallback parser
+    try {
+      let parsedDate = new Date(userInput);
+      const lowerInput = userInput.toLowerCase();
+      if (lowerInput === 'today') {
+        parsedDate = today;
+      } else if (lowerInput === 'tomorrow') {
+        parsedDate = new Date(today);
+        parsedDate.setDate(today.getDate() + 1);
+      } else if (lowerInput === 'next week') {
+        parsedDate = new Date(today);
+        parsedDate.setDate(today.getDate() + 7);
+      }
+
+      if (!isNaN(parsedDate.getTime())) {
+        const formatted = parsedDate.toISOString().split('T')[0];
+        if (isCheckOut && checkInDate && formatted <= checkInDate) {
+          return 'invalid';
+        }
+        if (formatted < todayStr) {
+          return 'invalid';
+        }
+        return formatted;
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    return 'invalid';
+  };
+
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -127,7 +205,7 @@ const AIChatbot = () => {
 
     // Check if we are currently in a booking flow
     if (bookingStep !== 'idle') {
-      handleBookingFlow(userText);
+      await handleBookingFlow(userText);
       return;
     }
 
@@ -161,7 +239,7 @@ const AIChatbot = () => {
     if (apiKey) {
       try {
         const apiMessages = [
-          { role: 'system', content: systemPrompt },
+          { role: 'system', content: getSystemPrompt() },
           ...updatedMessages.map(msg => ({
             role: msg.role,
             content: msg.content
@@ -205,71 +283,86 @@ const AIChatbot = () => {
     }
   };
 
-  const handleBookingFlow = (input: string) => {
+  const handleBookingFlow = async (userInputText: string) => {
     setIsTyping(true);
 
-    setTimeout(() => {
-      switch (bookingStep) {
-        case 'awaiting_room':
-          const matchedRoom = allRooms.find(r => r.title.toLowerCase().includes(input.toLowerCase()) || input.toLowerCase().includes(r.title.toLowerCase()) || r.id === input);
-          if (matchedRoom) {
-            setBookingData(prev => ({ ...prev, roomId: matchedRoom.id, roomTitle: matchedRoom.title }));
-            setBookingStep('awaiting_name');
-            setMessages(prev => [...prev, { role: 'assistant', content: `Perfect. Let's book the ${matchedRoom.title}. What is your full name?` }]);
-          } else {
-            setMessages(prev => [...prev, { role: 'assistant', content: "I couldn't find that suite. Please specify which room you'd like to book (e.g., Executive Master Suite)." }]);
-          }
-          break;
+    switch (bookingStep) {
+      case 'awaiting_room':
+        const matchedRoom = allRooms.find(r => r.title.toLowerCase().includes(userInputText.toLowerCase()) || userInputText.toLowerCase().includes(r.title.toLowerCase()) || r.id === userInputText);
+        if (matchedRoom) {
+          setBookingData(prev => ({ ...prev, roomId: matchedRoom.id, roomTitle: matchedRoom.title }));
+          setBookingStep('awaiting_name');
+          setMessages(prev => [...prev, { role: 'assistant', content: `Perfect. Let's book the ${matchedRoom.title}. What is your full name?` }]);
+        } else {
+          setMessages(prev => [...prev, { role: 'assistant', content: "I couldn't find that suite. Please specify which room you'd like to book (e.g., Executive Master Suite)." }]);
+        }
+        setIsTyping(false);
+        break;
 
-        case 'awaiting_name':
-          setBookingData(prev => ({ ...prev, guestName: input }));
-          setBookingStep('awaiting_phone');
-          setMessages(prev => [...prev, { role: 'assistant', content: `Thank you, ${input}. What is your WhatsApp number?` }]);
-          break;
+      case 'awaiting_name':
+        setBookingData(prev => ({ ...prev, guestName: userInputText }));
+        setBookingStep('awaiting_phone');
+        setMessages(prev => [...prev, { role: 'assistant', content: `Thank you, ${userInputText}. What is your WhatsApp number?` }]);
+        setIsTyping(false);
+        break;
 
-        case 'awaiting_phone':
-          setBookingData(prev => ({ ...prev, whatsappNumber: input }));
-          setBookingStep('awaiting_checkin');
-          setMessages(prev => [...prev, { role: 'assistant', content: "Got it. What is your check-in date? (e.g., YYYY-MM-DD)" }]);
-          break;
+      case 'awaiting_phone':
+        setBookingData(prev => ({ ...prev, whatsappNumber: userInputText }));
+        setBookingStep('awaiting_checkin');
+        setMessages(prev => [...prev, { role: 'assistant', content: "Got it. What is your check-in date? (e.g., tomorrow, next Friday, or YYYY-MM-DD)" }]);
+        setIsTyping(false);
+        break;
 
-        case 'awaiting_checkin':
-          setBookingData(prev => ({ ...prev, checkIn: input }));
+      case 'awaiting_checkin':
+        const parsedCheckIn = await parseDateInput(userInputText, false);
+        if (parsedCheckIn === 'invalid') {
+          setMessages(prev => [...prev, { role: 'assistant', content: "That doesn't seem to be a valid future date. Please specify a valid check-in date (e.g., tomorrow, next Friday, or YYYY-MM-DD)." }]);
+        } else {
+          setBookingData(prev => ({ ...prev, checkIn: parsedCheckIn }));
           setBookingStep('awaiting_checkout');
-          setMessages(prev => [...prev, { role: 'assistant', content: "And your check-out date? (e.g., YYYY-MM-DD)" }]);
-          break;
+          setMessages(prev => [...prev, { role: 'assistant', content: `Got it. Check-in set to ${parsedCheckIn}. What is your check-out date? (e.g., tomorrow, next Friday, or YYYY-MM-DD)` }]);
+        }
+        setIsTyping(false);
+        break;
 
-        case 'awaiting_checkout':
-          setBookingData(prev => ({ ...prev, checkOut: input }));
+      case 'awaiting_checkout':
+        const parsedCheckOut = await parseDateInput(userInputText, true, bookingData.checkIn);
+        if (parsedCheckOut === 'invalid') {
+          setMessages(prev => [...prev, { role: 'assistant', content: `That check-out date is invalid or before your check-in date (${bookingData.checkIn}). Please specify a valid check-out date.` }]);
+        } else {
+          setBookingData(prev => ({ ...prev, checkOut: parsedCheckOut }));
           setBookingStep('awaiting_guests');
-          setMessages(prev => [...prev, { role: 'assistant', content: "How many guests will be staying?" }]);
-          break;
+          setMessages(prev => [...prev, { role: 'assistant', content: `Perfect. Check-out set to ${parsedCheckOut}. How many guests will be staying?` }]);
+        }
+        setIsTyping(false);
+        break;
 
-        case 'awaiting_guests':
-          const numGuests = parseInt(input) || 2;
-          setBookingData(prev => ({ ...prev, guests: numGuests }));
-          setBookingStep('awaiting_note');
-          setMessages(prev => [...prev, { role: 'assistant', content: "Any special requests or notes? (Type 'none' if none)" }]);
-          break;
+      case 'awaiting_guests':
+        const numGuests = parseInt(userInputText) || 2;
+        setBookingData(prev => ({ ...prev, guests: numGuests }));
+        setBookingStep('awaiting_note');
+        setMessages(prev => [...prev, { role: 'assistant', content: "Any special requests or notes? (Type 'none' if none)" }]);
+        setIsTyping(false);
+        break;
 
-        case 'awaiting_note':
-          const finalNote = input.toLowerCase() === 'none' ? '' : input;
-          const finalBooking = { ...bookingData, note: finalNote };
-          
-          // Save to local storage database
-          saveBooking({
-            roomId: finalBooking.roomId,
-            roomTitle: finalBooking.roomTitle,
-            guestName: finalBooking.guestName,
-            whatsappNumber: finalBooking.whatsappNumber,
-            checkIn: finalBooking.checkIn,
-            checkOut: finalBooking.checkOut,
-            guests: finalBooking.guests,
-            note: finalBooking.note
-          });
+      case 'awaiting_note':
+        const finalNote = userInputText.toLowerCase() === 'none' ? '' : userInputText;
+        const finalBooking = { ...bookingData, note: finalNote };
+        
+        // Save to local storage database
+        saveBooking({
+          roomId: finalBooking.roomId,
+          roomTitle: finalBooking.roomTitle,
+          guestName: finalBooking.guestName,
+          whatsappNumber: finalBooking.whatsappNumber,
+          checkIn: finalBooking.checkIn,
+          checkOut: finalBooking.checkOut,
+          guests: finalBooking.guests,
+          note: finalBooking.note
+        });
 
-          // Format WhatsApp Message
-          const message = `Hello Lagos Prestige! I would like to book the *${finalBooking.roomTitle}*.
+        // Format WhatsApp Message
+        const message = `Hello Lagos Prestige! I would like to book the *${finalBooking.roomTitle}*.
 
 *Booking Details:*
 • *Name:* ${finalBooking.guestName}
@@ -281,36 +374,35 @@ ${finalBooking.note ? `• *Special Request:* ${finalBooking.note}` : ''}
 
 Please confirm availability and send payment details. Thank you!`;
 
-          const encodedMessage = encodeURIComponent(message);
-          const whatsappUrl = `https://wa.me/2349157802693?text=${encodedMessage}`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/2349157802693?text=${encodedMessage}`;
 
-          setMessages(prev => [...prev, { 
-            role: 'assistant', 
-            content: "Perfect! Your booking request has been logged. I am opening WhatsApp now to finalize your stay with our concierge." 
-          }]);
+        setMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: "Perfect! Your booking request has been logged. I am opening WhatsApp now to finalize your stay with our concierge." 
+        }]);
 
-          toast.success("Booking request saved! Redirecting to WhatsApp...");
-          
-          setTimeout(() => {
-            window.open(whatsappUrl, '_blank');
-          }, 1500);
+        toast.success("Booking request saved! Redirecting to WhatsApp...");
+        
+        setTimeout(() => {
+          window.open(whatsappUrl, '_blank');
+        }, 1500);
 
-          // Reset booking state
-          setBookingStep('idle');
-          setBookingData({
-            roomId: '',
-            roomTitle: '',
-            guestName: '',
-            whatsappNumber: '',
-            checkIn: '',
-            checkOut: '',
-            guests: 2,
-            note: ''
-          });
-          break;
-      }
-      setIsTyping(false);
-    }, 1000);
+        // Reset booking state
+        setBookingStep('idle');
+        setBookingData({
+          roomId: '',
+          roomTitle: '',
+          guestName: '',
+          whatsappNumber: '',
+          checkIn: '',
+          checkOut: '',
+          guests: 2,
+          note: ''
+        });
+        setIsTyping(false);
+        break;
+    }
   };
 
   const triggerFallback = (userText: string) => {
