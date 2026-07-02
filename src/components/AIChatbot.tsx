@@ -161,27 +161,25 @@ const AIChatbot = () => {
     setInput('');
     setIsTyping(true);
 
-    // 1. Check if user is asking a question mid-flow
-    const inquiryAnswer = isQuestionOrInquiry(userText);
-    if (inquiryAnswer && bookingStep !== 'idle') {
-      setTimeout(() => {
-        setMessages(prev => [
-          ...prev, 
-          { role: 'assistant', content: inquiryAnswer },
-          { role: 'assistant', content: `To continue your booking: ${getStepPrompt(bookingStep)}` }
-        ]);
-        setIsTyping(false);
-      }, 800);
-      return;
-    }
-
-    // 2. Handle Booking Flow State Machine
+    // 1. If we are in an active booking session, handle it directly with the local state machine!
     if (bookingStep !== 'idle') {
+      const inquiryAnswer = isQuestionOrInquiry(userText);
+      if (inquiryAnswer) {
+        setTimeout(() => {
+          setMessages(prev => [
+            ...prev, 
+            { role: 'assistant', content: inquiryAnswer },
+            { role: 'assistant', content: `To continue your booking: ${getStepPrompt(bookingStep)}` }
+          ]);
+          setIsTyping(false);
+        }, 800);
+        return;
+      }
       await handleBookingStep(userText);
       return;
     }
 
-    // 3. Check if user wants to start booking
+    // 2. Check if user wants to start booking
     const lowerText = userText.toLowerCase();
     if (lowerText.includes('book') || lowerText.includes('reserve') || lowerText.includes('rent') || lowerText.includes('stay')) {
       const matchedRoom = allRooms.find(r => lowerText.includes(r.title.toLowerCase()) || lowerText.includes(`room ${r.id}`));
@@ -202,9 +200,10 @@ const AIChatbot = () => {
       return;
     }
 
-    // 4. General Conversation Fallback
+    // 3. General Conversation Fallback (No active booking)
+    const inquiryAnswer = isQuestionOrInquiry(userText);
     setTimeout(() => {
-      const answer = inquiryAnswer || "Welcome to Lagos Prestige. I can help you book a suite or answer questions about our 24/7 power, security, and amenities.";
+      const answer = inquiryAnswer || "For bespoke requests or complex inquiries, you can connect directly with our 24/7 concierge team on WhatsApp at +234 915 780 2693.";
       setMessages(prev => [...prev, { role: 'assistant', content: answer }]);
       setIsTyping(false);
     }, 800);
