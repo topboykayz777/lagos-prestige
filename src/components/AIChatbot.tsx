@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Sparkles, Bot, User } from 'lucide-react';
-import { allRooms, Room } from '@/data/rooms';
+import { allRooms } from '@/data/rooms';
 import { saveBooking } from '@/utils/bookings';
 import { toast } from 'sonner';
 
