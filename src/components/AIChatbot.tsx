@@ -3,12 +3,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Sparkles, Bot, User } from 'lucide-react';
-import { allRooms } from '@/data/rooms';
+import { allRooms, Room } from '@/data/rooms';
+import { saveBooking } from '@/utils/bookings';
+import { toast } from 'sonner';
 
 interface Message {
   role: 'system' | 'user' | 'assistant';
   content: string;
 }
+
+type BookingStep = 'idle' | 'awaiting_room' | 'awaiting_name' | 'awaiting_phone' | 'awaiting_checkin' | 'awaiting_checkout' | 'awaiting_guests' | 'awaiting_note';
 
 // Dynamically format all rooms into a clean text block for the AI
 const formattedRoomsContext = allRooms.map(room => (
@@ -18,7 +22,8 @@ const formattedRoomsContext = allRooms.map(room => (
    Price: ${room.price} per night
    Rating: ${room.rating} (${room.reviews} reviews)
    Description: ${room.description}
-   Category: ${room.category}`
+   Category: ${room.category}
+   Booked Dates (Unavailable): ${room.bookedDates.join(', ')}`
 )).join('\n\n');
 
 const systemPrompt = `You are the Prestige Assistant, an elite, ultra-premium virtual concierge for Lagos Prestige Shortlets. 
@@ -29,7 +34,7 @@ TONE & STYLE RULES:
 - Speak with confident, quiet luxury. Do not over-explain.
 - Answer the question directly first, then stop.
 
-Here is the EXACT real-time catalog of our 13 luxury rooms:
+Here is the EXACT real-time catalog of our 13 luxury rooms and their booked dates:
 ${formattedRoomsContext}
 
 Key General Information:
@@ -40,7 +45,7 @@ Key General Information:
 - Chauffeur/Airport Pickup: Can be arranged by our private concierge.
 - Check-in: 2:00 PM. Check-out: 11:00 AM.
 
-Nudge guests to click "Reserve Now" on any room page to secure their booking via WhatsApp.`;
+If a guest wants to book or reserve a room, tell them: "I can help you book that right now. Let's get started."`;
 
 const localKnowledgeBase = [
   { 
@@ -82,10 +87,6 @@ const localKnowledgeBase = [
   { 
     keywords: ['price', 'cost', 'cheap', 'expensive', 'rate', 'night'], 
     response: "Our luxury suites range from ₦80k to ₦350k per night. View exact pricing in the 'Our Rooms' section." 
-  },
-  { 
-    keywords: ['book', 'reserve', 'stay', 'payment', 'pay'], 
-    response: "To book, click 'Reserve Now' on any room page to finalize details instantly with our concierge on WhatsApp." 
   }
 ];
 
@@ -97,6 +98,19 @@ const AIChatbot = () => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Conversational Booking State
+  const [bookingStep, setBookingStep] = useState<BookingStep>('idle');
+  const [bookingData, setBookingData] = useState({
+    roomId: '',
+    roomTitle: '',
+    guestName: '',
+    whatsappNumber: '',
+    checkIn: '',
+    checkOut: '',
+    guests: 2,
+    note: ''
+  });
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -110,8 +124,38 @@ const AIChatbot = () => {
     const updatedMessages = [...messages, { role: 'user' as const, content: userText }];
     setMessages(updatedMessages);
     setInput('');
-    setIsTyping(true);
 
+    // Check if we are currently in a booking flow
+    if (bookingStep !== 'idle') {
+      handleBookingFlow(userText);
+      return;
+    }
+
+    // Check if user wants to start booking
+    const lowerText = userText.toLowerCase();
+    if (lowerText.includes('book') || lowerText.includes('reserve') || lowerText.includes('rent') || lowerText.includes('stay at')) {
+      // Try to detect which room they want to book
+      const matchedRoom = allRooms.find(r => lowerText.includes(r.title.toLowerCase()) || lowerText.includes(r.id));
+      if (matchedRoom) {
+        setBookingData(prev => ({ ...prev, roomId: matchedRoom.id, roomTitle: matchedRoom.title }));
+        setBookingStep('awaiting_name');
+        setIsTyping(true);
+        setTimeout(() => {
+          setMessages(prev => [...prev, { role: 'assistant', content: `Excellent choice. Let's book the ${matchedRoom.title}. What is your full name?` }]);
+          setIsTyping(false);
+        }, 800);
+      } else {
+        setBookingStep('awaiting_room');
+        setIsTyping(true);
+        setTimeout(() => {
+          setMessages(prev => [...prev, { role: 'assistant', content: "I can help you book right now. Which suite would you like to reserve?" }]);
+          setIsTyping(false);
+        }, 800);
+      }
+      return;
+    }
+
+    setIsTyping(true);
     const apiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.GROQ_API_KEY;
 
     if (apiKey) {
@@ -159,6 +203,114 @@ const AIChatbot = () => {
         setIsTyping(false);
       }, 1000);
     }
+  };
+
+  const handleBookingFlow = (input: string) => {
+    setIsTyping(true);
+
+    setTimeout(() => {
+      switch (bookingStep) {
+        case 'awaiting_room':
+          const matchedRoom = allRooms.find(r => r.title.toLowerCase().includes(input.toLowerCase()) || input.toLowerCase().includes(r.title.toLowerCase()) || r.id === input);
+          if (matchedRoom) {
+            setBookingData(prev => ({ ...prev, roomId: matchedRoom.id, roomTitle: matchedRoom.title }));
+            setBookingStep('awaiting_name');
+            setMessages(prev => [...prev, { role: 'assistant', content: `Perfect. Let's book the ${matchedRoom.title}. What is your full name?` }]);
+          } else {
+            setMessages(prev => [...prev, { role: 'assistant', content: "I couldn't find that suite. Please specify which room you'd like to book (e.g., Executive Master Suite)." }]);
+          }
+          break;
+
+        case 'awaiting_name':
+          setBookingData(prev => ({ ...prev, guestName: input }));
+          setBookingStep('awaiting_phone');
+          setMessages(prev => [...prev, { role: 'assistant', content: `Thank you, ${input}. What is your WhatsApp number?` }]);
+          break;
+
+        case 'awaiting_phone':
+          setBookingData(prev => ({ ...prev, whatsappNumber: input }));
+          setBookingStep('awaiting_checkin');
+          setMessages(prev => [...prev, { role: 'assistant', content: "Got it. What is your check-in date? (e.g., YYYY-MM-DD)" }]);
+          break;
+
+        case 'awaiting_checkin':
+          setBookingData(prev => ({ ...prev, checkIn: input }));
+          setBookingStep('awaiting_checkout');
+          setMessages(prev => [...prev, { role: 'assistant', content: "And your check-out date? (e.g., YYYY-MM-DD)" }]);
+          break;
+
+        case 'awaiting_checkout':
+          setBookingData(prev => ({ ...prev, checkOut: input }));
+          setBookingStep('awaiting_guests');
+          setMessages(prev => [...prev, { role: 'assistant', content: "How many guests will be staying?" }]);
+          break;
+
+        case 'awaiting_guests':
+          const numGuests = parseInt(input) || 2;
+          setBookingData(prev => ({ ...prev, guests: numGuests }));
+          setBookingStep('awaiting_note');
+          setMessages(prev => [...prev, { role: 'assistant', content: "Any special requests or notes? (Type 'none' if none)" }]);
+          break;
+
+        case 'awaiting_note':
+          const finalNote = input.toLowerCase() === 'none' ? '' : input;
+          const finalBooking = { ...bookingData, note: finalNote };
+          
+          // Save to local storage database
+          saveBooking({
+            roomId: finalBooking.roomId,
+            roomTitle: finalBooking.roomTitle,
+            guestName: finalBooking.guestName,
+            whatsappNumber: finalBooking.whatsappNumber,
+            checkIn: finalBooking.checkIn,
+            checkOut: finalBooking.checkOut,
+            guests: finalBooking.guests,
+            note: finalBooking.note
+          });
+
+          // Format WhatsApp Message
+          const message = `Hello Lagos Prestige! I would like to book the *${finalBooking.roomTitle}*.
+
+*Booking Details:*
+• *Name:* ${finalBooking.guestName}
+• *WhatsApp:* ${finalBooking.whatsappNumber}
+• *Check-In:* ${finalBooking.checkIn}
+• *Check-Out:* ${finalBooking.checkOut}
+• *Guests:* ${finalBooking.guests}
+${finalBooking.note ? `• *Special Request:* ${finalBooking.note}` : ''}
+
+Please confirm availability and send payment details. Thank you!`;
+
+          const encodedMessage = encodeURIComponent(message);
+          const whatsappUrl = `https://wa.me/2349157802693?text=${encodedMessage}`;
+
+          setMessages(prev => [...prev, { 
+            role: 'assistant', 
+            content: "Perfect! Your booking request has been logged. I am opening WhatsApp now to finalize your stay with our concierge." 
+          }]);
+
+          toast.success("Booking request saved! Redirecting to WhatsApp...");
+          
+          setTimeout(() => {
+            window.open(whatsappUrl, '_blank');
+          }, 1500);
+
+          // Reset booking state
+          setBookingStep('idle');
+          setBookingData({
+            roomId: '',
+            roomTitle: '',
+            guestName: '',
+            whatsappNumber: '',
+            checkIn: '',
+            checkOut: '',
+            guests: 2,
+            note: ''
+          });
+          break;
+      }
+      setIsTyping(false);
+    }, 1000);
   };
 
   const triggerFallback = (userText: string) => {
@@ -246,7 +398,7 @@ const AIChatbot = () => {
             <form onSubmit={handleSend} className="p-4 border-t border-border flex gap-2">
               <input
                 type="text"
-                placeholder="Ask about power, security, wifi..."
+                placeholder={bookingStep !== 'idle' ? "Type your answer here..." : "Ask about power, security, wifi..."}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 className="flex-1 bg-background border border-border rounded-xl px-4 py-3 text-xs font-bold focus:outline-none focus:border-primary/50 text-center"

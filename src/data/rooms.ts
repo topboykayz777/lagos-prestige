@@ -9,7 +9,7 @@ export interface Room {
   rating: string;
   reviews: string;
   description: string;
-  bookedDates: string[]; // ISO strings
+  bookedDates: string[]; // ISO strings (YYYY-MM-DD)
   category: string;
 }
 
@@ -26,7 +26,7 @@ export const allRooms: Room[] = [
     reviews: "128",
     category: "Master Suite",
     description: "Our flagship suite offering panoramic views of the Lagos skyline. Features a king-sized orthopedic bed and a spa-inspired bathroom.",
-    bookedDates: ["2024-05-10"]
+    bookedDates: ["2026-03-10", "2026-03-11", "2026-03-12"]
   },
   { 
     id: "2", 
@@ -40,7 +40,7 @@ export const allRooms: Room[] = [
     reviews: "94",
     category: "Living Lounge",
     description: "A perfect blend of business and leisure with a dedicated workspace and high-speed fiber internet.",
-    bookedDates: []
+    bookedDates: ["2026-03-15", "2026-03-16"]
   },
   { 
     id: "3", 
@@ -54,7 +54,7 @@ export const allRooms: Room[] = [
     reviews: "210",
     category: "Chef's Kitchen",
     description: "Chic, compact, and incredibly functional. Ideal for solo travelers or couples looking for a vibrant city stay.",
-    bookedDates: []
+    bookedDates: ["2026-03-20"]
   },
   { 
     id: "4", 
@@ -68,7 +68,7 @@ export const allRooms: Room[] = [
     reviews: "56",
     category: "Cinema Room",
     description: "Wake up to the sunrise over the Atlantic. This suite offers floor-to-ceiling windows and automated blackout curtains.",
-    bookedDates: []
+    bookedDates: ["2026-03-10", "2026-03-11"]
   },
   { 
     id: "5", 
@@ -82,7 +82,7 @@ export const allRooms: Room[] = [
     reviews: "32",
     category: "Spa Bath",
     description: "Ultimate privacy in Lagos' most exclusive neighborhood. Includes private elevator access and 24/7 butler service.",
-    bookedDates: []
+    bookedDates: ["2026-03-25", "2026-03-26"]
   },
   { 
     id: "6", 
@@ -96,7 +96,7 @@ export const allRooms: Room[] = [
     reviews: "18",
     category: "Master Suite",
     description: "The pinnacle of luxury. A sprawling three-bedroom wing with a private dining room and dedicated security quarters.",
-    bookedDates: []
+    bookedDates: ["2026-03-15"]
   },
   { 
     id: "7", 
@@ -110,7 +110,7 @@ export const allRooms: Room[] = [
     reviews: "42",
     category: "Living Lounge",
     description: "A serene escape featuring a private garden terrace. Perfect for morning coffee or evening relaxation.",
-    bookedDates: []
+    bookedDates: ["2026-03-18"]
   },
   { 
     id: "8", 
@@ -124,7 +124,7 @@ export const allRooms: Room[] = [
     reviews: "88",
     category: "Chef's Kitchen",
     description: "High-altitude living with a modern touch. This studio offers a compact yet luxurious space with high-end appliances.",
-    bookedDates: []
+    bookedDates: ["2026-03-22"]
   },
   { 
     id: "9", 
@@ -138,7 +138,7 @@ export const allRooms: Room[] = [
     reviews: "64",
     category: "Master Suite",
     description: "Elegance meets comfort in this royal-themed guest room. Features a plush queen bed and antique-style furniture.",
-    bookedDates: []
+    bookedDates: ["2026-03-12"]
   },
   { 
     id: "10", 
@@ -152,7 +152,7 @@ export const allRooms: Room[] = [
     reviews: "112",
     category: "Living Lounge",
     description: "Industrial chic design with high ceilings and open spaces. Perfect for the creative traveler.",
-    bookedDates: []
+    bookedDates: ["2026-03-14"]
   },
   { 
     id: "11", 
@@ -170,7 +170,7 @@ export const allRooms: Room[] = [
     reviews: "45",
     category: "Master Suite",
     description: "A tribute to Lagosian history with modern luxury. Features hand-crafted furniture, local textiles, and a private library nook.",
-    bookedDates: []
+    bookedDates: ["2026-03-16"]
   },
   { 
     id: "12", 
@@ -184,7 +184,7 @@ export const allRooms: Room[] = [
     reviews: "76",
     category: "Spa Bath",
     description: "Light and airy room with subtle nautical touches. Enjoy the refreshing breeze from your private balcony.",
-    bookedDates: []
+    bookedDates: ["2026-03-19"]
   },
   { 
     id: "13", 
@@ -198,6 +198,6 @@ export const allRooms: Room[] = [
     reviews: "154",
     category: "Chef's Kitchen",
     description: "Clean lines and functional design. A peaceful retreat from the bustling city life.",
-    bookedDates: []
+    bookedDates: ["2026-03-21"]
   }
 ];
